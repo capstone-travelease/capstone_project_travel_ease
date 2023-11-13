@@ -19,7 +19,19 @@ class LoginView extends GetView<LoginController> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 80, bottom: 40),
+                  padding: const EdgeInsets.only(top: 10, bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () => Get.back(),
+                          icon: const Icon(Icons.arrow_back_outlined)),
+                      const Text('')
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 40),
                   child: Column(
                     children: [
                       Text('Welcome Back!',
@@ -72,7 +84,6 @@ class LoginView extends GetView<LoginController> {
                                 ),
                             decoration: InputDecoration(
                               alignLabelWithHint: true,
-                              errorText: controller.emailError.value,
                               hintText: 'mail@example.com',
                               hintStyle: context.theme.textTheme.bodySmall
                                   ?.copyWith(color: Colors.grey[500]),
@@ -109,7 +120,6 @@ class LoginView extends GetView<LoginController> {
                                       // color: context.theme.hintColor,
                                       ),
                               decoration: InputDecoration(
-                                errorText: controller.passwordError.value,
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     controller.showPassword.value
@@ -172,47 +182,54 @@ class LoginView extends GetView<LoginController> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.grey[300]!)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Or Login With',
-                            style: Get.theme.textTheme.bodyMedium,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Don't have ann account? ",
-                                  style: Get.theme.textTheme.bodyMedium),
-                              InkWell(
-                                onTap: () => Get.toNamed(SignPage.routeName),
-                                child: Text(
-                                  "Sign Up ",
-                                  style: Get.theme.textTheme.bodyMedium
-                                      ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.redAccent),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                )
+                const AltLogins(),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AltLogins extends StatelessWidget {
+  const AltLogins({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.grey[300]!)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Text(
+                'Or Login With',
+                style: Get.theme.textTheme.bodyMedium,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have ann account? ",
+                      style: Get.theme.textTheme.bodyMedium),
+                  InkWell(
+                    onTap: () => Get.toNamed(SignPage.routeName),
+                    child: Text(
+                      "Sign Up ",
+                      style: Get.theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.redAccent),
+                    ),
+                  )
+                ],
+              )
+            ],
           ),
         ),
       ),

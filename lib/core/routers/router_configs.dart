@@ -1,4 +1,6 @@
 import 'package:capstone_project_travel_ease/src/presentation/pages/app_start.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/login/login_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/login/login_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_controller.dart';
@@ -39,11 +41,20 @@ class RouterConfigs {
       page: () => const NavigatorMenuPage(),
       binding: BindingsBuilder<void>(() {
         Get.lazyPut(NavigatorMenuController.new);
-        // Get.lazyPut(HomeController.new);
+        Get.lazyPut(HomeController.new);
         // Get.lazyPut(WidgetSearchHotelController.new);
         // Get.lazyPut(MyBookingController.new);
         Get.lazyPut(ProfileController.new);
       }),
+    ),
+    GetPage(
+      name: HomePage.routeName,
+      page: () => const HomePage(),
+      binding: BindingsBuilder<void>(
+        () {
+          Get.lazyPut(HomeController.new);
+        },
+      ),
     ),
     GetPage(
       name: ProfilePage.routeName,

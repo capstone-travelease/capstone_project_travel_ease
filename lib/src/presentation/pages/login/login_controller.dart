@@ -8,9 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   late TextEditingController emailEditController;
-  late RxnString emailError = RxnString(null);
   late TextEditingController passwordEditController;
-  final RxnString passwordError = RxnString(null);
   bool isChecked = false;
   final RxBool isLoading = true.obs;
   RxBool showPassword = false.obs;
@@ -56,7 +54,5 @@ class LoginController extends GetxController {
   void _cleanInput() {
     emailEditController.text = '';
     passwordEditController.text = '';
-    emailError.value = null;
-    passwordError.value = null;
   }
 }

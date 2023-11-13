@@ -22,10 +22,10 @@ class _AppStartViewState extends State<AppStartView> {
         bool isLogin = prefs.getBool(LocalVariable.isLogin) ?? false;
         if (isLogin) {
           print(isLogin);
-          Get.offAllNamed(NavigatorMenuPage.routeName);
+          // Get.offAllNamed(NavigatorMenuPage.routeName);
           return;
         }
-        Get.offAllNamed(LoginView.routeName);
+        Get.offAllNamed(NavigatorMenuPage.routeName);
       },
     );
 

@@ -23,59 +23,115 @@ class ProfilePage extends GetView<ProfileController> {
       backgroundColor: Colors.grey[200],
       body: Column(
         children: [
-          const InformationProfile(),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.redAccent,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+          Obx(() => controller.isLogin.value != false
+              ? const InformationProfile()
+              : Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    width: Get.width,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.redAccent,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ClipOval(
+                          child: Image.asset(
+                            fit: BoxFit.fill,
+                            Assets.images.noImageUser.path,
+                            width: 60,
+                            height: 60,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
                           child: Text(
-                            'Edit Profile',
+                            'Đăng kí thành viên, hưởng nhiều ưu đãi!',
                             style: Get.textTheme.bodyMedium!
                                 .copyWith(color: Colors.white),
                           ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: SizedBox(
+                            width: Get.width,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: Text(
+                                    'Đăng Nhập/Đăng Kí',
+                                    style: Get.textTheme.bodyMedium!
+                                        .copyWith(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: Colors.grey[300]!,
+                )),
+          if (controller.isLogin.value != false)
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            'Change Password',
-                            style: Get.textTheme.bodyMedium!
-                                .copyWith(color: Colors.redAccent),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              'Edit Profile',
+                              style: Get.textTheme.bodyMedium!
+                                  .copyWith(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                )
-              ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: Colors.grey[300]!,
+                          ),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              'Change Password',
+                              style: Get.textTheme.bodyMedium!
+                                  .copyWith(color: Colors.redAccent),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
           CustomButton(
             text: Text(
               'My Bookmark',
@@ -120,19 +176,20 @@ class ProfilePage extends GetView<ProfileController> {
             ),
             onTap: () {},
           ),
-          CustomButton(
-            text: Text(
-              'Log Out',
-              style:
-                  Get.textTheme.bodyMedium?.copyWith(color: Colors.redAccent),
+          if (controller.isLogin.value != false)
+            CustomButton(
+              text: Text(
+                'Log Out',
+                style:
+                    Get.textTheme.bodyMedium?.copyWith(color: Colors.redAccent),
+              ),
+              icon: const Icon(
+                Icons.login,
+                size: 30,
+                color: Colors.redAccent,
+              ),
+              onTap: () => controller.logOut(),
             ),
-            icon: const Icon(
-              Icons.login,
-              size: 30,
-              color: Colors.redAccent,
-            ),
-            onTap: () => controller.logOut(),
-          ),
         ],
       ),
     );
