@@ -75,20 +75,20 @@ class CoreTheme {
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: const EdgeInsets.all(10),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(18),
           borderSide: BorderSide(color: Colors.red[300]!),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(18),
           borderSide: BorderSide(color: Colors.grey[300]!),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(18),
           borderSide: BorderSide(color: Colors.grey[300]!),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.grey[300]!),
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: BorderRadius.circular(18),
         ),
         labelStyle: const TextStyle(
           fontFamily: 'Roboto',

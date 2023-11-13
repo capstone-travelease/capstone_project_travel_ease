@@ -1,6 +1,9 @@
+import 'package:capstone_project_travel_ease/core/constrants/localvariable.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/login/login_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:package_login/package_login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppStartView extends StatefulWidget {
   const AppStartView({Key? key}) : super(key: key);
@@ -15,14 +18,14 @@ class _AppStartViewState extends State<AppStartView> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-        // final prefs = await SharedPreferences.getInstance();
-        // bool isLogin = prefs.getBool(LocalVariable.isLogin) ?? false;
-        // if (isLogin) {
-        //   print(isLogin);
-        //   Get.offAllNamed(RootApp.routerName);
-        //   return;
-        // }
-        // Get.offAllNamed(CoreUserPackage.goLogin as String);
+        final prefs = await SharedPreferences.getInstance();
+        bool isLogin = prefs.getBool(LocalVariable.isLogin) ?? false;
+        if (isLogin) {
+          print(isLogin);
+          Get.offAllNamed(NavigatorMenuPage.routeName);
+          return;
+        }
+        Get.offAllNamed(LoginView.routeName);
       },
     );
 
@@ -32,9 +35,8 @@ class _AppStartViewState extends State<AppStartView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: ElevatedButton(
-              onPressed: () => CoreUserPackage.goLogin(), child: Text('demo'))),
+      body:
+          Center(child: ElevatedButton(onPressed: () {}, child: Text('demo'))),
     );
   }
 }
