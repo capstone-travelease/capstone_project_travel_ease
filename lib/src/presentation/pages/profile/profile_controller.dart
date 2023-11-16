@@ -1,31 +1,50 @@
-import 'package:capstone_project_travel_ease/core/constrants/localvariable.dart';
+import 'package:capstone_project_travel_ease/src/presentation/loading/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/login/login_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_sign_out.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_notification.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController extends GetxController {
-  RxBool isLogin = false.obs;
+  final CheckLoginController checkLoginController = Get.find();
   @override
   void onInit() {
-    addUser();
+    // checkLoginController.checkLogin();
     super.onInit();
   }
 
-  Future<void> addUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    isLogin.value = prefs.getBool(LocalVariable.isLogin) ?? false;
+  Future<void> pushLogin() async {
+    await Get.toNamed(LoginView.routeName);
+    await checkLoginController.checkLogin();
+  }
+
+  Future<void> geToBookMark() async {
+    if (checkLoginController.isLogin.value == false) {
+      Get.dialog(
+        DiaLogNotification(
+          onTap: () async {
+            await Get.toNamed(LoginView.routeName);
+            await checkLoginController.checkLogin();
+            Get.back();
+          },
+          title: 'Thông Báo',
+          content: 'Đăng nhập để sử dụng chức năng !',
+          okText: 'Đăng Nhập',
+        ),
+      );
+    }
+    // Get.toNamed();
   }
 
   Future<void> logOut() async {
     Get.dialog(
-      DiaLogSignOut(
+      DiaLogNotification(
         onTap: () async {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setBool(LocalVariable.isLogin, false);
-          Get.offAllNamed(NavigatorMenuPage.routeName);
+          await checkLoginController.logOut();
+          await Get.offAllNamed(NavigatorMenuPage.routeName);
         },
+        title: 'Sign Out',
+        content: 'Are you sure you want to sign out?',
+        okText: 'Yes, Sign out',
       ),
     );
   }

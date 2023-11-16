@@ -47,6 +47,14 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/cancelled.png
+  AssetGenImage get cancelled =>
+      const AssetGenImage('assets/images/cancelled.png');
+
+  /// File path: assets/images/completed.png
+  AssetGenImage get completed =>
+      const AssetGenImage('assets/images/completed.png');
+
   /// File path: assets/images/noImage.jpg
   AssetGenImage get noImage => const AssetGenImage('assets/images/noImage.jpg');
 
@@ -54,11 +62,19 @@ class $AssetsImagesGen {
   AssetGenImage get noImageUser =>
       const AssetGenImage('assets/images/no_image_user.jpg');
 
+  /// File path: assets/images/ongoing.png
+  AssetGenImage get ongoing => const AssetGenImage('assets/images/ongoing.png');
+
   /// File path: assets/images/qrcode.png
   AssetGenImage get qrcode => const AssetGenImage('assets/images/qrcode.png');
 
+  /// File path: assets/images/startapp.png
+  AssetGenImage get startapp =>
+      const AssetGenImage('assets/images/startapp.png');
+
   /// List of all assets
-  List<AssetGenImage> get values => [noImage, noImageUser, qrcode];
+  List<AssetGenImage> get values =>
+      [cancelled, completed, noImage, noImageUser, ongoing, qrcode, startapp];
 }
 
 class Assets {

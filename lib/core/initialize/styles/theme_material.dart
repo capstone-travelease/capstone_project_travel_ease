@@ -24,7 +24,7 @@ class CoreTheme {
         onError: Colors.white,
         errorContainer: Color(0xffFFDAD6),
         onErrorContainer: Color(0xff410002),
-        background: Color(0xffFBFDF7),
+        background: Color(0xffF5F5F5),
         onBackground: Color(0xff191C19),
         secondary: Color(0xff4858A9),
         onSecondary: Colors.white,

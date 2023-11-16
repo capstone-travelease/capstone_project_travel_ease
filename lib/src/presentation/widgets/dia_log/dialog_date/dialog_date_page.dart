@@ -22,12 +22,12 @@ class DiaLogDatePage extends StatelessWidget {
               ),
             );
         return Dialog(
-          child: Container(
-            height: 500,
-            width: Get.width,
+          surfaceTintColor: Colors.transparent,
+          child: DecoratedBox(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20), color: Colors.white),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 14.0),
@@ -91,8 +91,7 @@ class DiaLogDatePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -113,24 +112,26 @@ class DiaLogDatePage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Trả Phòng',
-                            style: Get.textTheme.bodySmall?.copyWith(
-                                color: Colors.black45,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Obx(
-                            () => Text(
-                              controller.dateRange?.value.end
-                                      .formatDateTimeToString() ??
-                                  '',
-                              style: Get.textTheme.bodySmall?.copyWith(),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Trả Phòng',
+                              style: Get.textTheme.bodySmall?.copyWith(
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ],
+                            Obx(
+                              () => Text(
+                                controller.dateRange?.value.end
+                                        .formatDateTimeToString() ??
+                                    '',
+                                style: Get.textTheme.bodySmall?.copyWith(),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -165,27 +166,35 @@ class DiaLogDatePage extends StatelessWidget {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          Get.back(result: controller.dateRange?.value);
+                          if (controller.dateRange?.value.start.day !=
+                              controller.dateRange?.value.end.day) {
+                            Get.back(result: controller.dateRange?.value);
+                          }
+                          return;
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: Colors.redAccent,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Center(
-                                child: Text(
-                                  'Tiếp Tục',
-                                  style: Get.textTheme.bodySmall?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                          child: Obx(() => DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: controller
+                                              .dateRange?.value.start.day !=
+                                          controller.dateRange?.value.end.day
+                                      ? Colors.redAccent
+                                      : Colors.grey,
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
-                              ),
-                            ),
-                          ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Text(
+                                      'Tiếp Tục',
+                                      style: Get.textTheme.bodySmall?.copyWith(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                              )),
                         ),
                       ),
                     ),

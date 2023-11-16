@@ -10,22 +10,23 @@ class NavigatorMenuPage extends GetView<NavigatorMenuController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: Obx(() => controller.screens[controller.selectedIndex.value]),
-        bottomNavigationBar: Obx(
-          () => BottomNavigationBar(
-            elevation: 0,
-            onTap: (index) => controller.selectedIndex.value = index,
-            currentIndex: controller.selectedIndex.value,
-            items: const [
-              BottomNavigationBarItem(
-                  icon: Icon(Iconsax.home_1_copy), label: 'Home'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.list_alt_sharp), label: 'Booking'),
-              BottomNavigationBarItem(
-                  icon: Icon(Iconsax.user_octagon_copy), label: 'Profile'),
-            ],
-          ),
-        ));
+      backgroundColor: Colors.white,
+      body: Obx(() => controller.screens[controller.selectedIndex.value]),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          elevation: 0,
+          onTap: (index) => controller.selectedIndex.value = index,
+          currentIndex: controller.selectedIndex.value,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Iconsax.home_1_copy), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.list_alt_sharp), label: 'Booking'),
+            BottomNavigationBarItem(
+                icon: Icon(Iconsax.user_octagon_copy), label: 'Profile'),
+          ],
+        ),
+      ),
+    );
   }
 }

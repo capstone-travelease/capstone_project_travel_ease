@@ -1,4 +1,5 @@
 import 'package:capstone_project_travel_ease/core/constrants/localvariable.dart';
+import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/login/login_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +23,10 @@ class _AppStartViewState extends State<AppStartView> {
         bool isLogin = prefs.getBool(LocalVariable.isLogin) ?? false;
         if (isLogin) {
           print(isLogin);
-          // Get.offAllNamed(NavigatorMenuPage.routeName);
+          Get.offAllNamed(NavigatorMenuPage.routeName);
           return;
         }
-        Get.offAllNamed(NavigatorMenuPage.routeName);
+        await Get.offAllNamed(NavigatorMenuPage.routeName);
       },
     );
 
@@ -35,8 +36,17 @@ class _AppStartViewState extends State<AppStartView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          Center(child: ElevatedButton(onPressed: () {}, child: Text('demo'))),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Image.asset(
+            fit: BoxFit.fill,
+            Assets.images.startapp.path,
+            width: 280,
+            height: 280,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
-class DiaLogSignOut extends StatelessWidget {
+class DiaLogNotification extends StatelessWidget {
+  final String title;
+  final String content;
+  final String okText;
   final Callback onTap;
-  const DiaLogSignOut({Key? key, required this.onTap}) : super(key: key);
+  const DiaLogNotification(
+      {Key? key,
+      required this.onTap,
+      required this.title,
+      required this.content,
+      required this.okText})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +30,18 @@ class DiaLogSignOut extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 25.0),
+              padding: const EdgeInsets.only(top: 25.0),
               child: Text(
-                'Sign Out',
+                title,
                 style: Get.textTheme.titleLarge?.copyWith(
                     color: Colors.redAccent, fontWeight: FontWeight.bold),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text(
-                  textAlign: TextAlign.center,
-                  'Are you sure you want to sign out?'),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(textAlign: TextAlign.center, content
+                  // 'Are you sure you want to sign out?',
+                  ),
             ),
             Divider(
               color: Colors.grey[300],
@@ -53,7 +62,8 @@ class DiaLogSignOut extends StatelessWidget {
                     padding: const EdgeInsets.all(12.0),
                     child: Center(
                         child: Text(
-                      'Yes, Sign out',
+                      okText,
+                      // 'Yes, Sign out',
                       style: Get.textTheme.bodyMedium
                           ?.copyWith(color: Colors.white),
                     )),

@@ -20,7 +20,7 @@ class WidgetSearchHotelPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<WidgetSearchHotelController>(
       init: WidgetSearchHotelController(),
-      global: false,
+      global: true,
       builder: (controller) {
         return Padding(
           padding: const EdgeInsets.all(12.0),
@@ -78,7 +78,6 @@ class WidgetSearchHotelPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
-                  // onTap: () => Get.dialog(const DiaLogDatePage()),
                   onTap: () async {
                     final data = await Get.dialog<DateTimeRange>(
                       DiaLogDatePage(dateTimeRange: controller.dateRange.value),

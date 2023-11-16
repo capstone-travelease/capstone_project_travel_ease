@@ -1,7 +1,9 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/login/login_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/search_hotel/search_hotel_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/search_hotel/search_hotel_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/search_hotel_widget/widget_search_hotel_.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,7 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Get.theme.colorScheme.background,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -31,16 +33,16 @@ class HomePage extends GetView<HomeController> {
                   child: WidgetSearchHotelPage(
                     title: 'Search Your Hotel',
                     onChange: (SearchModel data) async {
-                      // await Get.toNamed(
-                      //   SearchHotelPage.routeName,
-                      //   preventDuplicates: false,
-                      //   arguments: ArgSearchHotel(
-                      //       dateTimeRange: DateTimeRange(
-                      //           end: data.todDay!, start: data.fromDay!),
-                      //       location: data.location ?? '',
-                      //       numberRoom: data.numberRoom ?? 0,
-                      //       numberAdult: data.numberAdult ?? 0),
-                      // );
+                      await Get.toNamed(
+                        SearchHotelPage.routeName,
+                        preventDuplicates: false,
+                        arguments: ArgSearchHotel(
+                            dateTimeRange: DateTimeRange(
+                                end: data.todDay!, start: data.fromDay!),
+                            location: data.location ?? '',
+                            numberRoom: data.numberRoom ?? 0,
+                            numberAdult: data.numberAdult ?? 0),
+                      );
                     },
                   ),
                 ),
@@ -240,57 +242,69 @@ class AppBar extends GetView<HomeController> {
         children: [
           Row(
             children: [
-              if (controller.isLogin != false)
-                SizedBox(
-                  width: Get.width * 0.12,
-                  height: Get.width * 0.12,
-                  child: ClipOval(
-                    child: ExtendedImage.network(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvNVVeso-U6DZ5v4Py3n5hYAttB7PVgb_6rA&usqp=CAU',
-                      // fit: BoxFit.cover,
-                      // shape: BoxShape.rectangle,
-                      loadStateChanged: (ExtendedImageState state) {
-                        switch (state.extendedImageLoadState) {
-                          case LoadState.loading:
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          case LoadState.completed:
-                            return state.completedWidget;
-                          case LoadState.failed:
-                            return Image.asset(
-                              Assets.images.noImageUser.path,
-                            );
-                        }
-                      },
-                    ),
-                  ),
-                ),
+              Obx(() => controller.checkLoginController.isLogin.value != false
+                  ? SizedBox(
+                      width: Get.width * 0.12,
+                      height: Get.width * 0.12,
+                      child: ClipOval(
+                        child: ExtendedImage.network(
+                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvNVVeso-U6DZ5v4Py3n5hYAttB7PVgb_6rA&usqp=CAU',
+                          // fit: BoxFit.cover,
+                          // shape: BoxShape.rectangle,
+                          loadStateChanged: (ExtendedImageState state) {
+                            switch (state.extendedImageLoadState) {
+                              case LoadState.loading:
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              case LoadState.completed:
+                                return state.completedWidget;
+                              case LoadState.failed:
+                                return Image.asset(
+                                  Assets.images.noImageUser.path,
+                                );
+                            }
+                          },
+                        ),
+                      ),
+                    )
+                  : const SizedBox.shrink()),
               const SizedBox(
                 width: 10,
               ),
               InkWell(
-                onTap: () => Get.toNamed(LoginView.routeName),
+                onTap: () =>
+                    controller.checkLoginController.isLogin.value == false
+                        ? controller.pushLogin()
+                        : {},
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      controller.isLogin.value != false
-                          ? 'Hello'
-                          : 'Sign in / Sign Up now',
-                      style: Get.textTheme.titleMedium?.copyWith(
-                          color: controller.isLogin.value != false
-                              ? Colors.grey
-                              : null),
+                    Obx(
+                      () => Text(
+                        controller.checkLoginController.isLogin.value != false
+                            ? 'Hello'
+                            : 'Sign in / Sign Up now',
+                        style: Get.textTheme.titleMedium?.copyWith(
+                            color:
+                                controller.checkLoginController.isLogin.value !=
+                                        false
+                                    ? Colors.grey
+                                    : null),
+                      ),
                     ),
-                    Text(
-                      controller.fullName.value == ''
-                          ? 'to receive more coupon '
-                          : controller.fullName.value,
-                      style: Get.textTheme.titleSmall?.copyWith(
-                          color: controller.isLogin.value != false
-                              ? null
-                              : Colors.grey),
+                    Obx(
+                      () => Text(
+                        controller.checkLoginController.fullName.value == ''
+                            ? 'to receive more coupon'
+                            : controller.checkLoginController.fullName.value,
+                        style: Get.textTheme.titleSmall?.copyWith(
+                            color:
+                                controller.checkLoginController.isLogin.value !=
+                                        false
+                                    ? null
+                                    : Colors.grey),
+                      ),
                     ),
                   ],
                 ),
@@ -326,146 +340,7 @@ class RecentlyBooked extends StatelessWidget {
         padding: const EdgeInsets.only(top: 0),
         itemCount: 5,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Hero(
-              tag: UniqueKey(),
-              child: InkWell(
-                // onTap: () => Get.toNamed(HotelDetailPage.routeName),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Colors.white),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 80,
-                                height: 80,
-                                child: ExtendedImage.network(
-                                  'https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_SEDK_01.jpg',
-                                  fit: BoxFit.cover,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(12)),
-                                  shape: BoxShape.rectangle,
-                                  loadStateChanged: (ExtendedImageState state) {
-                                    switch (state.extendedImageLoadState) {
-                                      case LoadState.loading:
-                                        return const Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      case LoadState.completed:
-                                        return null;
-                                      case LoadState.failed:
-                                        return Image.asset(
-                                          Assets.images.noImage.path,
-                                        );
-                                    }
-                                  },
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 18,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Intercontinental Hotel',
-                                      style: Get.textTheme.bodyMedium!.copyWith(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.location_on_outlined,
-                                          size: 16,
-                                        ),
-                                        Text(
-                                          'Hồ Chí Minh',
-                                          style: Get.textTheme.bodySmall!
-                                              .copyWith(),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "4,600,000đ",
-                                          style: Get.textTheme.bodySmall!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.green),
-                                        ),
-                                        Text(
-                                          "/per night",
-                                          style: Get.textTheme.bodySmall!
-                                              .copyWith(
-                                                  color: Colors.grey[500]),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.star,
-                                  color: Colors.redAccent,
-                                  size: 18,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  '5.0',
-                                  style: Get.textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              '(1000000 View)',
-                              style: Get.textTheme.bodySmall,
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            const Icon(
-                              Icons.bookmark_outline_outlined,
-                              size: 30,
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
+          return const ListHotelView();
         });
   }
 }

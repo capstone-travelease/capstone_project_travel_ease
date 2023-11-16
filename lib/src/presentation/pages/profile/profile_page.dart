@@ -12,7 +12,7 @@ class ProfilePage extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Get.theme.colorScheme.background,
         title: Text(
           'Profile',
           style: Get.textTheme.titleLarge!.copyWith(
@@ -20,55 +20,108 @@ class ProfilePage extends GetView<ProfileController> {
           ),
         ),
       ),
-      backgroundColor: Colors.grey[200],
-      body: Column(
-        children: [
-          Obx(() => controller.isLogin.value != false
-              ? const InformationProfile()
-              : Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    width: Get.width,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.redAccent,
-                      borderRadius: BorderRadius.circular(20),
+      backgroundColor: Get.theme.colorScheme.background,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Obx(
+              () => controller.checkLoginController.isLogin.value != false
+                  ? const InformationProfile()
+                  : Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ClipOval(
+                            child: Image.asset(
+                              fit: BoxFit.fill,
+                              Assets.images.noImageUser.path,
+                              width: 100,
+                              height: 100,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: Text(
+                              'Đăng kí thành viên, hưởng nhiều ưu đãi!',
+                              style: Get.textTheme.bodyMedium!.copyWith(),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: InkWell(
+                              onTap: () => controller.pushLogin(),
+                              child: SizedBox(
+                                width: Get.width,
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: Colors.redAccent,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: Text(
+                                        'Đăng Nhập/Đăng Kí',
+                                        style: Get.textTheme.bodyMedium!
+                                            .copyWith(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            Obx(() => controller.checkLoginController.isLogin.value != false
+                ? Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
                       children: [
-                        ClipOval(
-                          child: Image.asset(
-                            fit: BoxFit.fill,
-                            Assets.images.noImageUser.path,
-                            width: 60,
-                            height: 60,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Text(
-                            'Đăng kí thành viên, hưởng nhiều ưu đãi!',
-                            style: Get.textTheme.bodyMedium!
-                                .copyWith(color: Colors.white),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: SizedBox(
-                            width: Get.width,
+                        Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white),
+                                color: Colors.redAccent,
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
                                   child: Text(
-                                    'Đăng Nhập/Đăng Kí',
+                                    'Edit Profile',
                                     style: Get.textTheme.bodyMedium!
                                         .copyWith(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.grey[300]!,
+                                ),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text(
+                                    'Change Password',
+                                    style: Get.textTheme.bodyMedium!
+                                        .copyWith(color: Colors.redAccent),
                                   ),
                                 ),
                               ),
@@ -77,120 +130,69 @@ class ProfilePage extends GetView<ProfileController> {
                         )
                       ],
                     ),
-                  ),
-                )),
-          if (controller.isLogin.value != false)
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.redAccent,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              'Edit Profile',
-                              style: Get.textTheme.bodyMedium!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Colors.grey[300]!,
-                          ),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              'Change Password',
-                              style: Get.textTheme.bodyMedium!
-                                  .copyWith(color: Colors.redAccent),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                   )
-                ],
-              ),
-            ),
-          CustomButton(
-            text: Text(
-              'My Bookmark',
-              style: Get.textTheme.bodyMedium,
-            ),
-            onTap: () {},
-            icon: const Icon(
-              Icons.bookmark_outline_outlined,
-              size: 30,
-            ),
-          ),
-          CustomButton(
-            text: Text(
-              'Help',
-              style: Get.textTheme.bodyMedium,
-            ),
-            icon: const Icon(
-              Icons.help_outline,
-              size: 30,
-            ),
-            onTap: () {},
-          ),
-          CustomButton(
-            text: Text(
-              'Setting',
-              style: Get.textTheme.bodyMedium,
-            ),
-            icon: const Icon(
-              Icons.settings,
-              size: 30,
-            ),
-            onTap: () {},
-          ),
-          CustomButton(
-            text: Text(
-              'Partner Centre',
-              style: Get.textTheme.bodyMedium,
-            ),
-            icon: const Icon(
-              Icons.handshake_outlined,
-              size: 30,
-            ),
-            onTap: () {},
-          ),
-          if (controller.isLogin.value != false)
+                : const SizedBox.shrink()),
             CustomButton(
               text: Text(
-                'Log Out',
-                style:
-                    Get.textTheme.bodyMedium?.copyWith(color: Colors.redAccent),
+                'My Bookmark',
+                style: Get.textTheme.bodyMedium,
+              ),
+              onTap: () => controller.geToBookMark(),
+              icon: const Icon(
+                Icons.bookmark_outline_outlined,
+                size: 30,
+              ),
+            ),
+            CustomButton(
+              text: Text(
+                'Help',
+                style: Get.textTheme.bodyMedium,
               ),
               icon: const Icon(
-                Icons.login,
+                Icons.help_outline,
                 size: 30,
-                color: Colors.redAccent,
               ),
-              onTap: () => controller.logOut(),
+              onTap: () {},
             ),
-        ],
+            CustomButton(
+              text: Text(
+                'Setting',
+                style: Get.textTheme.bodyMedium,
+              ),
+              icon: const Icon(
+                Icons.settings_outlined,
+                size: 30,
+              ),
+              onTap: () {},
+            ),
+            CustomButton(
+              text: Text(
+                'Become Our Partner',
+                style: Get.textTheme.bodyMedium,
+              ),
+              icon: const Icon(
+                Icons.handshake_outlined,
+                size: 30,
+              ),
+              onTap: () {},
+            ),
+            Obx(() => controller.checkLoginController.isLogin.value != false
+                ? CustomButton(
+                    text: Text(
+                      'Log Out',
+                      style: Get.textTheme.bodyMedium
+                          ?.copyWith(color: Colors.redAccent),
+                    ),
+                    icon: const Icon(
+                      Icons.login,
+                      size: 30,
+                      color: Colors.redAccent,
+                    ),
+                    onTap: () => controller.logOut(),
+                  )
+                : const SizedBox.shrink())
+          ],
+        ),
       ),
     );
   }
