@@ -47,6 +47,10 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Background_ticket.png
+  AssetGenImage get backgroundTicket =>
+      const AssetGenImage('assets/images/Background_ticket.png');
+
   /// File path: assets/images/cancelled.png
   AssetGenImage get cancelled =>
       const AssetGenImage('assets/images/cancelled.png');
@@ -65,6 +69,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/ongoing.png
   AssetGenImage get ongoing => const AssetGenImage('assets/images/ongoing.png');
 
+  /// File path: assets/images/password.png
+  AssetGenImage get password =>
+      const AssetGenImage('assets/images/password.png');
+
   /// File path: assets/images/qrcode.png
   AssetGenImage get qrcode => const AssetGenImage('assets/images/qrcode.png');
 
@@ -73,8 +81,17 @@ class $AssetsImagesGen {
       const AssetGenImage('assets/images/startapp.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [cancelled, completed, noImage, noImageUser, ongoing, qrcode, startapp];
+  List<AssetGenImage> get values => [
+        backgroundTicket,
+        cancelled,
+        completed,
+        noImage,
+        noImageUser,
+        ongoing,
+        password,
+        qrcode,
+        startapp
+      ];
 }
 
 class Assets {
