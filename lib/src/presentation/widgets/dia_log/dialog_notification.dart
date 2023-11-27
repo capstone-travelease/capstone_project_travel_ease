@@ -39,9 +39,7 @@ class DiaLogNotification extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(textAlign: TextAlign.center, content
-                  // 'Are you sure you want to sign out?',
-                  ),
+              child: Text(textAlign: TextAlign.center, content),
             ),
             Divider(
               color: Colors.grey[300],

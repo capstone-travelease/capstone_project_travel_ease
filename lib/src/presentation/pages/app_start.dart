@@ -1,6 +1,5 @@
 import 'package:capstone_project_travel_ease/core/constrants/localvariable.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/login/login_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

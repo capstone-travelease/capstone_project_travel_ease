@@ -147,7 +147,7 @@ class RangePriceRoom extends GetView<FilterController> {
   }
 }
 
-class CustomerReview extends StatelessWidget {
+class CustomerReview extends GetView<FilterController> {
   const CustomerReview({Key? key}) : super(key: key);
 
   @override
@@ -170,32 +170,48 @@ class CustomerReview extends StatelessWidget {
             child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemCount: 5,
+                itemCount: controller.dsStar.length,
                 itemBuilder: (context, index) {
-                  // var item = controller.listitem[index];
+                  var item = controller.dsStar[index];
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(22),
-                          border: Border.all(color: Colors.redAccent)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 17),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.star_border_purple500_outlined,
-                              color: Colors.deepOrangeAccent,
+                    child: Obx(() => InkWell(
+                          onTap: () => controller.selectStar(item),
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                                color: controller.selectedStar.value == item
+                                    ? Colors.redAccent
+                                    : null,
+                                borderRadius: BorderRadius.circular(22),
+                                border: Border.all(color: Colors.redAccent)),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.star_border_purple500_outlined,
+                                    color: controller.selectedStar.value == item
+                                        ? Colors.white
+                                        : null,
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    item.toString(),
+                                    style: Get.textTheme.bodySmall?.copyWith(
+                                      color:
+                                          controller.selectedStar.value == item
+                                              ? Colors.white
+                                              : null,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Text(
-                              '5',
-                              style: Get.textTheme.bodySmall,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                          ),
+                        )),
                   );
                 }),
           ),

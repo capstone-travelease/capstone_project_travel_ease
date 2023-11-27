@@ -1,7 +1,7 @@
-import 'package:capstone_project_travel_ease/src/presentation/loading/checklogin_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/mybooking/mybooking_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/profile/profile_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/profile/profile_page.dart';
 import 'package:get/get.dart';
 
 class NavigatorMenuController extends GetxController {

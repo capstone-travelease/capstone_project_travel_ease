@@ -1,8 +1,8 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/search_hotel/search_hotel_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/search_hotel/search_hotel_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/search_hotel_widget/widget_search_hotel_.dart';
 import 'package:extended_image/extended_image.dart';

@@ -1,5 +1,5 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/hotel_detal/hotel_detail_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_page.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

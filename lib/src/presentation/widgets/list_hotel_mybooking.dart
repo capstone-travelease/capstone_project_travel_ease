@@ -1,4 +1,5 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/ticket/ticket_page.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class ListHotelMyBooking extends StatelessWidget {
       child: Hero(
         tag: UniqueKey(),
         child: InkWell(
-          // onTap: () => Get.toNamed(HotelDetailPage.routeName),
+          onTap: () => Get.toNamed(TicketPage.routeName),
           child: DecoratedBox(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12), color: Colors.white),
