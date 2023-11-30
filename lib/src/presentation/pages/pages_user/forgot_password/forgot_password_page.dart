@@ -91,7 +91,7 @@ class ForgotPassWordPage extends StatelessWidget {
                     onTap: () => controller.sendForgotPass(),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.redAccent),
+                        color: Colors.redAccent,
                         borderRadius: BorderRadius.circular(08),
                       ),
                       child: Padding(
@@ -100,8 +100,9 @@ class ForgotPassWordPage extends StatelessWidget {
                         child: Text(
                           'Send',
                           style: Get.textTheme.bodyMedium!.copyWith(
-                              color: Colors.redAccent,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),

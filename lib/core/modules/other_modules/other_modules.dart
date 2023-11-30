@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:capstone_project_travel_ease/core/interceptors/auth_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -90,9 +87,9 @@ class OtherModules {
     return dio;
   }
 
-  String getSecretKeyByClientId(String userName) {
-    final secretKey = '$userName@Viet_Info';
-    final stringToBase64 = utf8.fuse(base64);
-    return stringToBase64.encode(secretKey);
-  }
+  // String getSecretKeyByClientId(String userName) {
+  //   final secretKey = '$userName@Viet_Info';
+  //   final stringToBase64 = utf8.fuse(base64);
+  //   return stringToBase64.encode(secretKey);
+  // }
 }

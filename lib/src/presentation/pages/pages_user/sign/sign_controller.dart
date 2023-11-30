@@ -52,11 +52,12 @@ class SignController extends GetxController {
           ),
         );
         if (res != null) {
+          Get.back();
           notificationConfig.showSnackBar(
               title: 'Thông báo',
               'Đăng Kí Tài Khoản Thành Công <3',
               backgroundColor: Get.theme.colorScheme.primary);
-          Get.offAllNamed(LoginView.routeName);
+          // Get.offAllNamed(LoginView.routeName);
           _cleanInput();
         }
       } catch (error) {
