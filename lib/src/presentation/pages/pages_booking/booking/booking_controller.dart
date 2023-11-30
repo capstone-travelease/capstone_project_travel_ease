@@ -5,7 +5,7 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_bookin
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_widgets/detail_customer_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_widgets/finish_booking_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/login/login_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_custom.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_successful.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -73,8 +73,9 @@ class BookingController extends GetxController {
 
   Future<void> onPayment() async {
     Get.dialog(
-      DiaLogCustom(
+      DiaLogSuccessful(
         onTap: () => Get.offAllNamed(NavigatorMenuPage.routeName),
+        text: 'You have successfully booked. Please check your email inbox',
       ),
     );
   }

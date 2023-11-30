@@ -57,11 +57,11 @@ class SignPage extends GetView<SignController> {
                           TextFormField(
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return value.checkEmpty(ErrorAndIsEmptys.name);
+                                return value.checkEmpty(ErrorAndIsEmtys.name);
                               }
                               if (controller.nameEditController.text.length >
                                   30) {
-                                return ErrorAndIsEmptys.nameError;
+                                return ErrorAndIsEmtys.nameError;
                               }
                               return null;
                             },
@@ -90,11 +90,11 @@ class SignPage extends GetView<SignController> {
                           TextFormField(
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return value.checkEmpty(ErrorAndIsEmptys.phone);
+                                return value.checkEmpty(ErrorAndIsEmtys.phone);
                               }
                               if (!controller.phoneRegex.hasMatch(
                                   controller.phoneEditController.text.trim())) {
-                                return ErrorAndIsEmptys.phoneError;
+                                return ErrorAndIsEmtys.phoneError;
                               }
                               return null;
                             },
@@ -123,11 +123,11 @@ class SignPage extends GetView<SignController> {
                           TextFormField(
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return value.checkEmpty(ErrorAndIsEmptys.email);
+                                return value.checkEmpty(ErrorAndIsEmtys.email);
                               }
                               if (!controller.emailEditController.text
                                   .contains('@')) {
-                                return ErrorAndIsEmptys.emailWrongFormat;
+                                return ErrorAndIsEmtys.emailWrongFormat;
                               }
                               return null;
                             },
@@ -160,14 +160,14 @@ class SignPage extends GetView<SignController> {
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return value
-                                      .checkEmpty(ErrorAndIsEmptys.password);
+                                      .checkEmpty(ErrorAndIsEmtys.password);
                                 }
                                 if (controller.passwordEditController.text
                                         .contains(' ') ||
                                     !controller.specialCharsRegex.hasMatch(
                                         controller.passwordEditController.text
                                             .trim())) {
-                                  return ErrorAndIsEmptys.passwordError;
+                                  return ErrorAndIsEmtys.passwordError;
                                 }
                                 return null;
                               },
@@ -214,14 +214,14 @@ class SignPage extends GetView<SignController> {
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return value.checkEmpty(
-                                      ErrorAndIsEmptys.confirmPassword);
+                                      ErrorAndIsEmtys.confirmPassword);
                                 }
                                 if (controller
                                         .confirmPasswordEditController.text
                                         .trim() !=
                                     controller.passwordEditController.text
                                         .trim()) {
-                                  return ErrorAndIsEmptys.confirmPasswordError;
+                                  return ErrorAndIsEmtys.confirmPasswordError;
                                 }
                                 return null;
                               },

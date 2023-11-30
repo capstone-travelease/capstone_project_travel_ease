@@ -1,4 +1,4 @@
-import 'package:capstone_project_travel_ease/core/constrants/localvariable.dart';
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class _AppStartViewState extends State<AppStartView> {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
         final prefs = await SharedPreferences.getInstance();
-        bool isLogin = prefs.getBool(LocalVariable.isLogin) ?? false;
+        bool isLogin = prefs.getBool(Constant.isLogin) ?? false;
         if (isLogin) {
           print(isLogin);
           Get.offAllNamed(NavigatorMenuPage.routeName);

@@ -15,7 +15,7 @@ class DetailCustomerPage extends StatelessWidget {
       builder: (controller) => Container(
         width: Get.width,
         height: Get.height,
-        color: Colors.grey[50],
+        color: Get.theme.colorScheme.background,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,10 +92,10 @@ class DetailCustomerPage extends StatelessWidget {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return value.checkEmpty(ErrorAndIsEmptys.name);
+                            return value.checkEmpty(ErrorAndIsEmtys.name);
                           }
                           if (controller.nameEditController.text.length > 30) {
-                            return ErrorAndIsEmptys.nameError;
+                            return ErrorAndIsEmtys.nameError;
                           }
                           return null;
                         },
@@ -124,10 +124,10 @@ class DetailCustomerPage extends StatelessWidget {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return value.checkEmpty(ErrorAndIsEmptys.name);
+                            return value.checkEmpty(ErrorAndIsEmtys.name);
                           }
                           if (controller.nameEditController.text.length > 30) {
-                            return ErrorAndIsEmptys.nameError;
+                            return ErrorAndIsEmtys.nameError;
                           }
                           return null;
                         },
@@ -156,11 +156,11 @@ class DetailCustomerPage extends StatelessWidget {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return value.checkEmpty(ErrorAndIsEmptys.phone);
+                            return value.checkEmpty(ErrorAndIsEmtys.phone);
                           }
                           if (!controller.phoneRegex.hasMatch(
                               controller.phoneEditController.text.trim())) {
-                            return ErrorAndIsEmptys.phoneError;
+                            return ErrorAndIsEmtys.phoneError;
                           }
                           return null;
                         },
@@ -189,11 +189,11 @@ class DetailCustomerPage extends StatelessWidget {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return value.checkEmpty(ErrorAndIsEmptys.email);
+                            return value.checkEmpty(ErrorAndIsEmtys.email);
                           }
                           if (!controller.emailEditController.text
                               .contains('@')) {
-                            return ErrorAndIsEmptys.emailWrongFormat;
+                            return ErrorAndIsEmtys.emailWrongFormat;
                           }
                           return null;
                         },

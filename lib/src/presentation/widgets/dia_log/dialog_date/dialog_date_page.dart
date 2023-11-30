@@ -104,7 +104,7 @@ class DiaLogDatePage extends StatelessWidget {
                             Obx(
                               () => Text(
                                 controller.dateRange?.value.start
-                                        .formatDateTimeToString() ??
+                                        .formatDateMonthToString() ??
                                     '',
                                 style: Get.textTheme.bodySmall?.copyWith(),
                               ),
@@ -125,7 +125,7 @@ class DiaLogDatePage extends StatelessWidget {
                             Obx(
                               () => Text(
                                 controller.dateRange?.value.end
-                                        .formatDateTimeToString() ??
+                                        .formatDateMonthToString() ??
                                     '',
                                 style: Get.textTheme.bodySmall?.copyWith(),
                               ),

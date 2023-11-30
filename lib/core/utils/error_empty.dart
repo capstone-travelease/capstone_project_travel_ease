@@ -1,5 +1,5 @@
-class ErrorAndIsEmptys {
-  ErrorAndIsEmptys._();
+class ErrorAndIsEmtys {
+  ErrorAndIsEmtys._();
   //
   // //General
   // static const String appName = 'Chat App';
@@ -22,4 +22,8 @@ class ErrorAndIsEmptys {
       'Password phải có 8 Ký Tự,Chữ Hoa,\nKí Tự Đặc Biệt,Không Có Khoảng Trống';
   static const String confirmPasswordError =
       'Confirm Password phải giống với Password ';
+
+  ///Help
+  static const String ticketId = 'Bạn Chưa Nhập Id';
+  static const String messageHelp = 'Bạn Chưa Nhập Nội Dung';
 }

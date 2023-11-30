@@ -108,21 +108,26 @@ class ListHotelView extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.star,
-                            color: Colors.redAccent,
-                            size: 18,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            '5.0',
-                            style: Get.textTheme.bodySmall,
-                          ),
-                        ],
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            const WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Icon(
+                                Icons.star,
+                                size: 18,
+                                color: Colors.redAccent,
+                              ),
+                            ),
+                            const TextSpan(
+                              text: ' ',
+                            ),
+                            TextSpan(
+                              text: '5.0',
+                              style: Get.textTheme.bodySmall!.copyWith(),
+                            )
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 8,

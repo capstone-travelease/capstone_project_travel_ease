@@ -1,5 +1,7 @@
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/notification/notification_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/login/login_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_notification.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
@@ -28,5 +30,24 @@ class HomeController extends GetxController {
   Future<void> pushLogin() async {
     await Get.toNamed(LoginView.routeName);
     await checkLoginController.checkLogin();
+  }
+
+  Future<void> geToNotification() async {
+    if (checkLoginController.isLogin.value == false) {
+      Get.dialog(
+        DiaLogNotification(
+          onTap: () async {
+            await Get.toNamed(LoginView.routeName);
+            await checkLoginController.checkLogin();
+            Get.back();
+          },
+          title: 'Thông Báo',
+          content: 'Đăng nhập để sử dụng chức năng !',
+          okText: 'Đăng Nhập',
+        ),
+      );
+    } else {
+      Get.toNamed(NotificationPage.routeName);
+    }
   }
 }

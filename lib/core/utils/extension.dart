@@ -20,7 +20,7 @@ extension FormatDateTime on DateTime? {
         : DateFormat('EE, dd/MM/yyyy', 'vi_VN').format(this!);
   }
 
-  String formatDateTimeToString() {
+  String formatDateMonthToString() {
     return this == null ? '' : DateFormat('EE, d MMM y', 'vi_VN').format(this!);
   }
 }

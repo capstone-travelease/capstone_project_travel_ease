@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
 
-class DiaLogCustom extends StatelessWidget {
+class DiaLogSuccessful extends StatelessWidget {
   final Callback onTap;
-  const DiaLogCustom({Key? key, required this.onTap}) : super(key: key);
+  final String text;
+  const DiaLogSuccessful({Key? key, required this.onTap, required this.text})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class DiaLogCustom extends StatelessWidget {
         children: [
           Container(
             height: 200,
-            margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 30),
+            margin: const EdgeInsets.symmetric(vertical: 30),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
@@ -28,11 +30,9 @@ class DiaLogCustom extends StatelessWidget {
                     '',
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                      textAlign: TextAlign.center,
-                      'You have successfully booked. Please check your email inbox'),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(textAlign: TextAlign.center, text),
                 ),
                 InkWell(
                   onTap: onTap,
@@ -63,7 +63,10 @@ class DiaLogCustom extends StatelessWidget {
                   ),
                   child: const Padding(
                     padding: EdgeInsets.all(20.0),
-                    child: Icon(Icons.thumb_up_off_alt),
+                    child: Icon(
+                      Icons.thumb_up_off_alt,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 Text(

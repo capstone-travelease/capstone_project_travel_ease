@@ -25,31 +25,32 @@ class CustomNoDataWidget extends StatelessWidget {
           if (btnRefresh == null)
             if (isSearch)
               Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: ExtendedImage.asset(
-                      'assets/images/default.jpg',
-                      fit: BoxFit.cover,
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                      shape: BoxShape.rectangle,
-                      loadStateChanged: (ExtendedImageState state) {
-                        switch (state.extendedImageLoadState) {
-                          case LoadState.loading:
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          case LoadState.completed:
-                            return null;
-                          case LoadState.failed:
-                            return Image.asset(
-                              Assets.images.noImage.path,
-                            );
-                        }
-                      },
-                    ),
-                  ))
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: ExtendedImage.asset(
+                    'assets/images/default.jpg',
+                    fit: BoxFit.cover,
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    shape: BoxShape.rectangle,
+                    loadStateChanged: (ExtendedImageState state) {
+                      switch (state.extendedImageLoadState) {
+                        case LoadState.loading:
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        case LoadState.completed:
+                          return null;
+                        case LoadState.failed:
+                          return Image.asset(
+                            Assets.images.noImage.path,
+                          );
+                      }
+                    },
+                  ),
+                ),
+              )
             else
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),

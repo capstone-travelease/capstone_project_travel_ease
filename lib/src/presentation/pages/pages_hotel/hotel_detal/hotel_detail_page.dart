@@ -65,22 +65,24 @@ class HotelDetailPage extends GetView<HotelDetailController> {
                         )),
                   ),
                   Positioned(
-                    top: 60,
+                    top: 70,
                     left: 10,
                     child: InkWell(
                       onTap: () => Get.back(),
                       child: const Icon(
+                        size: 30,
                         Icons.arrow_back_outlined,
                         color: Colors.white,
                       ),
                     ),
                   ),
                   Positioned(
-                    top: 60,
+                    top: 70,
                     right: 10,
                     child: InkWell(
                       onTap: () {},
                       child: const Icon(
+                        size: 40,
                         Icons.bookmark_outline_outlined,
                         color: Colors.white,
                       ),
@@ -429,53 +431,53 @@ class GetFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 80,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 2,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 26.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                onTap: () => Get.toNamed(ListRoomPage.routeName),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                      color: Colors.deepOrange,
-                      borderRadius: BorderRadius.circular(18)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(
-                      'Select Room',
-                      style: Get.textTheme.titleLarge!.copyWith(
-                          fontWeight: FontWeight.bold, color: Colors.white),
-                    ),
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 2,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: () => Get.toNamed(ListRoomPage.routeName),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                    color: Colors.deepOrange,
+                    borderRadius: BorderRadius.circular(18)),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    'Select Room',
+                    style: Get.textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                 ),
               ),
-              Row(
+            ),
+            RichText(
+              text: TextSpan(
                 children: [
-                  Text(
-                    '\$ 30',
+                  TextSpan(
+                    text: '4,600,000đ',
                     style: Get.textTheme.titleLarge!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
-                  Text('/ per night ', style: Get.textTheme.bodySmall!),
+                  TextSpan(
+                      text: '\n/per night', style: Get.textTheme.bodySmall!),
                 ],
               ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

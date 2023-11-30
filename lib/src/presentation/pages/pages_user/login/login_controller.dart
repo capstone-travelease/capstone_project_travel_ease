@@ -1,4 +1,6 @@
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/utils/noti_config.dart';
+import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/forgot_password/forgot_password_page.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +15,11 @@ class LoginController extends GetxController {
   final NotificationConfig notificationConfig = Get.find();
   final CheckLoginController checkLoginController = Get.find();
   final keyForm = GlobalKey<FormState>();
-
+  final UserService _userService = Get.find(tag: Constant.uerSerServiceTAG);
   @override
   void onInit() {
     emailEditController = TextEditingController(text: 'anh@gmail.com');
-    passwordEditController = TextEditingController();
+    passwordEditController = TextEditingController(text: 'Anh123456@');
     super.onInit();
   }
 
@@ -38,8 +40,13 @@ class LoginController extends GetxController {
 
   Future login() async {
     try {
-      await checkLoginController.login('Nguyen Xuan Anh');
-      Get.back();
+      final res = await _userService.loginUser(
+          email: emailEditController.text.trim(),
+          password: passwordEditController.text.trim());
+      if (res != null) {
+        await checkLoginController.login(res.userId ?? -1);
+        Get.back();
+      }
     } catch (e) {
       notificationConfig.showSnackBar(
           title: 'Thông báo',

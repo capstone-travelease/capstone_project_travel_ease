@@ -63,11 +63,11 @@ class ForgotPassWordPage extends StatelessWidget {
                     child: TextFormField(
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return value.checkEmpty(ErrorAndIsEmptys.email);
+                          return value.checkEmpty(ErrorAndIsEmtys.email);
                         }
                         if (!controller.emailEditController.text
                             .contains('@')) {
-                          return ErrorAndIsEmptys.emailWrongFormat;
+                          return ErrorAndIsEmtys.emailWrongFormat;
                         }
                         return null;
                       },

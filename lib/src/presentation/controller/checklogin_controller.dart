@@ -1,4 +1,4 @@
-import 'package:capstone_project_travel_ease/core/constrants/localvariable.dart';
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,20 +14,20 @@ class CheckLoginController extends GetxController {
 
   Future<void> checkLogin() async {
     final prefs = await SharedPreferences.getInstance();
-    isLogin.value = prefs.getBool(LocalVariable.isLogin) ?? false;
-    fullName.value = prefs.getString(LocalVariable.fullName) ?? '';
-    userid.value = prefs.getInt(LocalVariable.userId) ?? -1;
+    isLogin.value = prefs.getBool(Constant.isLogin) ?? false;
+
+    userid.value = prefs.getInt(Constant.userId) ?? -1;
   }
 
-  Future<void> login(String fullName) async {
+  Future<void> login(int userId) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(LocalVariable.fullName, fullName);
-    await prefs.setBool(LocalVariable.isLogin, true);
+    await prefs.setInt(Constant.userId, userId);
+    await prefs.setBool(Constant.isLogin, true);
   }
 
   Future<void> logOut() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(LocalVariable.isLogin, false);
-    await prefs.setString(LocalVariable.fullName, '');
+    await prefs.setBool(Constant.isLogin, false);
+    await prefs.setInt(Constant.userId, -1);
   }
 }

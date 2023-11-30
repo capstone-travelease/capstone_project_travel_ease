@@ -70,11 +70,11 @@ class LoginView extends GetView<LoginController> {
                           TextFormField(
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return value.checkEmpty(ErrorAndIsEmptys.email);
+                                return value.checkEmpty(ErrorAndIsEmtys.email);
                               }
                               if (!controller.emailEditController.text
                                   .contains('@')) {
-                                return ErrorAndIsEmptys.emailWrongFormat;
+                                return ErrorAndIsEmtys.emailWrongFormat;
                               }
                               return null;
                             },
@@ -107,11 +107,11 @@ class LoginView extends GetView<LoginController> {
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return value
-                                      .checkEmpty(ErrorAndIsEmptys.password);
+                                      .checkEmpty(ErrorAndIsEmtys.password);
                                 }
                                 if (controller.passwordEditController.text
                                     .contains(' ')) {
-                                  return ErrorAndIsEmptys.passwordSpace;
+                                  return ErrorAndIsEmtys.passwordSpace;
                                 }
                                 return null;
                               },

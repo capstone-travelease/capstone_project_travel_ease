@@ -93,11 +93,11 @@ class InputChange extends GetView<ChangePassWordController> {
               obscureText: !controller.showCurrentPassword.value,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return value.checkEmpty(ErrorAndIsEmptys.password);
+                  return value.checkEmpty(ErrorAndIsEmtys.password);
                 }
                 if (controller.currentPasswordEditController.text
                     .contains(' ')) {
-                  return ErrorAndIsEmptys.passwordSpace;
+                  return ErrorAndIsEmtys.passwordSpace;
                 }
                 return null;
               },
@@ -140,12 +140,12 @@ class InputChange extends GetView<ChangePassWordController> {
               obscureText: !controller.showNewPassword.value,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return value.checkEmpty(ErrorAndIsEmptys.password);
+                  return value.checkEmpty(ErrorAndIsEmtys.password);
                 }
                 if (controller.newPasswordEditController.text.contains(' ') ||
                     !controller.specialCharsRegex.hasMatch(
                         controller.newPasswordEditController.text.trim())) {
-                  return ErrorAndIsEmptys.passwordError;
+                  return ErrorAndIsEmtys.passwordError;
                 }
                 return null;
               },
@@ -187,11 +187,11 @@ class InputChange extends GetView<ChangePassWordController> {
               obscureText: !controller.showConfirmPassword.value,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return value.checkEmpty(ErrorAndIsEmptys.confirmPassword);
+                  return value.checkEmpty(ErrorAndIsEmtys.confirmPassword);
                 }
                 if (controller.confirmPasswordEditController.text.trim() !=
                     controller.newPasswordEditController.text.trim()) {
-                  return ErrorAndIsEmptys.confirmPasswordError;
+                  return ErrorAndIsEmtys.confirmPasswordError;
                 }
                 return null;
               },

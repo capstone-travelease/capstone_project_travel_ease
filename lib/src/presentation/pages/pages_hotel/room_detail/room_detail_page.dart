@@ -67,6 +67,7 @@ class RoomDetailPage extends GetView<RoomDetailController> {
                 child: InkWell(
                   onTap: () => Get.back(),
                   child: const Icon(
+                    size: 30,
                     Icons.arrow_back_outlined,
                     color: Colors.white,
                   ),
@@ -80,6 +81,7 @@ class RoomDetailPage extends GetView<RoomDetailController> {
                     InkWell(
                       onTap: () {},
                       child: const Icon(
+                        size: 40,
                         Icons.bookmark_outline_outlined,
                         color: Colors.white,
                       ),
@@ -182,30 +184,30 @@ class GetFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 2,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 2,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             const Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(12.0),
               child: DataSearch(),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -226,18 +228,23 @@ class GetFooter extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text('Total Price ', style: Get.textTheme.bodySmall!),
-                      Text(
-                        '4,600,000đ',
-                        style: Get.textTheme.titleLarge!
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      Text('/ per night ', style: Get.textTheme.bodySmall!),
-                    ],
-                  )
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                            text: 'Total Price \n ',
+                            style: Get.textTheme.bodySmall!),
+                        TextSpan(
+                          text: '4,600,000đ',
+                          style: Get.textTheme.titleLarge!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(
+                            text: '\n/per night',
+                            style: Get.textTheme.bodySmall!),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -259,24 +266,28 @@ class DataSearch extends GetView<SearchHotelController> {
           TextSpan(
             text: controller.dateRange.value?.start.formatDateToString(),
             style: Get.textTheme.bodySmall
-                ?.copyWith(color: Colors.black, fontSize: 12),
+                ?.copyWith(color: Colors.black, fontSize: 13),
           ),
           TextSpan(
-              text: ' - ',
-              style: Get.textTheme.bodySmall
-                  ?.copyWith(color: Colors.black, fontSize: 12)),
+            text: ' - ',
+            style: Get.textTheme.bodySmall?.copyWith(
+                color: Colors.black, fontSize: 11, fontWeight: FontWeight.bold),
+          ),
           TextSpan(
-              text: controller.dateRange.value?.end.formatDateToString(),
-              style: Get.textTheme.bodySmall
-                  ?.copyWith(color: Colors.black, fontSize: 12)),
+            text: controller.dateRange.value?.end.formatDateToString(),
+            style: Get.textTheme.bodySmall
+                ?.copyWith(color: Colors.black, fontSize: 13),
+          ),
           TextSpan(
-              text: ',${controller.numberRoom.value} Night(s)',
-              style: Get.textTheme.bodySmall
-                  ?.copyWith(color: Colors.black, fontSize: 12)),
+            text: ', ${controller.numberRoom.value} Night(s)',
+            style: Get.textTheme.bodySmall
+                ?.copyWith(color: Colors.black, fontSize: 13),
+          ),
           TextSpan(
-              text: ',${controller.numberAdult.value} Room(s)',
-              style: Get.textTheme.bodySmall
-                  ?.copyWith(color: Colors.black, fontSize: 12)),
+            text: ', ${controller.numberAdult.value} Room(s)',
+            style: Get.textTheme.bodySmall
+                ?.copyWith(color: Colors.black, fontSize: 13),
+          ),
         ],
       ),
     );

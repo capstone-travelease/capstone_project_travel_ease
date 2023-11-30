@@ -64,7 +64,7 @@ class BottomSheetLocation extends StatelessWidget {
               Obx(() => ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    final item = controller.listitem[index];
+                    final item = controller.listItem[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Obx(
@@ -106,8 +106,8 @@ class BottomSheetLocation extends StatelessWidget {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    final previousItem = controller.listitem[index];
-                    final nextItem = controller.listitem[index + 1];
+                    final previousItem = controller.listItem[index];
+                    final nextItem = controller.listItem[index + 1];
                     return Obx(
                       () => Divider(
                         indent: 20,
@@ -121,7 +121,7 @@ class BottomSheetLocation extends StatelessWidget {
                       ),
                     );
                   },
-                  itemCount: controller.listitem.length))
+                  itemCount: controller.listItem.length))
             ],
           ),
         );

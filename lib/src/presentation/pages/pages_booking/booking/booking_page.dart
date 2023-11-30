@@ -16,66 +16,7 @@ class BookingPage extends GetView<BookingController> {
           physics: const NeverScrollableScrollPhysics(),
           controller: controller.pageController,
           children: controller.pages),
-      bottomNavigationBar: Container(
-        height: 80,
-        width: Get.width,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 2,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  Text('Total Price', style: Get.textTheme.bodySmall),
-                  Text('4,600,000đ', style: Get.textTheme.bodySmall),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    controller.nextToStepAndPage();
-                    // controller.nextToStep();
-                  },
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.redAccent,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Center(
-                        child: Obx(
-                          () => Text(
-                            (controller.currentStepAndPage ==
-                                    controller.pages.length - 1)
-                                ? 'Confirm Booking'
-                                : 'Next Step',
-                            style: Get.textTheme.bodyMedium!
-                                .copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
+      bottomNavigationBar: const Footer(),
     );
   }
 }
@@ -183,4 +124,75 @@ class AppbarBooking extends GetView<BookingController>
   @override
   // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(100);
+}
+
+class Footer extends GetView<BookingController> {
+  const Footer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 2,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                      text: 'Total Price \n', style: Get.textTheme.bodySmall!),
+                  TextSpan(
+                    text: '4,600,000đ',
+                    style: Get.textTheme.titleLarge!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  TextSpan(
+                      text: '\nIncludes taxes',
+                      style: Get.textTheme.bodySmall!),
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                controller.nextToStepAndPage();
+                // controller.nextToStep();
+              },
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Colors.redAccent,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 22),
+                  child: Obx(
+                    () => Text(
+                      (controller.currentStepAndPage ==
+                              controller.pages.length - 1)
+                          ? 'Confirm Booking'
+                          : 'Next Step',
+                      style: Get.textTheme.bodyMedium!.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }

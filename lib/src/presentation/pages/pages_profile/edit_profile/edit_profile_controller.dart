@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfileController extends GetxController {
   late TextEditingController nameEditController;
@@ -7,7 +10,7 @@ class EditProfileController extends GetxController {
   late TextEditingController emailEditController;
   late TextEditingController genDerEditController;
   late TextEditingController birthDayEditController;
-
+  Rx<File> image = Rx(File(''));
   @override
   void onInit() {
     emailEditController = TextEditingController(text: 'anh@gmail.com');
@@ -16,5 +19,16 @@ class EditProfileController extends GetxController {
     genDerEditController = TextEditingController();
     birthDayEditController = TextEditingController();
     super.onInit();
+  }
+
+  Future getGallery() async {
+    ImagePicker picker = ImagePicker();
+    final XFile? imageUser =
+        await picker.pickImage(source: ImageSource.gallery);
+    if (imageUser != null) {
+      image.value = File(imageUser.path);
+    } else {
+      print('No image selected.');
+    }
   }
 }

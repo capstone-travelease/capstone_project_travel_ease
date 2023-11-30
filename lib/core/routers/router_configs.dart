@@ -3,8 +3,12 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_co
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/notification/notification_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/notification/notification_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/ticket/ticket_controller.dart';
@@ -13,6 +17,8 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profil
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/change_password/change_password_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/edit_profile/edit_profile_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/edit_profile/edit_profile_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/help/help_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/help/help_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/my_bookmark/my_bookmark_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/my_bookmark/my_bookmark_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/profile/profile_controller.dart';
@@ -154,6 +160,27 @@ class RouterConfigs {
       page: () => const TicketPage(),
       binding: BindingsBuilder<void>(
         () => Get.lazyPut(TicketController.new),
+      ),
+    ),
+    GetPage(
+      name: HelpPage.routeName,
+      page: () => const HelpPage(),
+      binding: BindingsBuilder<void>(
+        () => Get.lazyPut(HelpController.new),
+      ),
+    ),
+    GetPage(
+      name: NotificationPage.routeName,
+      page: () => const NotificationPage(),
+      binding: BindingsBuilder<void>(
+        () => Get.lazyPut(NotificationController.new),
+      ),
+    ),
+    GetPage(
+      name: ChatPage.routeName,
+      page: () => const ChatPage(),
+      binding: BindingsBuilder<void>(
+        () => Get.lazyPut(ChatController.new),
       ),
     ),
   ];

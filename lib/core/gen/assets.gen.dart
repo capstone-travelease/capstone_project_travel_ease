@@ -22,6 +22,13 @@ class $AssetsAnimationsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/chat 1.png
+  AssetGenImage get chat1 => const AssetGenImage('assets/icons/chat 1.png');
+
+  /// File path: assets/icons/icontongdai.png
+  AssetGenImage get icontongdai =>
+      const AssetGenImage('assets/icons/icontongdai.png');
+
   /// File path: assets/icons/momo.png
   AssetGenImage get momo => const AssetGenImage('assets/icons/momo.png');
 
@@ -41,15 +48,12 @@ class $AssetsIconsGen {
   AssetGenImage get zalopay => const AssetGenImage('assets/icons/zalopay.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [momo, tpbank, upload, vcb, vnpay, zalopay];
+  List<AssetGenImage> get values =>
+      [chat1, icontongdai, momo, tpbank, upload, vcb, vnpay, zalopay];
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
-
-  /// File path: assets/images/Background_ticket.png
-  AssetGenImage get backgroundTicket =>
-      const AssetGenImage('assets/images/Background_ticket.png');
 
   /// File path: assets/images/cancelled.png
   AssetGenImage get cancelled =>
@@ -82,7 +86,6 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        backgroundTicket,
         cancelled,
         completed,
         noImage,

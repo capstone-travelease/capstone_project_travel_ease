@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class BottomSheetLocationController extends GetxController {
   List<String> dsTp = ['Hồ Chi Minh', 'Đà Lạt', 'Đà Nẵng', 'Hà Nội'];
-  final RxList<String> listitem = <String>[].obs;
+  final RxList<String> listItem = <String>[].obs;
   final Rxn<String> selectedLocation = Rxn();
 
   @override
@@ -12,7 +12,7 @@ class BottomSheetLocationController extends GetxController {
   }
 
   Future<void> fetchData() async {
-    listitem.call(dsTp);
+    listItem.call(dsTp);
   }
 
   void selectLocation(String? value) {

@@ -13,11 +13,12 @@ class EditProfilePage extends GetView<EditProfileController> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            )),
+          onPressed: () => Get.back(),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
         backgroundColor: Get.theme.colorScheme.background,
         title: Text(
           'Edit Profile',
@@ -49,7 +50,7 @@ class EditProfilePage extends GetView<EditProfileController> {
   }
 }
 
-class InformationProfile extends StatelessWidget {
+class InformationProfile extends GetView<EditProfileController> {
   const InformationProfile({Key? key}) : super(key: key);
 
   @override
@@ -94,7 +95,7 @@ class InformationProfile extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20)),
                     child: IconButton(
                         icon: const Icon(Icons.camera_alt_outlined),
-                        onPressed: () {}),
+                        onPressed: () => controller.getGallery()),
                   ),
                 )
               ],

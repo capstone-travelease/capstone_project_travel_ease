@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/notification/notification_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel.dart';
@@ -311,15 +312,18 @@ class AppBar extends GetView<HomeController> {
               ),
             ],
           ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Colors.redAccent),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),
-              child: Icon(
-                Icons.notifications,
-                color: Colors.white,
+          InkWell(
+            onTap: () => controller.geToNotification(),
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.redAccent),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 20),
+                child: Icon(
+                  Icons.notifications,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -335,12 +339,13 @@ class RecentlyBooked extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.only(top: 0),
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return const ListHotelView();
-        });
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.only(top: 0),
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return const ListHotelView();
+      },
+    );
   }
 }
