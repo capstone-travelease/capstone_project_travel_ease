@@ -8,12 +8,11 @@ import 'package:get/get.dart';
 class UserRepository implements UserService {
   final _client = Get.find<UserClient>(tag: Constant.userClientTAG);
   @override
-  Future<UserModel> signUser({required PostSignBody body}) async {
+  Future<String> signUser({required PostSignBody body}) async {
     try {
       final res = await _client.signUser(body);
       if (res != null) {
-        final data = UserModel.fromJson(res as Map<String, dynamic>);
-        return data;
+        return res['message'];
       } else {
         throw Exception('Request Error: $res');
       }
@@ -28,7 +27,7 @@ class UserRepository implements UserService {
     try {
       final res = await _client.loginUser(email: email, password: password);
       if (res != null) {
-        final data = UserModel.fromJson(res as Map<String, dynamic>);
+        final data = UserModel.fromJson(res['data'] as Map<String, dynamic>);
         return data;
       } else {
         throw Exception('Request Error: $res');

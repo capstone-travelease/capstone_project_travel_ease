@@ -13,7 +13,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       name: json['name'] as String?,
       gender: json['gender'] as bool?,
       password: json['password'] as String?,
-    )..token = json['token'] as String?;
+      token: json['token'] as String?,
+    );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'userId': instance.userId,

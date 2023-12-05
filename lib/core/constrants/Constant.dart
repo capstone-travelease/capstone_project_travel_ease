@@ -8,7 +8,8 @@ class Constant {
   static String city = 'city';
   static String userId = 'userId';
   static String email = 'email';
-  static const String isLogin = 'IsLogin';
+  static String isLogin = 'IsLogin';
+  static String token = 'token';
 
   static const String userClientTAG = 'UserModule|UserClient';
   static const String uerSerServiceTAG = 'UserModule|UserService';

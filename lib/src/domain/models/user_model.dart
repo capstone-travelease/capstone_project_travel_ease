@@ -11,6 +11,7 @@ class UserModel {
     this.name,
     this.gender,
     this.password,
+    this.token,
   });
   @JsonKey(name: 'userId')
   int? userId;

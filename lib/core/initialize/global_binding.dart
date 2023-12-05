@@ -19,7 +19,7 @@ class GlobalBinding extends Bindings {
     Get.put<UserClient>(
       UserClient(
         Get.find<Dio>(tag: Constant.dioTAG),
-        baseUrl: 'http://35.187.252.114:3634',
+        baseUrl: 'http://34.142.198.2:3634',
       ),
       permanent: true,
       tag: Constant.userClientTAG,

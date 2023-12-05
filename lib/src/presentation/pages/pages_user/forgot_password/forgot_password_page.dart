@@ -16,9 +16,7 @@ class ForgotPassWordPage extends StatelessWidget {
         return Dialog(
           backgroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
-          child: Container(
-            height: Get.height * 0.5,
-            width: Get.width,
+          child: DecoratedBox(
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -26,6 +24,7 @@ class ForgotPassWordPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,8 +47,8 @@ class ForgotPassWordPage extends StatelessWidget {
                     child: Image.asset(
                       fit: BoxFit.fill,
                       Assets.images.password.path,
-                      width: 150,
-                      height: 150,
+                      width: Get.width * 0.4,
+                      height: Get.height * 0.2,
                     ),
                   ),
                   Text(

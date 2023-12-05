@@ -1,7 +1,7 @@
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_widgets/cancelled_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_widgets/cancelled_pages.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_widgets/completed_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_widgets/ongoing_pages.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_widgets/ongoingtab_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,8 +34,9 @@ class MyBookingPage extends GetView<MyBookingController> {
           Obx(() => controller.checkLoginController.isLogin.value == false
               ? Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(12.0),
+                    padding: const EdgeInsets.only(top: 12.0),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(

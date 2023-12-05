@@ -296,9 +296,7 @@ class AppBar extends GetView<HomeController> {
                     ),
                     Obx(
                       () => Text(
-                        controller.checkLoginController.fullName.value == ''
-                            ? 'to receive more coupon'
-                            : controller.checkLoginController.fullName.value,
+                        'to receive more coupon',
                         style: Get.textTheme.titleSmall?.copyWith(
                             color:
                                 controller.checkLoginController.isLogin.value !=

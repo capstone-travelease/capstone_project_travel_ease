@@ -86,10 +86,4 @@ class OtherModules {
     );
     return dio;
   }
-
-  // String getSecretKeyByClientId(String userName) {
-  //   final secretKey = '$userName@Viet_Info';
-  //   final stringToBase64 = utf8.fuse(base64);
-  //   return stringToBase64.encode(secretKey);
-  // }
 }

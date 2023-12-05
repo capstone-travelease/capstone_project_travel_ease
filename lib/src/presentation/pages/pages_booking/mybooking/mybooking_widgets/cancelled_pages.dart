@@ -4,8 +4,8 @@ import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class OngoingTab extends GetView<MyBookingController> {
-  const OngoingTab({super.key});
+class CancelledTab extends GetView<MyBookingController> {
+  const CancelledTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,20 +13,19 @@ class OngoingTab extends GetView<MyBookingController> {
       () => controller.checkLoginController.isLogin.value != false
           ? ListView.builder(
               shrinkWrap: true,
-              itemCount: 10,
+              itemCount: 2,
               itemBuilder: (context, index) {
                 return ListHotelMyBooking(
                   decoratedBox: DecoratedBox(
                     decoration: BoxDecoration(
-                        color: Colors.green[50],
-                        borderRadius: BorderRadius.circular(22)),
+                        color: Colors.red[50],
+                        borderRadius: BorderRadius.circular(12)),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6.0, horizontal: 12),
+                      padding: const EdgeInsets.all(6.0),
                       child: Text(
-                        'Paid',
+                        'Cancelled & Refunded',
                         style: Get.textTheme.bodySmall
-                            ?.copyWith(color: Colors.green),
+                            ?.copyWith(color: Colors.red),
                       ),
                     ),
                   ),
@@ -36,17 +35,14 @@ class OngoingTab extends GetView<MyBookingController> {
               padding: const EdgeInsets.all(12.0),
               child: Column(
                 children: [
-                  Image.asset(
-                    fit: BoxFit.fill,
-                    Assets.images.ongoing.path,
-                    width: 180,
-                    height: 200,
-                  ),
-                  const SizedBox(
-                    height: 20,
+                  Expanded(
+                    child: Image.asset(
+                      fit: BoxFit.contain,
+                      Assets.images.cancelled.path,
+                    ),
                   ),
                   Text(
-                    'Không có Đặt Chỗ',
+                    'Không có đặt chỗ đã hủy',
                     style: Get.textTheme.titleLarge!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),

@@ -2,7 +2,7 @@ import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/utils/noti_config.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_sign_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/login/login_page.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,7 +43,7 @@ class SignController extends GetxController {
   Future<void> onSend() async {
     if (keyForm.currentState!.validate()) {
       try {
-        final res = await _userService.signUser(
+        await _userService.signUser(
           body: PostSignBody(
             email: emailEditController.text.trim(),
             password: passwordEditController.text.trim(),
@@ -51,22 +51,25 @@ class SignController extends GetxController {
             name: nameEditController.text.trim(),
           ),
         );
-        if (res != null) {
-          Get.back();
-          notificationConfig.showSnackBar(
-              title: 'Thông báo',
-              'Đăng Kí Tài Khoản Thành Công <3',
-              backgroundColor: Get.theme.colorScheme.primary);
-          // Get.offAllNamed(LoginView.routeName);
-          _cleanInput();
-        }
+        _cleanInput();
+        Get.back();
+        notificationConfig.showSnackBar(
+            title: 'Thông báo',
+            'Đăng Kí Tài Khoản Thành Công <3',
+            backgroundColor: Get.theme.colorScheme.primary);
       } catch (error) {
-        // if (Get.isSnackbarOpen) Get.closeAllSnackbars();
-        // SnackBarAndLoading.showSnackBar(
-        //   'Kết nối internet thất bại',
-        //   backgroundColor: Get.theme.colorScheme.error,
-        // );
-
+        String errorMessage = "Có lỗi xảy ra, thử lại nhé!";
+        if (error is DioException) {
+          if (error.response?.statusCode == 409 &&
+              error.response?.data['message'] != null) {
+            errorMessage = error.response?.data['message'] ??
+                "Có lỗi xảy ra, thử lại nhé!";
+          }
+        }
+        notificationConfig.showSnackBar(
+            title: 'Thông báo',
+            errorMessage,
+            backgroundColor: Get.theme.colorScheme.primary);
         Get.log(error.toString());
       }
     }
