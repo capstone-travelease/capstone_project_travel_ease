@@ -13,7 +13,7 @@ class UserModel {
     this.password,
     this.token,
   });
-  @JsonKey(name: 'userId')
+  @JsonKey(name: 'idUser')
   int? userId;
   @JsonKey(name: 'email')
   String? email;

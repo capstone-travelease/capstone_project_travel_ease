@@ -40,9 +40,9 @@ class BookingController extends GetxController {
         _currentStepAndPage.value = pageController.page!.round();
       },
     );
-    emailEditController = TextEditingController(text: 'anh@gmail.com');
-    nameEditController = TextEditingController(text: 'Nguyen Xuan Anh');
-    phoneEditController = TextEditingController(text: '0987654321');
+    emailEditController = TextEditingController();
+    nameEditController = TextEditingController();
+    phoneEditController = TextEditingController();
     listPayment.call(payment);
     selectPaymentMethod(listPayment.first);
 

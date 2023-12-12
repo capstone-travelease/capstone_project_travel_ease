@@ -44,8 +44,6 @@ class LoginController extends GetxController {
           email: emailEditController.text.trim(),
           password: passwordEditController.text.trim());
       if (res != null) {
-        print(res.userId);
-        print(res.token);
         await checkLoginController.login(
           userId: res.userId ?? -1,
           token: res.token ?? '',

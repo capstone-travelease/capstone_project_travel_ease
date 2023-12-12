@@ -21,9 +21,11 @@ class SignPage extends GetView<SignController> {
                   padding: const EdgeInsets.only(top: 30, bottom: 20),
                   child: Column(
                     children: [
-                      Text('Sign Up to!',
-                          style: Get.theme.textTheme.headlineMedium
-                              ?.copyWith(fontWeight: FontWeight.bold)),
+                      Text(
+                        'Sign Up to!',
+                        style: Get.theme.textTheme.headlineMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
                       const SizedBox(
                         height: 8,
                       ),

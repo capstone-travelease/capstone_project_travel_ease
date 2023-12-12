@@ -24,11 +24,11 @@ class SignController extends GetxController {
   final NotificationConfig notificationConfig = Get.find();
   @override
   void onInit() {
-    emailEditController = TextEditingController(text: 'anh@gmail.com');
-    passwordEditController = TextEditingController(text: 'Anh123456@');
-    nameEditController = TextEditingController(text: 'anh');
-    phoneEditController = TextEditingController(text: '0987654321');
-    confirmPasswordEditController = TextEditingController(text: 'Anh123456@');
+    emailEditController = TextEditingController();
+    passwordEditController = TextEditingController();
+    nameEditController = TextEditingController();
+    phoneEditController = TextEditingController();
+    confirmPasswordEditController = TextEditingController();
     super.onInit();
   }
 

@@ -3,7 +3,7 @@ import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:secure_shared_preferences/secure_shared_preferences.dart';
 
 class AppStartView extends StatefulWidget {
   const AppStartView({Key? key}) : super(key: key);
@@ -18,8 +18,8 @@ class _AppStartViewState extends State<AppStartView> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-        final prefs = await SharedPreferences.getInstance();
-        bool isLogin = prefs.getBool(Constant.isLogin) ?? false;
+        final prefs = await SecureSharedPref.getInstance();
+        bool isLogin = await prefs.getBool(Constant.isLogin) ?? false;
         if (isLogin) {
           print(isLogin);
           Get.offAllNamed(NavigatorMenuPage.routeName);
