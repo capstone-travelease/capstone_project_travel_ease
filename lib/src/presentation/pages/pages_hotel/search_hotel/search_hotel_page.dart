@@ -1,11 +1,15 @@
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/filter/filter_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/search_hotel_widget/widget_search_hotel_.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class SearchHotelPage extends GetView<SearchHotelController> {
   static const String routeName = '/SearchHotelPage';
@@ -229,19 +233,59 @@ class FilterOverlay extends StatelessWidget {
   }
 }
 
-class ListHotel extends StatelessWidget {
+class ListHotel extends GetView<SearchHotelController> {
   const ListHotel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return PagedListView<int, HotelModel>.separated(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.only(top: 0, bottom: 42),
-      itemCount: 10,
-      itemBuilder: (context, index) {
-        return const ListHotelView();
-      },
+      pagingController: controller.pagingController,
+      builderDelegate: PagedChildBuilderDelegate(
+        itemBuilder: (
+          BuildContext context,
+          HotelModel item,
+          int index,
+        ) {
+          // final itemPA = controller.listPhanAnh[index];
+          return InkWell(
+            onTap: () {},
+            child: ListHotelView(
+              hotelModel: item,
+            ),
+          );
+        },
+        noItemsFoundIndicatorBuilder: (context) => const CustomNoDataWidget(
+          noiDung: 'Không có dữ liệu',
+          isSearch: false,
+        ),
+        firstPageProgressIndicatorBuilder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+        newPageProgressIndicatorBuilder: (context) => SizedBox(
+          height: 30,
+          child: Center(
+            child: CupertinoActivityIndicator(
+              color: Get.theme.colorScheme.primary,
+            ),
+          ),
+        ),
+        firstPageErrorIndicatorBuilder: (context) => const CustomNoDataWidget(
+          noiDung: 'Không có dữ liệu',
+          isSearch: false,
+        ),
+        newPageErrorIndicatorBuilder: (context) => const CustomNoDataWidget(
+          noiDung: 'Có lỗi xảy ra. Vui lòng thử lại!',
+          isSearch: false,
+        ),
+      ),
+      separatorBuilder: (_, __) => const Divider(
+        endIndent: 0,
+        thickness: 1,
+        indent: 0,
+        height: 0,
+        color: Colors.transparent,
+      ),
     );
   }
 }

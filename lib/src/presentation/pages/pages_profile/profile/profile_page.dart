@@ -1,3 +1,4 @@
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/change_password/change_password_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/edit_profile/edit_profile_page.dart';
@@ -89,8 +90,12 @@ class ProfilePage extends GetView<ProfileController> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: InkWell(
-                              onTap: () =>
-                                  Get.toNamed(EditProfilePage.routeName),
+                              onTap: () => Get.toNamed(
+                                EditProfilePage.routeName,
+                                arguments: {
+                                  'userId': controller.userId,
+                                },
+                              ),
                               child: DecoratedBox(
                                 decoration: BoxDecoration(
                                   color: Colors.redAccent,
@@ -115,8 +120,12 @@ class ProfilePage extends GetView<ProfileController> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: InkWell(
-                              onTap: () =>
-                                  Get.toNamed(ChangePassWordPage.routeName),
+                              onTap: () => Get.toNamed(
+                                ChangePassWordPage.routeName,
+                                arguments: {
+                                  'userId': controller.userId,
+                                },
+                              ),
                               child: DecoratedBox(
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -209,7 +218,7 @@ class ProfilePage extends GetView<ProfileController> {
   }
 }
 
-class InformationProfile extends StatelessWidget {
+class InformationProfile extends GetView<ProfileController> {
   const InformationProfile({Key? key}) : super(key: key);
 
   @override
@@ -221,11 +230,13 @@ class InformationProfile extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: ClipOval(
               child: ExtendedImage.network(
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyD3SI8Qdekp6twYtnVVcpKfHw7WVQGy9Yfd32EiXPZI30cEgXJ-XhquB0ObTnutlwQrM&usqp=CAU',
-                width: 150,
-                height: 150,
+                Constant.baseImageUrl + (controller.user.value?.avatar ?? ''),
+                width: 100,
+                height: 100,
                 fit: BoxFit.fill,
-                borderRadius: const BorderRadius.all(Radius.circular(6)),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(6),
+                ),
                 shape: BoxShape.rectangle,
                 loadStateChanged: (ExtendedImageState state) {
                   switch (state.extendedImageLoadState) {
@@ -237,7 +248,7 @@ class InformationProfile extends StatelessWidget {
                       return null;
                     case LoadState.failed:
                       return Image.asset(
-                        Assets.images.noImage.path,
+                        Assets.images.noImageUser.path,
                       );
                   }
                 },
@@ -245,16 +256,19 @@ class InformationProfile extends StatelessWidget {
             ),
           ),
         ),
-        Text(
-          'Hoàng Văn Thắng',
-          style: Get.textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.bold,
+        Obx(
+          () => Text(
+            controller.user.value?.full_name ?? '',
+            style: Get.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        Text(
-          'hvthang002@gmail.com',
-          style: Get.textTheme.bodyMedium!.copyWith(color: Colors.grey[500]),
-        )
+        Obx(() => Text(
+              controller.user.value?.email ?? '',
+              style:
+                  Get.textTheme.bodyMedium!.copyWith(color: Colors.grey[500]),
+            ))
       ],
     );
   }

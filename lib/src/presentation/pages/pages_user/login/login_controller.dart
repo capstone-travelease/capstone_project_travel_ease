@@ -10,7 +10,7 @@ class LoginController extends GetxController {
   late TextEditingController emailEditController;
   late TextEditingController passwordEditController;
   bool isChecked = false;
-  final RxBool isLoading = true.obs;
+  final RxBool isLoading = false.obs;
   RxBool showPassword = false.obs;
   final NotificationConfig notificationConfig = Get.find();
   final CheckLoginController checkLoginController = Get.find();
@@ -19,7 +19,7 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     emailEditController = TextEditingController(text: 'anh@gmail.com');
-    passwordEditController = TextEditingController(text: 'Anh123456@');
+    passwordEditController = TextEditingController(text: 'Anh12345@');
     super.onInit();
   }
 
@@ -39,6 +39,7 @@ class LoginController extends GetxController {
   }
 
   Future login() async {
+    isLoading.call(true);
     try {
       final res = await _userService.loginUser(
           email: emailEditController.text.trim(),

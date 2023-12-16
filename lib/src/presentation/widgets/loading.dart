@@ -9,13 +9,14 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return Container(
+      color: Colors.white.withOpacity(0.5),
+      child: Center(
         child: Lottie.asset(
-          Assets.animations.loading,
-          width: 150,
-          fit: BoxFit.fill,
-        ),
+            Assets.animations.loading1, // Replace with your animation file
+            width: 180,
+            height: 180,
+            fit: BoxFit.fill),
       ),
     );
   }

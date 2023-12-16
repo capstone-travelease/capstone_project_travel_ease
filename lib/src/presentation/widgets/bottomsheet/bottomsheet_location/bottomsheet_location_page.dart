@@ -1,9 +1,10 @@
+import 'package:capstone_project_travel_ease/src/domain/models/location_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/bottomsheet_location/bottomsheet_location_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BottomSheetLocation extends StatelessWidget {
-  final String? location;
+  final LocationModel? location;
   const BottomSheetLocation({Key? key, this.location}) : super(key: key);
   static const String routeName = '/BottomSheetLocation';
 
@@ -21,6 +22,7 @@ class BottomSheetLocation extends StatelessWidget {
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -61,67 +63,72 @@ class BottomSheetLocation extends StatelessWidget {
               Divider(
                 color: Colors.grey[400],
               ),
-              Obx(() => ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    final item = controller.listItem[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Obx(
-                        () => InkWell(
-                          onTap: () {
-                            controller.selectLocation(item);
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: controller.selectedLocation.value == item
-                                  ? Border.all(
-                                      color: Colors.redAccent,
-                                    )
-                                  : null,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8.0, horizontal: 12),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    item,
-                                    style: Get.textTheme.bodyMedium,
+              Expanded(
+                child: Scrollbar(
+                  child: Obx(() => ListView.separated(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final item = controller.listLocation[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Obx(
+                            () => InkWell(
+                              onTap: () {
+                                controller.selectLocation(item);
+                              },
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color:
+                                      controller.selectedLocation.value == item
+                                          ? Colors.red[50]
+                                          : null,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8.0, horizontal: 12),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        item.placeName ?? '',
+                                        style: Get.textTheme.bodyMedium,
+                                      ),
+                                      if (controller.selectedLocation.value ==
+                                          item)
+                                        Icon(
+                                          Icons.check,
+                                          color: Colors.green[800],
+                                        )
+                                    ],
                                   ),
-                                  if (controller.selectedLocation.value == item)
-                                    const Icon(
-                                      Icons.check,
-                                      color: Colors.greenAccent,
-                                    )
-                                ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    final previousItem = controller.listItem[index];
-                    final nextItem = controller.listItem[index + 1];
-                    return Obx(
-                      () => Divider(
-                        indent: 20,
-                        endIndent: 20,
-                        color: controller.selectedLocation.value ==
-                                    previousItem ||
-                                controller.selectedLocation.value == nextItem
-                            ? Colors.transparent
-                            : Colors.grey[400],
-                        height: 0,
-                      ),
-                    );
-                  },
-                  itemCount: controller.listItem.length))
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        final previousItem = controller.listLocation[index];
+                        final nextItem = controller.listLocation[index + 1];
+                        return Obx(
+                          () => Divider(
+                            indent: 20,
+                            endIndent: 20,
+                            color: controller.selectedLocation.value ==
+                                        previousItem ||
+                                    controller.selectedLocation.value ==
+                                        nextItem
+                                ? Colors.transparent
+                                : Colors.grey[400],
+                            height: 0,
+                          ),
+                        );
+                      },
+                      itemCount: controller.listLocation.length)),
+                ),
+              )
             ],
           ),
         );

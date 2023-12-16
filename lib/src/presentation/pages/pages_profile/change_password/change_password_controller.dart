@@ -1,3 +1,7 @@
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/core/utils/noti_config.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/patch_update_pass_body.dart';
+import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +14,7 @@ class ChangePassWordController extends GetxController {
   RxBool showCurrentPassword = false.obs;
   RxBool showNewPassword = false.obs;
   RxBool showConfirmPassword = false.obs;
-
+  late int userId;
   var password = ''.obs;
   var lengthValid = false.obs;
   var uppercaseValid = false.obs;
@@ -18,11 +22,15 @@ class ChangePassWordController extends GetxController {
   var numericValid = false.obs;
   var specialValid = false.obs;
   final keyForm = GlobalKey<FormState>();
+  final UserService _userService = Get.find(tag: Constant.uerSerServiceTAG);
+  final NotificationConfig notificationConfig = Get.find();
+
   @override
   void onInit() {
-    currentPasswordEditController = TextEditingController();
-    newPasswordEditController = TextEditingController();
-    confirmPasswordEditController = TextEditingController();
+    userId = Get.arguments['userId'];
+    currentPasswordEditController = TextEditingController(text: 'Anh123456@');
+    newPasswordEditController = TextEditingController(text: 'Anh123456@');
+    confirmPasswordEditController = TextEditingController(text: 'Anh123456@');
     super.onInit();
   }
 
@@ -48,6 +56,27 @@ class ChangePassWordController extends GetxController {
 
   Future<void> onChange() async {
     if (keyForm.currentState!.validate()) {
+      try {
+        await _userService.updatePassWord(
+          userId: userId,
+          body: PatchUpdatePassBody(
+            oldPassword: currentPasswordEditController.text.trim(),
+            newPassword: newPasswordEditController.text.trim(),
+          ),
+        );
+        Get.back();
+        notificationConfig.showSnackBar(
+            title: 'Thông báo',
+            'Cập nhật mật khẩu Thành Công <3',
+            backgroundColor: Get.theme.colorScheme.primary);
+      } catch (error) {
+        String errorMessage = "Có lỗi xảy ra, thử lại nhé!";
+        notificationConfig.showSnackBar(
+            title: 'Thông báo',
+            errorMessage,
+            backgroundColor: Get.theme.colorScheme.primary);
+        Get.log(error.toString());
+      }
       _cleanInput();
     }
   }

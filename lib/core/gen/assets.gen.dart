@@ -15,8 +15,11 @@ class $AssetsAnimationsGen {
   /// File path: assets/animations/loading.json
   String get loading => 'assets/animations/loading.json';
 
+  /// File path: assets/animations/loading1.json
+  String get loading1 => 'assets/animations/loading1.json';
+
   /// List of all assets
-  List<String> get values => [loading];
+  List<String> get values => [loading, loading1];
 }
 
 class $AssetsIconsGen {
@@ -70,6 +73,9 @@ class $AssetsImagesGen {
   AssetGenImage get noImageUser =>
       const AssetGenImage('assets/images/no_image_user.jpg');
 
+  /// File path: assets/images/nodata.png
+  AssetGenImage get nodata => const AssetGenImage('assets/images/nodata.png');
+
   /// File path: assets/images/ongoing.png
   AssetGenImage get ongoing => const AssetGenImage('assets/images/ongoing.png');
 
@@ -90,6 +96,7 @@ class $AssetsImagesGen {
         completed,
         noImage,
         noImageUser,
+        nodata,
         ongoing,
         password,
         qrcode,

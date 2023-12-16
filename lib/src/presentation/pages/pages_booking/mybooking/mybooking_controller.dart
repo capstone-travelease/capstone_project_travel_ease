@@ -32,7 +32,9 @@ class MyBookingController extends GetxController
   }
 
   Future<void> pushLogin() async {
+    String previousRoute = Get.currentRoute;
     await Get.toNamed(LoginView.routeName);
     await checkLoginController.checkLogin();
+    Get.offNamedUntil(previousRoute, (route) => false);
   }
 }

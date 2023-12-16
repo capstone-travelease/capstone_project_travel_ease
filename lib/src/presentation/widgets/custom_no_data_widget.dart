@@ -30,7 +30,7 @@ class CustomNoDataWidget extends StatelessWidget {
                   width: 60,
                   height: 60,
                   child: ExtendedImage.asset(
-                    'assets/images/default.jpg',
+                    Assets.images.nodata.path,
                     fit: BoxFit.cover,
                     borderRadius: const BorderRadius.all(Radius.circular(5)),
                     shape: BoxShape.rectangle,
@@ -44,7 +44,7 @@ class CustomNoDataWidget extends StatelessWidget {
                           return null;
                         case LoadState.failed:
                           return Image.asset(
-                            Assets.images.noImage.path,
+                            Assets.images.nodata.path,
                           );
                       }
                     },
@@ -58,7 +58,7 @@ class CustomNoDataWidget extends StatelessWidget {
                   width: 60,
                   height: 60,
                   child: ExtendedImage.asset(
-                    'assets/images/default.jpg',
+                    Assets.images.nodata.path,
                     fit: BoxFit.cover,
                     borderRadius: const BorderRadius.all(Radius.circular(5)),
                     shape: BoxShape.rectangle,
@@ -72,7 +72,7 @@ class CustomNoDataWidget extends StatelessWidget {
                           return null;
                         case LoadState.failed:
                           return Image.asset(
-                            Assets.images.noImage.path,
+                            Assets.images.nodata.path,
                           );
                       }
                     },

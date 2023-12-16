@@ -19,7 +19,7 @@ class ErrorAndIsEmtys {
   static const String phoneError = 'SDT không hợp lệ!';
   static const String confirmPassword = 'Bạn Phải Nhập Lại Mật Khẩu ';
   static const String passwordError =
-      'Password phải có 8 Ký Tự,Chữ Hoa,\nKí Tự Đặc Biệt,Không Có Khoảng Trống';
+      'Password phải có 8 Ký Tự,Chữ thường và Hoa,\nKí Tự Đặc Biệt,Không Có Khoảng Trống';
   static const String confirmPasswordError =
       'Confirm Password phải giống với Password ';
 

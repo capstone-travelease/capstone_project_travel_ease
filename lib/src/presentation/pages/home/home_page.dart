@@ -1,3 +1,4 @@
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_controller.dart';
@@ -223,7 +224,7 @@ class HomePage extends GetView<HomeController> {
                   ],
                 ),
               ),
-              const RecentlyBooked(),
+              // const RecentlyBooked(),
             ],
           ),
         ),
@@ -249,7 +250,8 @@ class AppBar extends GetView<HomeController> {
                       height: Get.width * 0.12,
                       child: ClipOval(
                         child: ExtendedImage.network(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvNVVeso-U6DZ5v4Py3n5hYAttB7PVgb_6rA&usqp=CAU',
+                          Constant.baseImageUrl +
+                              (controller.user.value?.avatar ?? ''),
                           // fit: BoxFit.cover,
                           // shape: BoxShape.rectangle,
                           loadStateChanged: (ExtendedImageState state) {
@@ -296,7 +298,8 @@ class AppBar extends GetView<HomeController> {
                     ),
                     Obx(
                       () => Text(
-                        'to receive more coupon',
+                        controller.user.value?.full_name ??
+                            'to receive more coupon',
                         style: Get.textTheme.titleSmall?.copyWith(
                             color:
                                 controller.checkLoginController.isLogin.value !=
@@ -331,19 +334,19 @@ class AppBar extends GetView<HomeController> {
   }
 }
 
-class RecentlyBooked extends StatelessWidget {
-  const RecentlyBooked({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.only(top: 0),
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        return const ListHotelView();
-      },
-    );
-  }
-}
+// class RecentlyBooked extends StatelessWidget {
+//   const RecentlyBooked({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.builder(
+//       shrinkWrap: true,
+//       physics: const NeverScrollableScrollPhysics(),
+//       padding: const EdgeInsets.only(top: 0),
+//       itemCount: 5,
+//       itemBuilder: (context, index) {
+//         return const ListHotelView(listHotelModel: null,);
+//       },
+//     );
+//   }
+// }

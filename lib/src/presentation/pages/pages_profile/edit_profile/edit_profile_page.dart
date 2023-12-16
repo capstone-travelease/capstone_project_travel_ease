@@ -122,152 +122,154 @@ class TextFormProfile extends GetView<EditProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Your FullName',
-          style: Get.theme.textTheme.bodyMedium
-              ?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        TextFormField(
-          controller: controller.nameEditController,
-          style: context.theme.textTheme.bodyMedium?.copyWith(
-              // color: context.theme.hintColor,
-              ),
-          decoration: InputDecoration(
-            alignLabelWithHint: true,
-            hintText: 'Your Name',
-            hintStyle: context.theme.textTheme.bodySmall
-                ?.copyWith(color: Colors.grey[500]),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(
-          'GenDer & Birthday',
-          style: Get.theme.textTheme.bodyMedium
-              ?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        SizedBox(
-          height: 50,
-          child: Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: controller.genDerEditController,
-                  style: context.theme.textTheme.bodyMedium?.copyWith(
-                      // color: context.theme.hintColor,
-                      ),
-                  decoration: InputDecoration(
-                    alignLabelWithHint: true,
-                    hintText: 'GenDer',
-                    hintStyle: context.theme.textTheme.bodySmall
-                        ?.copyWith(color: Colors.grey[500]),
+    return Form(
+        key: controller.keyForm,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Your FullName',
+              style: Get.theme.textTheme.bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            TextFormField(
+              controller: controller.nameEditController,
+              style: context.theme.textTheme.bodyMedium?.copyWith(
+                  // color: context.theme.hintColor,
                   ),
-                ),
+              decoration: InputDecoration(
+                alignLabelWithHint: true,
+                hintText: 'Your Name',
+                hintStyle: context.theme.textTheme.bodySmall
+                    ?.copyWith(color: Colors.grey[500]),
               ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: TextFormField(
-                  controller: controller.birthDayEditController,
-                  style: context.theme.textTheme.bodyMedium?.copyWith(
-                      // color: context.theme.hintColor,
-                      ),
-                  decoration: InputDecoration(
-                    alignLabelWithHint: true,
-                    hintText: 'Birthday',
-                    hintStyle: context.theme.textTheme.bodySmall
-                        ?.copyWith(color: Colors.grey[500]),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              'GenDer & Birthday',
+              style: Get.theme.textTheme.bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            // SizedBox(
+            //   height: 50,
+            //   child: Row(
+            //     children: [
+            //       Expanded(
+            //         child: TextFormField(
+            //           controller: controller.genDerEditController,
+            //           style: context.theme.textTheme.bodyMedium?.copyWith(
+            //               // color: context.theme.hintColor,
+            //               ),
+            //           decoration: InputDecoration(
+            //             alignLabelWithHint: true,
+            //             hintText: 'GenDer',
+            //             hintStyle: context.theme.textTheme.bodySmall
+            //                 ?.copyWith(color: Colors.grey[500]),
+            //           ),
+            //         ),
+            //       ),
+            //       const SizedBox(
+            //         width: 20,
+            //       ),
+            //       Expanded(
+            //         child: TextFormField(
+            //           controller: controller.birthDayEditController,
+            //           style: context.theme.textTheme.bodyMedium?.copyWith(
+            //               // color: context.theme.hintColor,
+            //               ),
+            //           decoration: InputDecoration(
+            //             alignLabelWithHint: true,
+            //             hintText: 'Birthday',
+            //             hintStyle: context.theme.textTheme.bodySmall
+            //                 ?.copyWith(color: Colors.grey[500]),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Your Phone',
+              style: Get.theme.textTheme.bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            TextFormField(
+              controller: controller.phoneEditController,
+              style: context.theme.textTheme.bodyMedium?.copyWith(
+                  // color: context.theme.hintColor,
                   ),
-                ),
+              decoration: InputDecoration(
+                alignLabelWithHint: true,
+                hintText: 'Your Phone',
+                hintStyle: context.theme.textTheme.bodySmall
+                    ?.copyWith(color: Colors.grey[500]),
               ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(
-          'Your Phone',
-          style: Get.theme.textTheme.bodyMedium
-              ?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        TextFormField(
-          controller: controller.phoneEditController,
-          style: context.theme.textTheme.bodyMedium?.copyWith(
-              // color: context.theme.hintColor,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Your Email',
+              style: Get.theme.textTheme.bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            TextFormField(
+              controller: controller.emailEditController,
+              style: context.theme.textTheme.bodyMedium?.copyWith(
+                  // color: context.theme.hintColor,
+                  ),
+              decoration: InputDecoration(
+                alignLabelWithHint: true,
+                hintText: 'mail@example.com',
+                hintStyle: context.theme.textTheme.bodySmall
+                    ?.copyWith(color: Colors.grey[500]),
               ),
-          decoration: InputDecoration(
-            alignLabelWithHint: true,
-            hintText: 'Your Phone',
-            hintStyle: context.theme.textTheme.bodySmall
-                ?.copyWith(color: Colors.grey[500]),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(
-          'Your Email',
-          style: Get.theme.textTheme.bodyMedium
-              ?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          height: 4,
-        ),
-        TextFormField(
-          controller: controller.emailEditController,
-          style: context.theme.textTheme.bodyMedium?.copyWith(
-              // color: context.theme.hintColor,
-              ),
-          decoration: InputDecoration(
-            alignLabelWithHint: true,
-            hintText: 'mail@example.com',
-            hintStyle: context.theme.textTheme.bodySmall
-                ?.copyWith(color: Colors.grey[500]),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        SizedBox(
-          width: Get.width,
-          child: GestureDetector(
-            // onTap: () => controller.onSend(),
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.redAccent),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    'Save',
-                    style: Get.theme.textTheme.titleMedium?.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: Get.width,
+              child: GestureDetector(
+                onTap: () => controller.updateUser(),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.redAccent),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'Save',
+                        style: Get.theme.textTheme.titleMedium?.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ),
-      ],
-    );
+          ],
+        ));
   }
 }
