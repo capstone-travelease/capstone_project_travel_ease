@@ -94,10 +94,4 @@ class BookingController extends GetxController {
       return;
     }
   }
-
-  Future<void> pushLogin() async {
-    await Get.toNamed(LoginView.routeName);
-    await checkLoginController.checkLogin();
-    // Get.offNamed(Get.currentRoute);
-  }
 }

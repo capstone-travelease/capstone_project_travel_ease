@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
+import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_page.dart';
@@ -231,7 +232,7 @@ class HomePage extends GetView<HomeController> {
   }
 }
 
-class AppBar extends GetView<HomeController> {
+class AppBar extends GetView<CheckLoginController> {
   const AppBar({Key? key}) : super(key: key);
 
   @override
@@ -242,31 +243,32 @@ class AppBar extends GetView<HomeController> {
         children: [
           Row(
             children: [
-              Obx(() => controller.checkLoginController.isLogin.value != false
-                  ? SizedBox(
-                      width: Get.width * 0.12,
-                      height: Get.width * 0.12,
-                      child: ClipOval(
-                        child: ExtendedImage.network(
-                          Constant.baseImageUrl +
-                              (controller.user.value?.avatar ?? ''),
-                          // fit: BoxFit.cover,
-                          // shape: BoxShape.rectangle,
-                          loadStateChanged: (ExtendedImageState state) {
-                            switch (state.extendedImageLoadState) {
-                              case LoadState.loading:
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              case LoadState.completed:
-                                return state.completedWidget;
-                              case LoadState.failed:
-                                return Image.asset(
-                                  Assets.images.noImageUser.path,
-                                );
-                            }
-                          },
-                        ),
+              Obx(() => controller.isLogin.value != false
+                  ? ClipOval(
+                      child: ExtendedImage.network(
+                        Constant.baseImageUrl +
+                            (controller.user.value?.avatar ?? ''),
+                        width: Get.width * 0.12,
+                        height: Get.width * 0.12,
+                        fit: BoxFit.fill,
+                        // shape: BoxShape.rectangle,
+                        loadStateChanged: (ExtendedImageState state) {
+                          switch (state.extendedImageLoadState) {
+                            case LoadState.loading:
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            case LoadState.completed:
+                              return state.completedWidget;
+                            case LoadState.failed:
+                              return Image.asset(
+                                width: Get.width * 0.12,
+                                height: Get.width * 0.12,
+                                fit: BoxFit.fill,
+                                Assets.images.noImageUser.path,
+                              );
+                          }
+                        },
                       ),
                     )
                   : const SizedBox.shrink()),
@@ -274,24 +276,21 @@ class AppBar extends GetView<HomeController> {
                 width: 10,
               ),
               InkWell(
-                onTap: () =>
-                    controller.checkLoginController.isLogin.value == false
-                        ? controller.pushLogin()
-                        : {},
+                onTap: () => controller.isLogin.value == false
+                    ? controller.pushLogin()
+                    : {},
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Obx(
                       () => Text(
-                        controller.checkLoginController.isLogin.value != false
+                        controller.isLogin.value != false
                             ? 'Hello'
                             : 'Sign in / Sign Up now',
                         style: Get.textTheme.titleMedium?.copyWith(
-                            color:
-                                controller.checkLoginController.isLogin.value !=
-                                        false
-                                    ? Colors.grey
-                                    : null),
+                            color: controller.isLogin.value != false
+                                ? Colors.grey
+                                : null),
                       ),
                     ),
                     Obx(
@@ -299,11 +298,9 @@ class AppBar extends GetView<HomeController> {
                         controller.user.value?.full_name ??
                             'to receive more coupon',
                         style: Get.textTheme.titleSmall?.copyWith(
-                            color:
-                                controller.checkLoginController.isLogin.value !=
-                                        false
-                                    ? null
-                                    : Colors.grey),
+                            color: controller.isLogin.value != false
+                                ? null
+                                : Colors.grey),
                       ),
                     ),
                   ],
@@ -312,7 +309,7 @@ class AppBar extends GetView<HomeController> {
             ],
           ),
           InkWell(
-            onTap: () => controller.geToNotification(),
+            // onTap: () => controller.geToNotification(),
             child: DecoratedBox(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),

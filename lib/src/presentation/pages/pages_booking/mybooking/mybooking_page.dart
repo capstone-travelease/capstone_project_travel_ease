@@ -49,7 +49,8 @@ class MyBookingPage extends GetView<MyBookingController> {
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: InkWell(
-                            onTap: () => controller.pushLogin(),
+                            onTap: () =>
+                                controller.checkLoginController.pushLogin(),
                             child: SizedBox(
                               width: Get.width,
                               child: DecoratedBox(

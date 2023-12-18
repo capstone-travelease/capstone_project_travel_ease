@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
+import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/change_password/change_password_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/edit_profile/edit_profile_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/help/help_page.dart';
@@ -54,7 +57,8 @@ class ProfilePage extends GetView<ProfileController> {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: InkWell(
-                              onTap: () => controller.pushLogin(),
+                              onTap: () =>
+                                  controller.checkLoginController.pushLogin(),
                               child: SizedBox(
                                 width: Get.width,
                                 child: DecoratedBox(
@@ -93,7 +97,8 @@ class ProfilePage extends GetView<ProfileController> {
                               onTap: () => Get.toNamed(
                                 EditProfilePage.routeName,
                                 arguments: {
-                                  'userModel': controller.user.value,
+                                  'userModel': controller
+                                      .checkLoginController.user.value,
                                 },
                               ),
                               child: DecoratedBox(
@@ -123,7 +128,9 @@ class ProfilePage extends GetView<ProfileController> {
                               onTap: () => Get.toNamed(
                                 ChangePassWordPage.routeName,
                                 arguments: {
-                                  'userId': controller.userId,
+                                  'userId': controller
+                                          .checkLoginController.userid.value ??
+                                      -1,
                                 },
                               ),
                               child: DecoratedBox(
@@ -218,7 +225,7 @@ class ProfilePage extends GetView<ProfileController> {
   }
 }
 
-class InformationProfile extends GetView<ProfileController> {
+class InformationProfile extends GetView<CheckLoginController> {
   const InformationProfile({Key? key}) : super(key: key);
 
   @override
