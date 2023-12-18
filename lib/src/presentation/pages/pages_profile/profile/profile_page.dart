@@ -93,7 +93,7 @@ class ProfilePage extends GetView<ProfileController> {
                               onTap: () => Get.toNamed(
                                 EditProfilePage.routeName,
                                 arguments: {
-                                  'userId': controller.userId,
+                                  'userModel': controller.user.value,
                                 },
                               ),
                               child: DecoratedBox(
@@ -231,8 +231,8 @@ class InformationProfile extends GetView<ProfileController> {
             child: ClipOval(
               child: ExtendedImage.network(
                 Constant.baseImageUrl + (controller.user.value?.avatar ?? ''),
-                width: 100,
-                height: 100,
+                width: 150,
+                height: 150,
                 fit: BoxFit.fill,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(6),
@@ -249,6 +249,7 @@ class InformationProfile extends GetView<ProfileController> {
                     case LoadState.failed:
                       return Image.asset(
                         Assets.images.noImageUser.path,
+                        fit: BoxFit.cover,
                       );
                   }
                 },

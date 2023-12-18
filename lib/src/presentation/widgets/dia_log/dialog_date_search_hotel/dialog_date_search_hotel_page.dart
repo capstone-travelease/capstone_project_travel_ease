@@ -1,13 +1,14 @@
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
-import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_date/dialog_date_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_date_search_hotel/dialog_date_search_hotel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class DiaLogDatePage extends StatelessWidget {
+class DiaLogDateSearchHotelPage extends StatelessWidget {
   final DateTimeRange? dateTimeRange;
-  const DiaLogDatePage({Key? key, this.dateTimeRange}) : super(key: key);
+  const DiaLogDateSearchHotelPage({Key? key, this.dateTimeRange})
+      : super(key: key);
   static const String routeName = '/DiaLogSelectDiaLog';
   @override
   Widget build(BuildContext context) {
@@ -68,6 +69,7 @@ class DiaLogDatePage extends StatelessWidget {
                     controller.dateRange?.value.start,
                     controller.dateRange?.value.end,
                   ),
+                  initialDisplayDate: controller.dateRange?.value.start,
                   onSelectionChanged:
                       (DateRangePickerSelectionChangedArgs? args) {
                     if (args?.value is PickerDateRange) {

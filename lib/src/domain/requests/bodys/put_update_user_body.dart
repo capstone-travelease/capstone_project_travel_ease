@@ -12,7 +12,7 @@ class PutUpdateUserBody extends Equatable {
   final String fullname;
   final String? avatar;
   final String phone;
-  final String? birthday;
+  final DateTime? birthday;
   final bool? gender;
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -20,7 +20,7 @@ class PutUpdateUserBody extends Equatable {
       'avatar': avatar,
       'phone': phone,
       'gender': gender,
-      'birthday': birthday,
+      'birthday': birthday?.toIso8601String(),
     };
   }
 
@@ -29,7 +29,7 @@ class PutUpdateUserBody extends Equatable {
       String? fullname,
       String? avatar,
       String? phone,
-      String? birthday,
+      DateTime? birthday,
       bool? gender}) {
     return PutUpdateUserBody(
         fullname: fullname ?? this.fullname,

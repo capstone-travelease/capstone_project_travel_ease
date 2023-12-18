@@ -3,7 +3,7 @@ import 'package:capstone_project_travel_ease/src/domain/models/location_model.da
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/bottomsheet_location/bottomsheet_location_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/bottomsheet_room_adult/bottomsheet_room_adult_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_date/dialog_date_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_date_search_hotel/dialog_date_search_hotel_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/search_hotel_widget/widget_search_hotel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -80,7 +80,8 @@ class WidgetSearchHotelPage extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () async {
                     final data = await Get.dialog<DateTimeRange>(
-                      DiaLogDatePage(dateTimeRange: controller.dateRange.value),
+                      DiaLogDateSearchHotelPage(
+                          dateTimeRange: controller.dateRange.value),
                     );
                     if (data != null) {
                       final newDateRange = DateTimeRange(

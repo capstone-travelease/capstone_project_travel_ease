@@ -1,22 +1,20 @@
-import 'package:capstone_project_travel_ease/src/domain/models/location_model.dart';
-import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/bottomsheet_location/bottomsheet_location_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/edit_gender_user/eidt_gender_user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class BottomSheetLocation extends StatelessWidget {
-  const BottomSheetLocation({Key? key, this.location}) : super(key: key);
-  final LocationModel? location;
+class BottomSheetEditGenderUser extends StatelessWidget {
+  const BottomSheetEditGenderUser({Key? key, this.gender}) : super(key: key);
+  final String? gender;
 
   static const String routeName = '/BottomSheetLocation';
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<BottomSheetLocationController>(
-      init: BottomSheetLocationController(initialValue: location),
+    return GetBuilder<BottomSheetEditGenderUserController>(
+      init: BottomSheetEditGenderUserController(initialValue: gender),
       builder: (controller) {
-        controller.selectedLocation.value = location;
         return Container(
-          height: Get.height,
+          height: Get.height * 0.3,
           width: Get.width,
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -47,7 +45,7 @@ class BottomSheetLocation extends StatelessWidget {
                       flex: 2,
                       fit: FlexFit.tight,
                       child: Text(
-                        'Chọn Thành Phố',
+                        'Chọn Giới Tính',
                         textAlign: TextAlign.center,
                         style: Get.textTheme.bodyLarge!
                             .copyWith(fontWeight: FontWeight.bold),
@@ -68,15 +66,10 @@ class BottomSheetLocation extends StatelessWidget {
                 child: Scrollbar(
                   child: Obx(
                     () {
-                      if (controller.isLoading.value) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
                       return ListView.separated(
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            final item = controller.listLocation[index];
+                            final item = controller.listGender[index];
                             return Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8),
@@ -87,33 +80,69 @@ class BottomSheetLocation extends StatelessWidget {
                                   },
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
-                                      color:
-                                          controller.selectedLocation.value ==
-                                                  item
-                                              ? Colors.red[50]
-                                              : null,
+                                      color: controller.selectedGender.value ==
+                                              item
+                                          ? Colors.red[50]
+                                          : null,
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 8.0, horizontal: 12),
                                       child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                            item.placeName ?? '',
-                                            style: Get.textTheme.bodyMedium,
+                                          Flexible(
+                                            flex: 1,
+                                            fit: FlexFit.tight,
+                                            child: InkWell(
+                                              onTap: () => Get.back(),
+                                              child: const Text(
+                                                '',
+                                              ),
+                                            ),
                                           ),
-                                          if (controller
-                                                  .selectedLocation.value ==
-                                              item)
-                                            Icon(
-                                              Icons.check,
-                                              color: Colors.green[800],
-                                            )
+                                          Flexible(
+                                            flex: 2,
+                                            fit: FlexFit.tight,
+                                            child: Text(
+                                              item,
+                                              textAlign: TextAlign.center,
+                                              style: Get.textTheme.titleMedium!
+                                                  .copyWith(),
+                                            ),
+                                          ),
+                                          Flexible(
+                                              flex: 1,
+                                              fit: FlexFit.tight,
+                                              child: controller.selectedGender
+                                                          .value ==
+                                                      item
+                                                  ? Icon(
+                                                      Icons.check,
+                                                      color: Colors.green[800],
+                                                    )
+                                                  : const SizedBox.shrink()),
                                         ],
                                       ),
+                                      // child: Row(
+                                      //   mainAxisAlignment:
+                                      //       MainAxisAlignment.spaceBetween,
+                                      //   children: [
+                                      //     Text(
+                                      //       item ?? '',
+                                      //       style: Get.textTheme.bodyMedium,
+                                      //     ),
+                                      //)
+                                      //       Icon(
+                                      //         Icons.check,
+                                      //         color: Colors.green[800],
+                                      //       )
+                                      //   ],
+                                      // ),
                                     ),
                                   ),
                                 ),
@@ -121,15 +150,15 @@ class BottomSheetLocation extends StatelessWidget {
                             );
                           },
                           separatorBuilder: (context, index) {
-                            final previousItem = controller.listLocation[index];
-                            final nextItem = controller.listLocation[index + 1];
+                            final previousItem = controller.listGender[index];
+                            final nextItem = controller.listGender[index + 1];
                             return Obx(
                               () => Divider(
                                 indent: 20,
                                 endIndent: 20,
-                                color: controller.selectedLocation.value ==
+                                color: controller.selectedGender.value ==
                                             previousItem ||
-                                        controller.selectedLocation.value ==
+                                        controller.selectedGender.value ==
                                             nextItem
                                     ? Colors.transparent
                                     : Colors.grey[400],
@@ -137,7 +166,7 @@ class BottomSheetLocation extends StatelessWidget {
                               ),
                             );
                           },
-                          itemCount: controller.listLocation.length);
+                          itemCount: controller.listGender.length);
                     },
                   ),
                 ),
