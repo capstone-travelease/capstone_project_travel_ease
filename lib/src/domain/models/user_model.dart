@@ -7,8 +7,8 @@ class UserModel {
   UserModel({
     this.userId,
     this.email,
-    this.phone_number,
-    this.full_name,
+    this.phoneNumber,
+    this.fullName,
     this.dob,
     this.gender,
     this.avatar,
@@ -21,11 +21,11 @@ class UserModel {
   @JsonKey(name: 'avatar')
   String? avatar;
   @JsonKey(name: 'phone_number')
-  String? phone_number;
+  String? phoneNumber;
   @JsonKey(name: 'dob')
   DateTime? dob;
   @JsonKey(name: 'full_name')
-  String? full_name;
+  String? fullName;
   @JsonKey(name: 'token')
   String? token;
   @JsonKey(name: 'gender')

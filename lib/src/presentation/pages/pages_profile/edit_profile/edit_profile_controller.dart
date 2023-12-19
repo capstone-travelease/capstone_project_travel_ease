@@ -5,6 +5,7 @@ import 'package:capstone_project_travel_ease/core/utils/noti_config.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/user_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/put_update_user_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
+import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,13 +21,14 @@ class EditProfileController extends GetxController {
   final Rxn<DateTime>? birthday = Rxn();
   final Rxn<bool>? genDer = Rxn();
   final NotificationConfig notificationConfig = Get.find();
+  final CheckLoginController checkLoginController = Get.find();
   @override
   void onInit() {
     userModel = Get.arguments['userModel'];
     birthday?.value = userModel.dob;
     genDer?.value = userModel.gender;
-    nameEditController = TextEditingController(text: userModel.full_name);
-    phoneEditController = TextEditingController(text: userModel.phone_number);
+    nameEditController = TextEditingController(text: userModel.fullName);
+    phoneEditController = TextEditingController(text: userModel.phoneNumber);
     genDerEditController = TextEditingController();
     super.onInit();
   }
@@ -48,10 +50,10 @@ class EditProfileController extends GetxController {
             phone: phoneEditController.text.trim(),
             fullname: nameEditController.text.trim(),
             gender: genDer?.value,
-            avatar: '',
             birthday: birthday?.value,
           ),
         );
+        await checkLoginController.checkLogin();
         Get.back();
         notificationConfig.showSnackBar(
             title: 'Thông báo',

@@ -108,7 +108,7 @@ class InformationProfile extends GetView<EditProfileController> {
           ),
         ),
         Text(
-          controller.userModel.full_name ?? '',
+          controller.userModel.fullName ?? '',
           style: Get.textTheme.bodyMedium!.copyWith(
             fontWeight: FontWeight.bold,
           ),

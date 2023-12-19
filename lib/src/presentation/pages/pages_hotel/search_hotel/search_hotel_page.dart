@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/filter/filter_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
@@ -247,12 +248,11 @@ class ListHotel extends GetView<SearchHotelController> {
           HotelModel item,
           int index,
         ) {
-          // final itemPA = controller.listPhanAnh[index];
-          return InkWell(
-            onTap: () {},
-            child: ListHotelView(
-              hotelModel: item,
-            ),
+          final itemHotel = controller.listHotel[index];
+          return ListHotelView(
+            hotelModel: item,
+            onTap: () => Get.toNamed(HotelDetailPage.routeName,
+                arguments: {'hotelModel': itemHotel}),
           );
         },
         noItemsFoundIndicatorBuilder: (context) => const CustomNoDataWidget(

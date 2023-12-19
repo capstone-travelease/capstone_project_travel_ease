@@ -1,14 +1,15 @@
 import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_page.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListHotelView extends StatelessWidget {
-  const ListHotelView({Key? key, required this.hotelModel}) : super(key: key);
+  const ListHotelView({Key? key, required this.hotelModel, required this.onTap})
+      : super(key: key);
   final HotelModel hotelModel;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,7 +17,7 @@ class ListHotelView extends StatelessWidget {
       child: Hero(
         tag: UniqueKey(),
         child: InkWell(
-          onTap: () => Get.toNamed(HotelDetailPage.routeName),
+          onTap: onTap,
           child: DecoratedBox(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12), color: Colors.white),

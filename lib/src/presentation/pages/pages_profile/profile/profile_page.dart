@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
 import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/change_password/change_password_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/edit_profile/edit_profile_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/help/help_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/profile/profile_controller.dart';
 import 'package:extended_image/extended_image.dart';
@@ -94,13 +91,7 @@ class ProfilePage extends GetView<ProfileController> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: InkWell(
-                              onTap: () => Get.toNamed(
-                                EditProfilePage.routeName,
-                                arguments: {
-                                  'userModel': controller
-                                      .checkLoginController.user.value,
-                                },
-                              ),
+                              onTap: () => controller.pushEditProfile(),
                               child: DecoratedBox(
                                 decoration: BoxDecoration(
                                   color: Colors.redAccent,
@@ -129,8 +120,7 @@ class ProfilePage extends GetView<ProfileController> {
                                 ChangePassWordPage.routeName,
                                 arguments: {
                                   'userId': controller
-                                          .checkLoginController.userid.value ??
-                                      -1,
+                                      .checkLoginController.userid.value,
                                 },
                               ),
                               child: DecoratedBox(
@@ -266,7 +256,7 @@ class InformationProfile extends GetView<CheckLoginController> {
         ),
         Obx(
           () => Text(
-            controller.user.value?.full_name ?? '',
+            controller.user.value?.fullName ?? '',
             style: Get.textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.bold,
             ),
