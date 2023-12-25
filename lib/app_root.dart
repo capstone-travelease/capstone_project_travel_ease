@@ -20,7 +20,7 @@ class _AppRootState extends State<AppRoot> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'TravelEase',
-      locale: DevicePreview.locale(context),
+      locale: const Locale("vi", "VI"),
       builder: DevicePreview.appBuilder,
       getPages: RouterConfigs.routes,
       debugShowCheckedModeBanner: false,
@@ -29,6 +29,10 @@ class _AppRootState extends State<AppRoot> {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'), // Support English as well, if needed
+        Locale('vi', 'VN'),
       ],
       theme: CoreTheme.theme,
       initialRoute: AppStartView.routeName,

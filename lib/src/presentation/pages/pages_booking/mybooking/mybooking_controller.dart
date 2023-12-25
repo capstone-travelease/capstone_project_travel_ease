@@ -30,9 +30,4 @@ class MyBookingController extends GetxController
     selected.call(tab);
     tabController?.animateTo(tabs.indexOf(tab));
   }
-
-  Future<void> pushLogin() async {
-    await Get.toNamed(LoginView.routeName);
-    await checkLoginController.checkLogin();
-  }
 }

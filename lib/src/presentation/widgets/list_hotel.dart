@@ -1,12 +1,15 @@
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_page.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListHotelView extends StatelessWidget {
-  const ListHotelView({Key? key}) : super(key: key);
-
+  const ListHotelView({Key? key, required this.hotelModel, required this.onTap})
+      : super(key: key);
+  final HotelModel hotelModel;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -14,7 +17,7 @@ class ListHotelView extends StatelessWidget {
       child: Hero(
         tag: UniqueKey(),
         child: InkWell(
-          onTap: () => Get.toNamed(HotelDetailPage.routeName),
+          onTap: onTap,
           child: DecoratedBox(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12), color: Colors.white),
@@ -31,7 +34,7 @@ class ListHotelView extends StatelessWidget {
                           width: 80,
                           height: 80,
                           child: ExtendedImage.network(
-                            'https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_SEDK_01.jpg',
+                            Constant.baseImageUrl + (hotelModel.images ?? ''),
                             fit: BoxFit.cover,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(12)),
@@ -60,24 +63,34 @@ class ListHotelView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Intercontinental Hotel',
+                                hotelModel.hotelName ?? '',
                                 style: Get.textTheme.bodyMedium!
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(
                                 height: 8,
                               ),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.location_on_outlined,
-                                    size: 16,
-                                  ),
-                                  Text(
-                                    'Hồ Chí Minh',
-                                    style: Get.textTheme.bodySmall!.copyWith(),
-                                  ),
-                                ],
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    const WidgetSpan(
+                                      alignment: PlaceholderAlignment.middle,
+                                      child: Icon(
+                                        Icons.location_on_outlined,
+                                        size: 18,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                    const TextSpan(
+                                      text: ' ',
+                                    ),
+                                    TextSpan(
+                                      text: hotelModel.hotelCity ?? '',
+                                      style: Get.textTheme.bodySmall!
+                                          .copyWith(color: Colors.grey[500]),
+                                    )
+                                  ],
+                                ),
                               ),
                               const SizedBox(
                                 height: 8,
@@ -86,7 +99,7 @@ class ListHotelView extends StatelessWidget {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: "4,600,00,000đ",
+                                      text: hotelModel.price.toString(),
                                       style: Get.textTheme.bodySmall!.copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.green),
@@ -123,25 +136,18 @@ class ListHotelView extends StatelessWidget {
                               text: ' ',
                             ),
                             TextSpan(
-                              text: '5.0',
+                              text: hotelModel.starRating.toString(),
                               style: Get.textTheme.bodySmall!.copyWith(),
                             )
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        '(1000000 View)',
-                        style: Get.textTheme.bodySmall,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Icon(
-                        Icons.bookmark_outline_outlined,
-                        size: 30,
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Icon(
+                          Icons.bookmark_outline_outlined,
+                          size: 30,
+                        ),
                       )
                     ],
                   ),

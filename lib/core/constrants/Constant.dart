@@ -13,5 +13,8 @@ class Constant {
 
   static const String userClientTAG = 'UserModule|UserClient';
   static const String uerSerServiceTAG = 'UserModule|UserService';
+  static const String bookingClientTAG = 'bookingModule|bookingClient';
+  static const String bookingServiceTAG = 'bookingModule|bookingService';
   static const String dioTAG = 'app|Dio';
+  static const String baseImageUrl = 'http://34.142.198.2/';
 }

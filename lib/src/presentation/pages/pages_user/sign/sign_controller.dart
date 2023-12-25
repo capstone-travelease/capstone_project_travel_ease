@@ -16,7 +16,7 @@ class SignController extends GetxController {
   final RegExp specialCharsRegex =
       RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
   bool isChecked = false;
-  final RxBool isLoading = true.obs;
+  final RxBool isLoading = false.obs;
   RxBool showPassword = false.obs;
   RxBool showConfirmPassword = false.obs;
   final keyForm = GlobalKey<FormState>();
@@ -24,11 +24,11 @@ class SignController extends GetxController {
   final NotificationConfig notificationConfig = Get.find();
   @override
   void onInit() {
-    emailEditController = TextEditingController();
-    passwordEditController = TextEditingController();
-    nameEditController = TextEditingController();
-    phoneEditController = TextEditingController();
-    confirmPasswordEditController = TextEditingController();
+    emailEditController = TextEditingController(text: 'anh@gmail.com');
+    passwordEditController = TextEditingController(text: 'Anh12345@');
+    nameEditController = TextEditingController(text: 'Xuan Anh');
+    phoneEditController = TextEditingController(text: '1234567890');
+    confirmPasswordEditController = TextEditingController(text: 'Anh12345@');
     super.onInit();
   }
 
@@ -41,6 +41,7 @@ class SignController extends GetxController {
   }
 
   Future<void> onSend() async {
+    isLoading.call(true);
     if (keyForm.currentState!.validate()) {
       try {
         await _userService.signUser(

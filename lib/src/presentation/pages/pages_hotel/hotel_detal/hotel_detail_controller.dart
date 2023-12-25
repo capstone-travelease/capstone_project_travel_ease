@@ -1,11 +1,12 @@
+import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HotelDetailController extends GetxController {
   final activeIndex = 0.obs;
-  late int hotelId;
   final RxList<String> listImage = <String>[].obs;
+  late HotelModel hotelModel;
   String fullText =
       'Khách sạn 5 sao là điểm đến hoàn hảo cho những người yêu thích sự sang trọng và dịch vụ tối ưu. Nơi đây đượng thiết kế với đẳng cấp và vẻ đẹp tối tân, từ kiến trúc đến nội thất. Khách sạn này cung cấp các dịch vụ cao cấp như nhà hàng 5 sao, spa, phòng tập thể dục, hồ bơi và quầy bar tại tầng thượng với tầm nhìn ấn tượng. Đội ngũ nhân viên luôn sẵn sàng phục vụ mọi nhu cầu của khách hàng, từ đón tiếp đến dịch vụ phòng hàng ngày. Tại đây, bạn sẽ tận hưởng kỳ nghỉ đáng nhớ trong không gian tuyệt vời và tiện nghi đỉnh cao.';
 
@@ -25,6 +26,7 @@ class HotelDetailController extends GetxController {
 
   @override
   void onInit() {
+    hotelModel = Get.arguments['hotelModel'];
     loadData();
     super.onInit();
   }

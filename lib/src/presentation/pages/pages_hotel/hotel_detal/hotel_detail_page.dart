@@ -1,5 +1,6 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
@@ -118,7 +119,7 @@ class HotelDetailPage extends GetView<HotelDetailController> {
   }
 }
 
-class AddressView extends StatelessWidget {
+class AddressView extends GetView<HotelDetailController> {
   const AddressView({Key? key}) : super(key: key);
 
   @override
@@ -131,7 +132,7 @@ class AddressView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              'Royale President Hotel',
+              controller.hotelModel.hotelName ?? '',
               style: Get.textTheme.headlineSmall!
                   .copyWith(fontWeight: FontWeight.bold),
             ),
@@ -153,8 +154,7 @@ class AddressView extends StatelessWidget {
                     text: ' ',
                   ),
                   TextSpan(
-                    text:
-                        '2 Đường C - Bắc, Tân Phú, Quận 7, Thành phố Hồ Chí Minh, Việt Nam',
+                    text: controller.hotelModel.hotelCity ?? '',
                     style: Get.textTheme.bodySmall!
                         .copyWith(color: Colors.grey[500]),
                   )
@@ -234,7 +234,7 @@ class Facilities extends StatelessWidget {
   }
 }
 
-class Review extends StatelessWidget {
+class Review extends GetView<HotelDetailController> {
   const Review({Key? key}) : super(key: key);
 
   @override
@@ -267,7 +267,7 @@ class Review extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: '4.9',
+                            text: controller.hotelModel.starRating.toString(),
                             style: Get.textTheme.headlineSmall!
                                 .copyWith(color: Colors.white),
                           ),
@@ -426,7 +426,7 @@ class Description extends GetView<HotelDetailController> {
   }
 }
 
-class GetFooter extends StatelessWidget {
+class GetFooter extends GetView<HotelDetailController> {
   const GetFooter({Key? key}) : super(key: key);
 
   @override
@@ -449,7 +449,14 @@ class GetFooter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             InkWell(
-              onTap: () => Get.toNamed(ListRoomPage.routeName),
+              onTap: () => Get.toNamed(
+                ListRoomPage.routeName,
+                preventDuplicates: false,
+                arguments: ArgListRoom(
+                    location: controller.hotelModel.hotelCity ?? '',
+                    hotelName: controller.hotelModel.hotelName ?? '',
+                    hotelId: controller.hotelModel.hotelId ?? -1),
+              ),
               child: DecoratedBox(
                 decoration: BoxDecoration(
                     color: Colors.deepOrange,
@@ -468,7 +475,7 @@ class GetFooter extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: '4,600,000đ',
+                    text: controller.hotelModel.price.toString(),
                     style: Get.textTheme.titleLarge!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),

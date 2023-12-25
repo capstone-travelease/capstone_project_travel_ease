@@ -111,10 +111,12 @@ class RoomDetailPage extends GetView<RoomDetailController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Standard Room',
-                  style: Get.textTheme.titleLarge!
-                      .copyWith(fontWeight: FontWeight.bold),
+                Obx(
+                  () => Text(
+                    controller.room.value?.roomName ?? '',
+                    style: Get.textTheme.titleLarge!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
                 ),
                 const Divider(
                   color: Colors.grey,
@@ -179,7 +181,7 @@ class RoomDetailPage extends GetView<RoomDetailController> {
   }
 }
 
-class GetFooter extends StatelessWidget {
+class GetFooter extends GetView<RoomDetailController> {
   const GetFooter({Key? key}) : super(key: key);
 
   @override
@@ -228,23 +230,25 @@ class GetFooter extends StatelessWidget {
                       ),
                     ),
                   ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                            text: 'Total Price \n ',
-                            style: Get.textTheme.bodySmall!),
-                        TextSpan(
-                          text: '4,600,000đ',
-                          style: Get.textTheme.titleLarge!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        TextSpan(
-                            text: '\n/per night',
-                            style: Get.textTheme.bodySmall!),
-                      ],
+                  Obx(
+                    () => RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: 'Total Price \n ',
+                              style: Get.textTheme.bodySmall!),
+                          TextSpan(
+                            text: controller.room.value?.roomPrice.toString(),
+                            style: Get.textTheme.titleLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                              text: '\n/per night',
+                              style: Get.textTheme.bodySmall!),
+                        ],
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

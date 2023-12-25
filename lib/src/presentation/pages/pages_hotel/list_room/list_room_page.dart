@@ -1,10 +1,14 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/room_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/room_detail/room_detail_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ListRoomPage extends GetView<ListRoomController> {
   static const String routeName = '/ListRoomPage';
@@ -15,64 +19,53 @@ class ListRoomPage extends GetView<ListRoomController> {
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.background,
       appBar: const Appbar(),
-      body: ListView.builder(
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const ListImage(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10.0, vertical: 6),
-                    child: Text(
-                      'Standard Room',
-                      style: Get.textTheme.titleLarge!.copyWith(
-                          color: Colors.redAccent, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: SizedBox(
-                      height: 30,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Row(
-                              children: [
-                                const Icon(
-                                  Icons.bedroom_parent_outlined,
-                                  size: 20,
-                                ),
-                                Text(
-                                  '1 king bed',
-                                  style: Get.textTheme.bodySmall,
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    color: Colors.grey[400],
-                  ),
-                  const ListRoom(),
-                ],
+      body: PagedListView<int, RoomModel>.separated(
+        shrinkWrap: true,
+        pagingController: controller.pagingController,
+        builderDelegate: PagedChildBuilderDelegate(
+          itemBuilder: (
+            BuildContext context,
+            RoomModel item,
+            int index,
+          ) {
+            // final itemPA = controller.listPhanAnh[index];
+            return InkWell(
+                onTap: () {},
+                child: ListRooms(
+                  roomModel: item,
+                ));
+          },
+          noItemsFoundIndicatorBuilder: (context) => const CustomNoDataWidget(
+            noiDung: 'Không có dữ liệu',
+            isSearch: false,
+          ),
+          firstPageProgressIndicatorBuilder: (context) {
+            return const Center(child: CircularProgressIndicator());
+          },
+          newPageProgressIndicatorBuilder: (context) => SizedBox(
+            height: 30,
+            child: Center(
+              child: CupertinoActivityIndicator(
+                color: Get.theme.colorScheme.primary,
               ),
             ),
-          );
-        },
+          ),
+          firstPageErrorIndicatorBuilder: (context) => const CustomNoDataWidget(
+            noiDung: 'Không có dữ liệu',
+            isSearch: false,
+          ),
+          newPageErrorIndicatorBuilder: (context) => const CustomNoDataWidget(
+            noiDung: 'Có lỗi xảy ra. Vui lòng thử lại!',
+            isSearch: false,
+          ),
+        ),
+        separatorBuilder: (_, __) => const Divider(
+          endIndent: 0,
+          thickness: 1,
+          indent: 0,
+          height: 0,
+          color: Colors.transparent,
+        ),
       ),
     );
   }
@@ -114,7 +107,7 @@ class Appbar extends GetView<ListRoomController>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Royale President Hotel',
+                          controller.argListRoom.hotelName,
                           style: Get.textTheme.titleMedium!.copyWith(
                               fontWeight: FontWeight.bold, color: Colors.white),
                         ),
@@ -133,7 +126,7 @@ class Appbar extends GetView<ListRoomController>
                                 text: ' ',
                               ),
                               TextSpan(
-                                text: 'Hồ Chí Minh',
+                                text: controller.argListRoom.location,
                                 style: Get.textTheme.bodySmall!
                                     .copyWith(color: Colors.white),
                               )
@@ -162,6 +155,236 @@ class Appbar extends GetView<ListRoomController>
   @override
   // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(70);
+}
+
+class ListRooms extends StatelessWidget {
+  const ListRooms({Key? key, required this.roomModel}) : super(key: key);
+  final RoomModel roomModel;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: InkWell(
+        onTap: () => Get.toNamed(RoomDetailPage.routeName,
+            arguments: {"roomId": roomModel.roomId}),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ListImage(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6),
+                child: Text(
+                  roomModel.roomName ?? '',
+                  style: Get.textTheme.titleLarge!.copyWith(
+                      color: Colors.redAccent, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: SizedBox(
+                  height: 30,
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        const WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            Icons.square_foot_outlined,
+                            size: 18,
+                          ),
+                        ),
+                        const TextSpan(
+                          text: ' ',
+                        ),
+                        TextSpan(
+                          text: roomModel.roomSize ?? '',
+                          style: Get.textTheme.bodySmall!.copyWith(),
+                        ),
+                        const TextSpan(
+                          text: '     ',
+                        ),
+                        const WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            Icons.bed,
+                            size: 18,
+                          ),
+                        ),
+                        const TextSpan(
+                          text: ' ',
+                        ),
+                        TextSpan(
+                          text:
+                              "${roomModel.roomBedQuantity.toString()} ${'Bed Quantity'}",
+                          style: Get.textTheme.bodySmall!.copyWith(),
+                        ),
+                        const TextSpan(
+                          text: '     ',
+                        ),
+                        const WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            Icons.people_outline,
+                            size: 18,
+                          ),
+                        ),
+                        const TextSpan(
+                          text: ' ',
+                        ),
+                        TextSpan(
+                          text:
+                              " ${roomModel.roomCapacity.toString()} ${'capacity'}",
+                          style: Get.textTheme.bodySmall!.copyWith(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Divider(
+                color: Colors.grey[400],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12.0, vertical: 6),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.people),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          '2 guest(s)/room',
+                          style: Get.textTheme.bodySmall,
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.people),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          '2 guest(s)/room',
+                          style: Get.textTheme.bodySmall,
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.people),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              '2 guest(s)/room',
+                              style: Get.textTheme.bodySmall,
+                            )
+                          ],
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                  text:
+                                      ' ${roomModel.roomPrice! + 100}', // Replace with your original price
+                                  style: Get.textTheme.bodySmall!.copyWith(
+                                    fontStyle: FontStyle.italic,
+                                    decoration: TextDecoration.lineThrough,
+                                  )),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.people),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              '2 guest(s)/room',
+                              style: Get.textTheme.bodySmall,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              roomModel.roomPrice.toString(),
+                              style: Get.textTheme.bodyLarge,
+                            ),
+                            Text(
+                              '/per night',
+                              style: Get.textTheme.bodySmall,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(''),
+                        InkWell(
+                          onTap: () => Get.toNamed(BookingPage.routeName),
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.circular(16)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 16),
+                              child: Center(
+                                child: Text(
+                                  'Book now',
+                                  style: Get.textTheme.bodyMedium!
+                                      .copyWith(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class ListImage extends GetView<ListRoomController> {
@@ -202,145 +425,6 @@ class ListImage extends GetView<ListRoomController> {
               ),
             );
           }),
-    );
-  }
-}
-
-class ListRoom extends StatelessWidget {
-  const ListRoom({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Get.toNamed(RoomDetailPage.routeName),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
-            child: Row(
-              children: [
-                const Icon(Icons.people),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  '2 guest(s)/room',
-                  style: Get.textTheme.bodySmall,
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: Row(
-              children: [
-                const Icon(Icons.people),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  '2 guest(s)/room',
-                  style: Get.textTheme.bodySmall,
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.people),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      '2 guest(s)/room',
-                      style: Get.textTheme.bodySmall,
-                    )
-                  ],
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                          text:
-                              '7.600.000đ', // Replace with your original price
-                          style: Get.textTheme.bodySmall!.copyWith(
-                            fontStyle: FontStyle.italic,
-                            decoration: TextDecoration.lineThrough,
-                          )),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.people),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      '2 guest(s)/room',
-                      style: Get.textTheme.bodySmall,
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      '4.600.000đ',
-                      style: Get.textTheme.bodyLarge,
-                    ),
-                    Text(
-                      '/per night',
-                      style: Get.textTheme.bodySmall,
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(''),
-                InkWell(
-                  onTap: () => Get.toNamed(BookingPage.routeName),
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                        color: Colors.redAccent,
-                        borderRadius: BorderRadius.circular(16)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12.0, horizontal: 16),
-                      child: Center(
-                        child: Text(
-                          'Book now',
-                          style: Get.textTheme.bodyMedium!
-                              .copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/edit_profile/edit_profile_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/my_bookmark/my_bookmark_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/login/login_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_notification.dart';
@@ -7,15 +8,10 @@ import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
   final CheckLoginController checkLoginController = Get.find();
+  final RxBool isLoading = false.obs;
   @override
   void onInit() {
-    // checkLoginController.checkLogin();
     super.onInit();
-  }
-
-  Future<void> pushLogin() async {
-    await Get.toNamed(LoginView.routeName);
-    await checkLoginController.checkLogin();
   }
 
   Future<void> geToBookMark() async {
@@ -35,6 +31,16 @@ class ProfileController extends GetxController {
     } else {
       Get.toNamed(MyBookMarkPage.routeName);
     }
+  }
+
+  Future<void> pushEditProfile() async {
+    Get.toNamed(
+      EditProfilePage.routeName,
+      arguments: {
+        'userModel': checkLoginController.user.value,
+      },
+    );
+    await checkLoginController.checkLogin();
   }
 
   Future<void> logOut() async {

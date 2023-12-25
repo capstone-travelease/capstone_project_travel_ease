@@ -1,3 +1,6 @@
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/room_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
 import 'package:get/get.dart';
 
 class RoomDetailController extends GetxController {
@@ -13,10 +16,24 @@ class RoomDetailController extends GetxController {
     'https://asiky.com/files/images/Article/tin-tuc/chup-anh-khach-san.jpg',
     'https://cf.bstatic.com/xdata/images/hotel/max1024x768/382586584.jpg?k=c615c33d39628661129df3581cdf4eacc434cccdd69ed4fc62be839d28f526af&o=&hp=1'
   ];
+  final BookingService _bookingService =
+      Get.find(tag: Constant.bookingServiceTAG);
+  final Rxn<RoomModel> room = Rxn<RoomModel>();
   @override
   void onInit() {
+    roomId = Get.arguments['roomId'];
+    fetchRoomDetail();
     loadData();
     super.onInit();
+  }
+
+  Future<void> fetchRoomDetail() async {
+    try {
+      final res = await _bookingService.detailRoom(roomId: roomId);
+      room.call(res);
+    } catch (e) {
+      Get.log(e.toString());
+    }
   }
 
   Future<void> loadData() async {

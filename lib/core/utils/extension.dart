@@ -11,7 +11,7 @@ extension Validation on String? {
 
 extension FormatDateTime on DateTime? {
   String formatDateAndTimeToString() {
-    return this == null ? '' : DateFormat('HH:mm dd/MM/yyyy').format(this!);
+    return this == null ? '' : DateFormat('dd/MM/yyyy').format(this!);
   }
 
   String formatDateToString() {

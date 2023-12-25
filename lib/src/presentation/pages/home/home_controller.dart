@@ -1,3 +1,6 @@
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/user_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/notification/notification_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/login/login_page.dart';
@@ -6,7 +9,8 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   final RxList<String> listImage = <String>[].obs;
-  // String? fullname;
+  final RxBool isLoading = false.obs;
+  int userId = 0;
   final CheckLoginController checkLoginController = Get.find();
   List<String> dsImage = [
     'https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_SEDK_01.jpg',
@@ -17,19 +21,13 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    loadData();
+    loadDataImage();
     // checkLoginController.checkLogin();
-    // fullname == checkLoginController.fullName.value;
     super.onInit();
   }
 
-  Future<void> loadData() async {
+  Future<void> loadDataImage() async {
     listImage.call(dsImage);
-  }
-
-  Future<void> pushLogin() async {
-    await Get.toNamed(LoginView.routeName);
-    await checkLoginController.checkLogin();
   }
 
   Future<void> geToNotification() async {

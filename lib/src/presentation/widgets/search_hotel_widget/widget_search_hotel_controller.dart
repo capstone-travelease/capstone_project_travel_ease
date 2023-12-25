@@ -1,4 +1,5 @@
 import 'package:capstone_project_travel_ease/core/utils/noti_config.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/location_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,13 +13,10 @@ class WidgetSearchHotelController extends GetxController {
   final NotificationConfig tinTucConfig = Get.find();
   final RxInt numberRoom = 1.obs;
   final RxInt numberAdult = 2.obs;
-  List<String> dsTp = ['Hồ Chi Minh', 'Đà Lạt', 'Đà Nẵng', 'Hà Nội'];
-  final RxList<String> listitem = <String>[].obs;
-  final Rxn<String> selectedLocation = Rxn();
+  final Rxn<LocationModel> selectedLocation = Rxn();
 
   @override
   void onInit() {
-    fetchData();
     super.onInit();
   }
 
@@ -50,15 +48,9 @@ class WidgetSearchHotelController extends GetxController {
     }
   }
 
-  Future<void> fetchData() async {
-    listitem.call(dsTp);
-  }
-
-  void selectLocation(String? value) {
+  void selectLocation(LocationModel? value) {
     if (selectedLocation.value != value) {
       selectedLocation.call(value);
-      // location = value;
-      // Get.back(result: selectedLocation.value);
       return;
     }
   }

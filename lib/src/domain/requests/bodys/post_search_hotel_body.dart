@@ -5,8 +5,8 @@ class PostSearchHotelBody extends Equatable {
       {required this.location,
       required this.fromDate,
       required this.toDate,
-      required this.numberAdult,
-      required this.numberRoom,
+      required this.adultNumber,
+      required this.roomNumber,
       this.hotelName,
       this.priceFrom,
       this.toPrice,
@@ -16,9 +16,9 @@ class PostSearchHotelBody extends Equatable {
       this.priceFromLowToHigh});
   final String location;
   final DateTime fromDate;
-  final String toDate;
-  final int numberRoom;
-  final bool numberAdult;
+  final DateTime toDate;
+  final int roomNumber;
+  final int adultNumber;
   final String? hotelName;
   final int? priceFrom;
   final int? toPrice;
@@ -30,10 +30,10 @@ class PostSearchHotelBody extends Equatable {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'location': location,
-      'fromDate': fromDate,
-      'toDate': toDate,
-      'numberRoom': numberRoom,
-      'numberAdult': numberAdult,
+      'fromDate': fromDate.toIso8601String(),
+      'toDate': toDate.toIso8601String(),
+      'roomNumber': roomNumber,
+      'adultNumber': adultNumber,
       'hotelName': hotelName,
       'priceFrom': priceFrom,
       'toPrice': toPrice,
@@ -47,9 +47,9 @@ class PostSearchHotelBody extends Equatable {
   PostSearchHotelBody copyWith({
     String? location,
     DateTime? fromDate,
-    String? toDate,
-    int? numberRoom,
-    bool? numberAdult,
+    DateTime? toDate,
+    int? roomNumber,
+    int? adultNumber,
     String? hotelName,
     int? priceFrom,
     int? toPrice,
@@ -62,8 +62,8 @@ class PostSearchHotelBody extends Equatable {
       location: location ?? this.location,
       fromDate: fromDate ?? this.fromDate,
       toDate: toDate ?? this.toDate,
-      numberAdult: numberAdult ?? this.numberAdult,
-      numberRoom: numberRoom ?? this.numberRoom,
+      adultNumber: adultNumber ?? this.adultNumber,
+      roomNumber: roomNumber ?? this.roomNumber,
       hotelName: hotelName ?? this.hotelName,
       toPrice: toPrice ?? this.toPrice,
       facilities: facilities ?? this.facilities,
@@ -76,7 +76,7 @@ class PostSearchHotelBody extends Equatable {
   @override
   String toString() {
     return 'PostSearchHotelBody('
-        'location: $location, fromDate: $fromDate, toDate: $toDate, numberAdult: $numberAdult,numberRoom: $numberRoom,hotelName: $hotelName, toPrice: $toPrice, facilities: $facilities, priceFrom: $priceFrom, priceFromHighToLow: $priceFromHighToLow,, priceFromLowToHigh: $priceFromLowToHigh)';
+        'location: $location, fromDate: $fromDate, toDate: $toDate, roomNumber: $roomNumber,adultNumber: $adultNumber,hotelName: $hotelName, toPrice: $toPrice, facilities: $facilities, priceFrom: $priceFrom, priceFromHighToLow: $priceFromHighToLow,, priceFromLowToHigh: $priceFromLowToHigh)';
   }
 
   @override
