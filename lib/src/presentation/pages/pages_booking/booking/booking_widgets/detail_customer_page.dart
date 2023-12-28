@@ -68,10 +68,11 @@ class DetailCustomerPage extends StatelessWidget {
                   : const SizedBox.shrink()),
 
               Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10, left: 12),
                 child: Text(
                   'Your detail',
-                  style: Get.textTheme.titleMedium!.copyWith(),
+                  style: Get.textTheme.titleMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
@@ -82,40 +83,11 @@ class DetailCustomerPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Name',
-                        style: Get.theme.textTheme.bodyMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return value.checkEmpty(ErrorAndIsEmtys.name);
-                          }
-                          if (controller.nameEditController.text.length > 30) {
-                            return ErrorAndIsEmtys.nameError;
-                          }
-                          return null;
-                        },
-                        controller: controller.nameEditController,
-                        style: context.theme.textTheme.bodyMedium?.copyWith(
-                            // color: context.theme.hintColor,
-                            ),
-                        decoration: InputDecoration(
-                          alignLabelWithHint: true,
-                          hintText: 'Your Name',
-                          hintStyle: context.theme.textTheme.bodySmall
-                              ?.copyWith(color: Colors.grey[500]),
-                        ),
-                      ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
-                        'Name',
+                        'Full Name',
                         style: Get.theme.textTheme.bodyMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),

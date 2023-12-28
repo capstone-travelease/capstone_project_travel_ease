@@ -5,9 +5,13 @@ import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_sear
 
 abstract interface class BookingService {
   Future<List<HotelModel>> searchHotel({required PostSearchHotelBody body});
+
   Future<List<LocationModel>> getLocation();
-// Future detailHotel();
+
+  Future<HotelModel> detailHotel({required int hotelId});
+
   Future<List<RoomModel>> listRooms({required int hotelId});
+
   Future<RoomModel> detailRoom({required int roomId});
 // Future booking();
 }

@@ -1,14 +1,18 @@
+import 'dart:io';
+
 import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/user_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/patch_update_pass_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_sign_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/put_update_user_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
-import 'package:capstone_project_travel_ease/src/infrastructure/client/user_client/user_client.dart';
-import 'package:get/get.dart';
+import 'package:capstone_project_travel_ease/src/infrastructure/base/user_client/user_client.dart';
+import 'package:dio/dio.dart';
+import 'package:get/get.dart' as get_x;
+import 'package:http/http.dart' as http;
 
 class UserRepository implements UserService {
-  final _userClient = Get.find<UserClient>(tag: Constant.userClientTAG);
+  final _userClient = get_x.Get.find<UserClient>(tag: Constant.userClientTAG);
   @override
   Future<String> signUser({required PostSignBody body}) async {
     try {
@@ -76,6 +80,25 @@ class UserRepository implements UserService {
       final res = await _userClient.updateUser(userId, body);
       if (res != null) {
         return res['message'];
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> updateImage({required int userId, required File file}) async {
+    try {
+      final filed = await MultipartFile.fromFile(file.path);
+      Dio().options.headers["Content-Type"] = "multipart/form-data";
+      final res = await Dio().post(
+        'http://34.142.198.2:3634/user/updateimage?userid=$userId',
+        data: FormData.fromMap({'image': filed}),
+      );
+      if (res != null) {
+        return res.toString();
       } else {
         throw Exception('Request Error: $res');
       }

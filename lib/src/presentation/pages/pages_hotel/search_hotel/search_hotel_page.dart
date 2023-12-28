@@ -252,7 +252,7 @@ class ListHotel extends GetView<SearchHotelController> {
           return ListHotelView(
             hotelModel: item,
             onTap: () => Get.toNamed(HotelDetailPage.routeName,
-                arguments: {'hotelModel': itemHotel}),
+                arguments: {'hotelId': itemHotel.hotelId}),
           );
         },
         noItemsFoundIndicatorBuilder: (context) => const CustomNoDataWidget(

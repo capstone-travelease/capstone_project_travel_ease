@@ -18,4 +18,7 @@ abstract class BookingClient {
 
   @GET('/api/room/detail/get-room?roomId={roomId}')
   Future detailRoom(@Path('roomId') int roomId);
+
+  @GET('/api/hotel/detail?hotelId={hotelId}')
+  Future detailHotel(@Path('hotelId') int hotelId);
 }

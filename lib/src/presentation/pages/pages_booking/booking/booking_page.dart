@@ -1,6 +1,8 @@
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/room_detail/room_detail_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'package:timeline_tile/timeline_tile.dart';
 
@@ -16,7 +18,20 @@ class BookingPage extends GetView<BookingController> {
           physics: const NeverScrollableScrollPhysics(),
           controller: controller.pageController,
           children: controller.pages),
-      bottomNavigationBar: const Footer(),
+      bottomNavigationBar: Obx(
+        () => Footer(
+          onTap: () {
+            controller.nextToStepAndPage();
+          },
+          text: Text(
+            (controller.currentStepAndPage == controller.pages.length - 1)
+                ? 'Confirm Booking'
+                : 'Next Step',
+            style: Get.textTheme.bodyMedium!
+                .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -127,7 +142,13 @@ class AppbarBooking extends GetView<BookingController>
 }
 
 class Footer extends GetView<BookingController> {
-  const Footer({Key? key}) : super(key: key);
+  final VoidCallback onTap;
+  final Text text;
+  const Footer({
+    Key? key,
+    required this.onTap,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -148,27 +169,31 @@ class Footer extends GetView<BookingController> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                      text: 'Total Price \n', style: Get.textTheme.bodySmall!),
-                  TextSpan(
-                    text: '4,600,000đ',
-                    style: Get.textTheme.titleLarge!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(
-                      text: '\nIncludes taxes',
-                      style: Get.textTheme.bodySmall!),
-                ],
+            Obx(
+              () => RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Total Price \n',
+                        style: Get.textTheme.bodySmall!),
+                    TextSpan(
+                      text: controller.room.value?.roomPrice != null
+                          ? NumberFormat.currency(
+                                  locale: 'vi_VN', symbol: 'VND')
+                              .format(controller.room.value?.roomPrice)
+                          : '',
+                      style: Get.textTheme.titleLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    TextSpan(
+                        text: '\nIncludes taxes',
+                        style: Get.textTheme.bodySmall!),
+                  ],
+                ),
               ),
             ),
             InkWell(
-              onTap: () {
-                controller.nextToStepAndPage();
-                // controller.nextToStep();
-              },
+              onTap: onTap,
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: Colors.redAccent,
@@ -177,16 +202,7 @@ class Footer extends GetView<BookingController> {
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 22),
-                  child: Obx(
-                    () => Text(
-                      (controller.currentStepAndPage ==
-                              controller.pages.length - 1)
-                          ? 'Confirm Booking'
-                          : 'Next Step',
-                      style: Get.textTheme.bodyMedium!.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  child: text,
                 ),
               ),
             )

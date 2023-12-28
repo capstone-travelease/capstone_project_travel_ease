@@ -24,3 +24,14 @@ extension FormatDateTime on DateTime? {
     return this == null ? '' : DateFormat('EE, d MMM y', 'vi_VN').format(this!);
   }
 }
+
+extension DateTimeExt on DateTime {
+  bool isSameDay(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
+  }
+
+  /// Returns a new [DateTime] instance with the time set to 00:00:00.000.
+  DateTime toStartOfDay() {
+    return DateTime(year, month, day);
+  }
+}

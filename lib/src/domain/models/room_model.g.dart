@@ -15,7 +15,9 @@ RoomModel _$RoomModelFromJson(Map<String, dynamic> json) => RoomModel(
       roomCapacity: json['room_capacity'] as int?,
       roomPrice: (json['room_price'] as num?)?.toDouble(),
       fileUrl: json['file_url'] as String?,
-      facilityName: json['facility_name'] as String?,
+      facilities: (json['facilities'] as List<dynamic>?)
+          ?.map((e) => FacilitiesModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$RoomModelToJson(RoomModel instance) => <String, dynamic>{
@@ -26,6 +28,6 @@ Map<String, dynamic> _$RoomModelToJson(RoomModel instance) => <String, dynamic>{
       'room_bed_quantity': instance.roomBedQuantity,
       'room_capacity': instance.roomCapacity,
       'file_url': instance.fileUrl,
-      'facility_name': instance.facilityName,
+      'facilities': instance.facilities?.map((e) => e.toJson()).toList(),
       'room_price': instance.roomPrice,
     };

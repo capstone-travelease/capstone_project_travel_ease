@@ -1,20 +1,19 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 
 class PutUpdateUserBody extends Equatable {
   const PutUpdateUserBody({
     required this.phone,
-    required this.fullname,
+    required this.fullName,
     this.gender,
     this.birthday,
   });
-  final String fullname;
+  final String fullName;
   final String phone;
   final DateTime? birthday;
   final bool? gender;
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'fullname': fullname,
+      'fullname': fullName,
       'phone': phone,
       'gender': gender,
       'birthday': birthday?.toIso8601String(),
@@ -28,7 +27,7 @@ class PutUpdateUserBody extends Equatable {
       DateTime? birthday,
       bool? gender}) {
     return PutUpdateUserBody(
-        fullname: fullname ?? this.fullname,
+        fullName: fullname ?? this.fullName,
         gender: gender ?? this.gender,
         phone: phone ?? this.phone,
         birthday: birthday ?? this.birthday);
@@ -36,10 +35,10 @@ class PutUpdateUserBody extends Equatable {
 
   @override
   String toString() {
-    return 'PutUpdateUserBody( fullname: $fullname, phonenumber: $phone,gender: $gender,birthday: $birthday)';
+    return 'PutUpdateUserBody( fullname: $fullName, phonenumber: $phone,gender: $gender,birthday: $birthday)';
   }
 
   @override
   // TODO: implement props
-  List<Object?> get props => [fullname, phone, gender, birthday];
+  List<Object?> get props => [fullName, phone, gender, birthday];
 }

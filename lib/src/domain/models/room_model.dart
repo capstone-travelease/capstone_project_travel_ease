@@ -1,3 +1,4 @@
+import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'room_model.g.dart';
@@ -13,7 +14,7 @@ class RoomModel {
       this.roomCapacity,
       this.roomPrice,
       this.fileUrl,
-      this.facilityName});
+      this.facilities});
   @JsonKey(name: 'room_id')
   int? roomId;
   @JsonKey(name: 'room_name')
@@ -28,8 +29,8 @@ class RoomModel {
   int? roomCapacity;
   @JsonKey(name: 'file_url')
   String? fileUrl;
-  @JsonKey(name: 'facility_name')
-  String? facilityName;
+  @JsonKey(name: 'facilities')
+  List<FacilitiesModel>? facilities;
   @JsonKey(name: 'room_price')
   double? roomPrice;
   factory RoomModel.fromJson(Map<String, dynamic> json) =>

@@ -29,7 +29,6 @@ class EditProfileController extends GetxController {
     genDer?.value = userModel.gender;
     nameEditController = TextEditingController(text: userModel.fullName);
     phoneEditController = TextEditingController(text: userModel.phoneNumber);
-    genDerEditController = TextEditingController();
     super.onInit();
   }
 
@@ -41,14 +40,32 @@ class EditProfileController extends GetxController {
     genDer?.value = newDate;
   }
 
+  Future updateImageUser({required File path}) async {
+    try {
+      await _userService.updateImage(
+          userId: checkLoginController.userid.value, file: path);
+      notificationConfig.showSnackBar(
+          title: 'Thông báo',
+          'Cập nhật thông tin Thành Công <3',
+          backgroundColor: Get.theme.colorScheme.primary);
+    } catch (error) {
+      String errorMessage = "Có lỗi xảy ra, vui lòng thử lại nhé!";
+      notificationConfig.showSnackBar(
+          title: 'Thông báo',
+          errorMessage,
+          backgroundColor: Get.theme.colorScheme.primary);
+      Get.log(error.toString());
+    }
+  }
+
   Future updateUser() async {
     if (keyForm.currentState!.validate()) {
       try {
         await _userService.updateUser(
-          userId: userModel.userId ?? -1,
+          userId: checkLoginController.userid.value,
           body: PutUpdateUserBody(
             phone: phoneEditController.text.trim(),
-            fullname: nameEditController.text.trim(),
+            fullName: nameEditController.text.trim(),
             gender: genDer?.value,
             birthday: birthday?.value,
           ),
@@ -77,6 +94,7 @@ class EditProfileController extends GetxController {
         await picker.pickImage(source: ImageSource.gallery);
     if (imageUser != null) {
       image.value = File(imageUser.path);
+      updateImageUser(path: image.value);
     } else {
       print('No image selected.');
     }
@@ -85,7 +103,5 @@ class EditProfileController extends GetxController {
   void _cleanInput() {
     nameEditController.text = '';
     phoneEditController.text = '';
-    genDerEditController.text = '';
-    // birthDayEditController.text = '';
   }
 }

@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:intl/intl.dart';
 
 class ListRoomPage extends GetView<ListRoomController> {
   static const String routeName = '/ListRoomPage';
@@ -249,136 +250,84 @@ class ListRooms extends StatelessWidget {
               Divider(
                 color: Colors.grey[400],
               ),
-              Column(
+              Stack(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12.0, vertical: 6),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.people),
-                        const SizedBox(
-                          width: 10,
+                  ListView.builder(
+                    padding: const EdgeInsets.only(top: 10),
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: roomModel.facilities?.length,
+                    itemBuilder: (context, index) {
+                      final item = roomModel.facilities?[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          item?.facilityName ?? '',
+                          style: Get.textTheme.bodyMedium,
                         ),
-                        Text(
-                          '2 guest(s)/room',
-                          style: Get.textTheme.bodySmall,
-                        )
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: Row(
+                  Positioned(
+                    bottom: 8,
+                    right: 10,
+                    child: Column(
                       children: [
-                        const Icon(Icons.people),
-                        const SizedBox(
-                          width: 10,
-                        ),
+                        Text('${roomModel.roomPrice! + 100}',
+                            style: Get.textTheme.bodySmall!.copyWith(
+                              fontStyle: FontStyle.italic,
+                              color: Colors.grey.shade500,
+                              decoration: TextDecoration.lineThrough,
+                            )),
                         Text(
-                          '2 guest(s)/room',
-                          style: Get.textTheme.bodySmall,
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.people),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              '2 guest(s)/room',
-                              style: Get.textTheme.bodySmall,
-                            )
-                          ],
-                        ),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                  text:
-                                      ' ${roomModel.roomPrice! + 100}', // Replace with your original price
-                                  style: Get.textTheme.bodySmall!.copyWith(
-                                    fontStyle: FontStyle.italic,
-                                    decoration: TextDecoration.lineThrough,
-                                  )),
-                            ],
+                          NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+                              .format(roomModel.roomPrice),
+                          style: Get.textTheme.bodyLarge?.copyWith(
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.bold,
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.people),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              '2 guest(s)/room',
-                              style: Get.textTheme.bodySmall,
-                            ),
-                          ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              roomModel.roomPrice.toString(),
-                              style: Get.textTheme.bodyLarge,
-                            ),
-                            Text(
-                              '/per night',
-                              style: Get.textTheme.bodySmall,
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(''),
-                        InkWell(
-                          onTap: () => Get.toNamed(BookingPage.routeName),
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                                color: Colors.redAccent,
-                                borderRadius: BorderRadius.circular(16)),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12.0, horizontal: 16),
-                              child: Center(
-                                child: Text(
-                                  'Book now',
-                                  style: Get.textTheme.bodyMedium!
-                                      .copyWith(color: Colors.white),
-                                ),
-                              ),
-                            ),
+                        Text(
+                          '/per night',
+                          style: Get.textTheme.bodySmall?.copyWith(
+                            color: Colors.grey.shade500,
                           ),
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(''),
+                    InkWell(
+                      onTap: () => Get.toNamed(BookingPage.routeName,
+                          arguments: {"roomId": roomModel.roomId}),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 12.0, horizontal: 16),
+                          child: Center(
+                            child: Text(
+                              'Book now',
+                              style: Get.textTheme.bodyMedium!
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

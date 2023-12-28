@@ -1,8 +1,10 @@
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class FinishBookingPage extends StatelessWidget {
   static const String routeName = '/BookingOverview';
@@ -341,11 +343,7 @@ class BookingInformation extends GetView<BookingController> {
                 controller.phoneEditController.text,
                 style: Get.textTheme.bodyMedium!.copyWith(),
               ),
-              Text(
-                'Royale President Hotel',
-                style: Get.textTheme.titleLarge!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
+              const HotelSelect(),
               const DataSearchFinish(),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -356,10 +354,13 @@ class BookingInformation extends GetView<BookingController> {
                       style: Get.textTheme.titleLarge!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
-                    Text(
-                      '4,600,000đ',
-                      style: Get.textTheme.titleLarge?.copyWith(),
-                    ),
+                    Obx(
+                      () => Text(
+                        NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+                            .format(controller.room.value?.roomPrice),
+                        style: Get.textTheme.titleLarge?.copyWith(),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -367,6 +368,18 @@ class BookingInformation extends GetView<BookingController> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class HotelSelect extends GetView<HotelDetailController> {
+  const HotelSelect({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      controller.hotelDetail.value?.hotelName ?? "",
+      style: Get.textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
     );
   }
 }

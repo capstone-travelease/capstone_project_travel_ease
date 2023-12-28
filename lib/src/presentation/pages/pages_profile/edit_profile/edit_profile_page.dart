@@ -68,7 +68,8 @@ class InformationProfile extends GetView<EditProfileController> {
               children: [
                 ClipOval(
                   child: ExtendedImage.network(
-                    Constant.baseImageUrl + (controller.userModel.avatar ?? ''),
+                    Constant.baseImageUserUrl +
+                        (controller.userModel.avatar ?? ''),
                     width: 150,
                     height: 150,
                     fit: BoxFit.cover,

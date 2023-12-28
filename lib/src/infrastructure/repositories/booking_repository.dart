@@ -4,7 +4,7 @@ import 'package:capstone_project_travel_ease/src/domain/models/location_model.da
 import 'package:capstone_project_travel_ease/src/domain/models/room_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_search_hotel_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
-import 'package:capstone_project_travel_ease/src/infrastructure/client/booking_client/booking_client.dart';
+import 'package:capstone_project_travel_ease/src/infrastructure/base/booking_client/booking_client.dart';
 import 'package:get/get.dart';
 
 class BookingRepository implements BookingService {
@@ -69,6 +69,21 @@ class BookingRepository implements BookingService {
       final res = await _bookingClient.detailRoom(roomId);
       if (res != null) {
         final data = RoomModel.fromJson(res['data'] as Map<String, dynamic>);
+        return data;
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<HotelModel> detailHotel({required int hotelId}) async {
+    try {
+      final res = await _bookingClient.detailHotel(hotelId);
+      if (res != null) {
+        final data = HotelModel.fromJson(res['data'] as Map<String, dynamic>);
         return data;
       } else {
         throw Exception('Request Error: $res');

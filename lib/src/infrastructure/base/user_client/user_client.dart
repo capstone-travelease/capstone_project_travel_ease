@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/patch_update_pass_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_sign_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/put_update_user_body.dart';
@@ -25,6 +27,14 @@ abstract class UserClient {
   Future updatePassWord(
       @Path('userId') int userId, @Body() PatchUpdatePassBody body);
 
-  @PUT('/user/updateuser/17')
+  @PUT('/user/updateuser?userid={userId}')
   Future updateUser(@Path() int userId, @Body() PutUpdateUserBody body);
+
+  @Header('Content-Type multipart/form-data')
+  @POST('/user/updateimage?userid={userId}')
+  @MultiPart()
+  Future updateImage(
+    @Path('userId') int userId,
+    @Part(name: 'image') File file,
+  );
 }

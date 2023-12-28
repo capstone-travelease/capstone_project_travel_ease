@@ -1,10 +1,13 @@
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class BookingOverviewPage extends StatelessWidget {
   static const String routeName = '/BookingOverview';
@@ -41,10 +44,14 @@ class BookingOverviewPage extends StatelessWidget {
                           'Standard Room',
                           style: Get.textTheme.titleMedium!.copyWith(),
                         ),
-                        Text(
-                          '4,500,000đ',
-                          style: Get.textTheme.titleMedium?.copyWith(),
-                        ),
+                        Obx(
+                          () => Text(
+                            NumberFormat.currency(
+                                    locale: 'vi_VN', symbol: 'VND')
+                                .format(controller.room.value?.roomPrice),
+                            style: Get.textTheme.titleMedium?.copyWith(),
+                          ),
+                        )
                       ],
                     ),
                     Padding(
@@ -144,11 +151,16 @@ class BookingOverviewPage extends StatelessWidget {
                           style: Get.textTheme.titleLarge!.copyWith(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),
-                        Text(
-                          '4,500,000đ',
-                          style: Get.textTheme.titleLarge?.copyWith(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
+                        Obx(
+                          () => Text(
+                            NumberFormat.currency(
+                                    locale: 'vi_VN', symbol: 'VND')
+                                .format(controller.room.value?.roomPrice),
+                            style: Get.textTheme.titleLarge?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -183,7 +195,7 @@ class BookingOverviewPage extends StatelessWidget {
   }
 }
 
-class HotelSelected extends StatelessWidget {
+class HotelSelected extends GetView<HotelDetailController> {
   const HotelSelected({Key? key}) : super(key: key);
 
   @override
@@ -192,61 +204,84 @@ class HotelSelected extends StatelessWidget {
       children: [
         Expanded(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Royale President Hotel',
-                style: Get.textTheme.titleMedium!.copyWith(),
-              ),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    const WidgetSpan(
-                      alignment: PlaceholderAlignment.middle,
-                      child: Icon(
-                        Icons.location_on,
-                        size: 18,
-                      ),
-                    ),
-                    const TextSpan(
-                      text: ' ',
-                    ),
-                    TextSpan(
-                      text: '01 Phan Chu Trinh, Ward 9, TP.HCM, Vietnam',
-                      style: Get.textTheme.bodySmall!.copyWith(),
-                    )
-                  ],
+              Obx(
+                () => Text(
+                  controller.hotelDetail.value?.hotelName ?? '',
+                  style: Get.textTheme.titleMedium!.copyWith(),
                 ),
               ),
+              Obx(() => RichText(
+                    text: TextSpan(
+                      children: [
+                        const WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: Icon(
+                            Icons.location_on_outlined,
+                            size: 18,
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                        const TextSpan(
+                          text: ' ',
+                        ),
+                        TextSpan(
+                          text:
+                              controller.hotelDetail.value?.hotelAddress ?? '',
+                          style: Get.textTheme.bodySmall!.copyWith(),
+                        ),
+                        const TextSpan(
+                          text: ' ',
+                        ),
+                        TextSpan(
+                          text: controller.hotelDetail.value?.hotelCity ?? '',
+                          style: Get.textTheme.bodySmall!.copyWith(),
+                        ),
+                        const TextSpan(
+                          text: ' ',
+                        ),
+                        TextSpan(
+                          text:
+                              controller.hotelDetail.value?.hotelCountry ?? '',
+                          style: Get.textTheme.bodySmall!.copyWith(),
+                        )
+                      ],
+                    ),
+                  )),
             ],
           ),
         ),
         const SizedBox(
           width: 10,
         ),
-        Expanded(
-          child: ExtendedImage.network(
-            'https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_SEDK_01.jpg',
-            fit: BoxFit.cover,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(12),
+        Obx(
+          () => Expanded(
+            child: ExtendedImage.network(
+              Constant.baseImageUrl +
+                  (controller.hotelDetail.value?.images ?? ''),
+              fit: BoxFit.cover,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(12),
+              ),
+              shape: BoxShape.rectangle,
+              loadStateChanged: (ExtendedImageState state) {
+                switch (state.extendedImageLoadState) {
+                  case LoadState.loading:
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  case LoadState.completed:
+                    return null;
+                  case LoadState.failed:
+                    return Image.asset(
+                      Assets.images.noImage.path,
+                    );
+                }
+              },
             ),
-            shape: BoxShape.rectangle,
-            loadStateChanged: (ExtendedImageState state) {
-              switch (state.extendedImageLoadState) {
-                case LoadState.loading:
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                case LoadState.completed:
-                  return null;
-                case LoadState.failed:
-                  return Image.asset(
-                    Assets.images.noImage.path,
-                  );
-              }
-            },
           ),
-        ),
+        )
       ],
     );
   }

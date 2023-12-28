@@ -1,4 +1,5 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_page.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -107,7 +109,13 @@ class HotelDetailPage extends GetView<HotelDetailController> {
                 ],
               ),
               const AddressView(),
-              const Facilities(),
+              Obx(
+                () => controller.hotelDetail.value?.facilities != null
+                    ? Facilities(
+                        facilitiesModel:
+                            controller.hotelDetail.value?.facilities ?? [])
+                    : const SizedBox.shrink(),
+              ),
               const Review(),
               const Description(),
             ],
@@ -130,37 +138,54 @@ class AddressView extends GetView<HotelDetailController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              controller.hotelModel.hotelName ?? '',
-              style: Get.textTheme.headlineSmall!
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-          ),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Obx(
+                () => Text(
+                  controller.hotelDetail.value?.hotelName ?? '',
+                  style: Get.textTheme.headlineSmall!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+              )),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  const WidgetSpan(
-                    alignment: PlaceholderAlignment.middle,
-                    child: Icon(
-                      Icons.location_on_outlined,
-                      size: 18,
-                      color: Colors.redAccent,
-                    ),
+            child: Obx(() => RichText(
+                  text: TextSpan(
+                    children: [
+                      const WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Icon(
+                          Icons.location_on_outlined,
+                          size: 18,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                      const TextSpan(
+                        text: ' ',
+                      ),
+                      TextSpan(
+                        text: controller.hotelDetail.value?.hotelAddress ?? '',
+                        style: Get.textTheme.bodySmall!
+                            .copyWith(color: Colors.grey[500]),
+                      ),
+                      const TextSpan(
+                        text: ' ',
+                      ),
+                      TextSpan(
+                        text: controller.hotelDetail.value?.hotelCity ?? '',
+                        style: Get.textTheme.bodySmall!
+                            .copyWith(color: Colors.grey[500]),
+                      ),
+                      const TextSpan(
+                        text: ' ',
+                      ),
+                      TextSpan(
+                        text: controller.hotelDetail.value?.hotelCountry ?? '',
+                        style: Get.textTheme.bodySmall!
+                            .copyWith(color: Colors.grey[500]),
+                      )
+                    ],
                   ),
-                  const TextSpan(
-                    text: ' ',
-                  ),
-                  TextSpan(
-                    text: controller.hotelModel.hotelCity ?? '',
-                    style: Get.textTheme.bodySmall!
-                        .copyWith(color: Colors.grey[500]),
-                  )
-                ],
-              ),
-            ),
+                )),
           ),
           Padding(
             padding: const EdgeInsets.all(6),
@@ -179,8 +204,8 @@ class AddressView extends GetView<HotelDetailController> {
 }
 
 class Facilities extends StatelessWidget {
-  const Facilities({Key? key}) : super(key: key);
-
+  const Facilities({Key? key, required this.facilitiesModel}) : super(key: key);
+  final List<FacilitiesModel> facilitiesModel;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -197,36 +222,37 @@ class Facilities extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: SizedBox(
-            height: 220,
-            child: GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(top: 8),
-              itemCount: 8,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4),
-              itemBuilder: (context, index) {
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0), //<-- SEE HERE
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Column(
-                      children: [
-                        const Icon(
-                          Icons.hotel_class,
-                          color: Colors.deepOrangeAccent,
-                        ),
-                        Text(
-                          'item item',
-                          style: Get.textTheme.bodyMedium,
-                        ),
-                      ],
+            height: Get.height * 0.1,
+            child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: facilitiesModel.length,
+                itemBuilder: (context, index) {
+                  final item = facilitiesModel[index];
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0), //<-- SEE HERE
                     ),
-                  ),
-                );
-              },
-            ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(
+                            Icons.wifi,
+                            color: Colors.deepOrangeAccent,
+                          ),
+                          Text(
+                            item.facilityName ?? '',
+                            style: Get.textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
           ),
         ),
       ],
@@ -263,22 +289,23 @@ class Review extends GetView<HotelDetailController> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: controller.hotelModel.starRating.toString(),
-                            style: Get.textTheme.headlineSmall!
-                                .copyWith(color: Colors.white),
+                    child: Obx(() => RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: controller.hotelDetail.value?.starRating
+                                    .toString(),
+                                style: Get.textTheme.headlineSmall!
+                                    .copyWith(color: Colors.white),
+                              ),
+                              TextSpan(
+                                text: '/5.0',
+                                style: Get.textTheme.bodyLarge!
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
                           ),
-                          TextSpan(
-                            text: '/5.0',
-                            style: Get.textTheme.bodyLarge!
-                                .copyWith(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
+                        )),
                   ),
                 ),
               ),
@@ -357,13 +384,16 @@ class Description extends GetView<HotelDetailController> {
                                 const Icon(
                                   Icons.location_on,
                                   color: Colors.red,
-                                  size: 45,
+                                  size: 18,
                                 ),
-                                Text(
-                                  'Hotel Name',
-                                  style: Get.textTheme.bodySmall!.copyWith(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.bold),
+                                Expanded(
+                                  child: Text(
+                                    controller.hotelDetail.value?.hotelName ??
+                                        '',
+                                    style: Get.textTheme.bodySmall!.copyWith(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 )
                               ],
                             ),
@@ -395,15 +425,23 @@ class Description extends GetView<HotelDetailController> {
                     children: [
                       TextSpan(
                         text: controller.isExpanded.value
-                            ? controller.fullText
-                            : (controller.fullText.length > 200
-                                ? controller.fullText.substring(0, 200)
-                                : controller.fullText),
+                            ? controller.hotelDetail.value?.hotelDescription
+                            : ((controller.hotelDetail.value?.hotelDescription
+                                            ?.length ??
+                                        -1) >
+                                    200
+                                ? controller.hotelDetail.value?.hotelDescription
+                                    ?.substring(0, 200)
+                                : controller
+                                    .hotelDetail.value?.hotelDescription),
                         style: Get.theme.textTheme.bodyMedium?.copyWith(
                           color: Get.theme.colorScheme.onSurface,
                         ),
                       ),
-                      if (controller.fullText.length > 200)
+                      if ((controller.hotelDetail.value?.hotelDescription
+                                  ?.length ??
+                              -1) >
+                          200)
                         TextSpan(
                           recognizer: TapGestureRecognizer()
                             ..onTap = controller.toggleExpanded,
@@ -453,9 +491,9 @@ class GetFooter extends GetView<HotelDetailController> {
                 ListRoomPage.routeName,
                 preventDuplicates: false,
                 arguments: ArgListRoom(
-                    location: controller.hotelModel.hotelCity ?? '',
-                    hotelName: controller.hotelModel.hotelName ?? '',
-                    hotelId: controller.hotelModel.hotelId ?? -1),
+                    location: controller.hotelDetail.value?.hotelCity ?? '',
+                    hotelName: controller.hotelDetail.value?.hotelName ?? '',
+                    hotelId: controller.hotelDetail.value?.hotelId ?? -1),
               ),
               child: DecoratedBox(
                 decoration: BoxDecoration(
@@ -475,7 +513,10 @@ class GetFooter extends GetView<HotelDetailController> {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: controller.hotelModel.price.toString(),
+                    text: controller.hotelDetail.value?.price == null
+                        ? '200000'
+                        : NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+                            .format(controller.hotelDetail.value?.price),
                     style: Get.textTheme.titleLarge!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),

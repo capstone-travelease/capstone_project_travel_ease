@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'booking_client.dart';
+part of 'user_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'booking_client.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _BookingClient implements BookingClient {
-  _BookingClient(
+class _UserClient implements UserClient {
+  _UserClient(
     this._dio, {
     this.baseUrl,
   });
@@ -19,7 +19,7 @@ class _BookingClient implements BookingClient {
   String? baseUrl;
 
   @override
-  Future<dynamic> searchHotel(PostSearchHotelBody body) async {
+  Future<dynamic> signUser(PostSignBody body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -32,7 +32,7 @@ class _BookingClient implements BookingClient {
     )
         .compose(
           _dio.options,
-          '/api/hotel/search',
+          '/auth/signup',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -46,19 +46,25 @@ class _BookingClient implements BookingClient {
   }
 
   @override
-  Future<dynamic> getLocation() async {
+  Future<dynamic> loginUser({
+    required String email,
+    required String password,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = {
+      'email': email,
+      'password': password,
+    };
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
-      method: 'GET',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/api/location/',
+          '/auth/login',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -72,7 +78,7 @@ class _BookingClient implements BookingClient {
   }
 
   @override
-  Future<dynamic> listRooms(int hotelId) async {
+  Future<dynamic> getUser(int userId) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -84,7 +90,7 @@ class _BookingClient implements BookingClient {
     )
         .compose(
           _dio.options,
-          '/api/room/list?hotelId=${hotelId}',
+          '/user/getuser?userid=${userId}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -98,19 +104,90 @@ class _BookingClient implements BookingClient {
   }
 
   @override
-  Future<dynamic> detailRoom(int roomId) async {
+  Future<dynamic> updatePassWord(
+    int userId,
+    PatchUpdatePassBody body,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
-      method: 'GET',
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/api/room/detail/get-room?roomId=${roomId}',
+          '/auth/changepassword/${userId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> updateUser(
+    int userId,
+    PutUpdateUserBody body,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/user/updateuser?userid=${userId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        ))));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> updateImage(
+    int userId,
+    File file,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        file.path,
+        filename: file.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'multipart/form-data',
+    )
+        .compose(
+          _dio.options,
+          '/user/updateimage?userid=${userId}',
           queryParameters: queryParameters,
           data: _data,
         )

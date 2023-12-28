@@ -1,3 +1,4 @@
+import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'hotel_model.g.dart';
@@ -16,14 +17,22 @@ class HotelModel {
   int? hotelId;
   @JsonKey(name: 'hotel_name')
   String? hotelName;
+  @JsonKey(name: 'hotel_address')
+  String? hotelAddress;
   @JsonKey(name: 'hotel_city')
   String? hotelCity;
+  @JsonKey(name: 'hotel_country')
+  String? hotelCountry;
+  @JsonKey(name: 'hotel_description')
+  String? hotelDescription;
   @JsonKey(name: 'star_rating')
   double? starRating;
-  @JsonKey(name: 'images')
+  @JsonKey(name: 'hotel_images')
   String? images;
   @JsonKey(name: 'price')
   double? price;
+  @JsonKey(name: 'facilities')
+  List<FacilitiesModel>? facilities;
 
   factory HotelModel.fromJson(Map<String, dynamic> json) =>
       _$HotelModelFromJson(json);

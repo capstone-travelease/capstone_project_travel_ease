@@ -227,10 +227,11 @@ class InformationProfile extends GetView<CheckLoginController> {
             padding: const EdgeInsets.all(8.0),
             child: ClipOval(
               child: ExtendedImage.network(
-                Constant.baseImageUrl + (controller.user.value?.avatar ?? ''),
+                Constant.baseImageUserUrl +
+                    (controller.user.value?.avatar ?? ''),
                 width: 150,
                 height: 150,
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(6),
                 ),

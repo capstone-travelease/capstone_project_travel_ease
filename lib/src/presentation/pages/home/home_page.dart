@@ -246,11 +246,11 @@ class AppBar extends GetView<CheckLoginController> {
               Obx(() => controller.isLogin.value != false
                   ? ClipOval(
                       child: ExtendedImage.network(
-                        Constant.baseImageUrl +
+                        Constant.baseImageUserUrl +
                             (controller.user.value?.avatar ?? ''),
                         width: Get.width * 0.12,
                         height: Get.width * 0.12,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                         // shape: BoxShape.rectangle,
                         loadStateChanged: (ExtendedImageState state) {
                           switch (state.extendedImageLoadState) {
@@ -259,12 +259,12 @@ class AppBar extends GetView<CheckLoginController> {
                                 child: CircularProgressIndicator(),
                               );
                             case LoadState.completed:
-                              return state.completedWidget;
+                              return null;
                             case LoadState.failed:
                               return Image.asset(
                                 width: Get.width * 0.12,
                                 height: Get.width * 0.12,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                                 Assets.images.noImageUser.path,
                               );
                           }

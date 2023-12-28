@@ -4,6 +4,7 @@ import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart'
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ListHotelView extends StatelessWidget {
   const ListHotelView({Key? key, required this.hotelModel, required this.onTap})
@@ -99,7 +100,9 @@ class ListHotelView extends StatelessWidget {
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: hotelModel.price.toString(),
+                                      text: NumberFormat.currency(
+                                              locale: 'vi_VN', symbol: 'VND')
+                                          .format(hotelModel.price),
                                       style: Get.textTheme.bodySmall!.copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.green),
