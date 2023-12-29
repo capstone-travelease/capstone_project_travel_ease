@@ -94,7 +94,7 @@ class RangePriceRoom extends GetView<FilterController> {
                           ),
                         ),
                       ),
-                    )),
+                    ),),
               ),
               const SizedBox(
                 width: 10,

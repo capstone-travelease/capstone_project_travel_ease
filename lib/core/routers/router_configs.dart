@@ -5,6 +5,9 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_me
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/notification/notification_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/notification/notification_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_new_payment_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_new_payment_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_payment_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_controller.dart';
@@ -181,6 +184,20 @@ class RouterConfigs {
       page: () => const ChatPage(),
       binding: BindingsBuilder<void>(
         () => Get.lazyPut(ChatController.new),
+      ),
+    ),
+    GetPage(
+      name: AddNewPaymentPage.routeName,
+      page: () => const AddNewPaymentPage(),
+      binding: BindingsBuilder<void>(
+        () => Get.lazyPut(AddNewPaymentController.new),
+      ),
+    ),
+    GetPage(
+      name: AddPay.routeName,
+      page: () => const AddPay(),
+      binding: BindingsBuilder<void>(
+        () => Get.lazyPut(AddNewPaymentController.new),
       ),
     ),
   ];

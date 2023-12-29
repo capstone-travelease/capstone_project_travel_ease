@@ -1,4 +1,5 @@
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_new_payment_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
@@ -23,7 +24,7 @@ class FinishBookingPage extends StatelessWidget {
             padding: EdgeInsets.all(12.0),
             child: Column(
               children: [
-                PaymentMethod(),
+                Payment(),
                 BookingInformation(),
               ],
             ),
@@ -34,96 +35,14 @@ class FinishBookingPage extends StatelessWidget {
   }
 }
 
-class PaymentMethod extends GetView<BookingController> {
-  const PaymentMethod({Key? key}) : super(key: key);
+class Payment extends GetView<BookingController> {
+  const Payment({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          width: Get.width,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Payment method',
-                    style: Get.textTheme.titleMedium!.copyWith(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Text(
-                      'Choose a payment method',
-                      style: Get.textTheme.bodySmall!.copyWith(),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          height: 100,
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: controller.listPayment.length,
-                              itemBuilder: (context, index) {
-                                var item = controller.listPayment[index];
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12.0, vertical: 10),
-                                  child: Column(
-                                    children: [
-                                      Obx(
-                                        () => InkWell(
-                                          onTap: () => controller
-                                              .selectPaymentMethod(item),
-                                          child: Container(
-                                            width: 60,
-                                            height: 60,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                              border: Border.all(
-                                                  color: controller
-                                                              .selectedPaymentMethod
-                                                              .value ==
-                                                          item
-                                                      ? Colors
-                                                          .redAccent.shade100
-                                                      : Colors.grey[300]!,
-                                                  width: 2),
-                                            ),
-                                            child: Icon(item.icon),
-                                          ),
-                                        ),
-                                      ),
-                                      Text(
-                                        item.namePay,
-                                        style:
-                                            Get.textTheme.bodySmall!.copyWith(),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
+        const ListPaymentMethod(),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           child: SizedBox(
@@ -153,139 +72,145 @@ class PaymentMethod extends GetView<BookingController> {
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 6.0, vertical: 12),
-                          child: Obx(() => ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: controller.selectedPaymentMethod
-                                    .value?.children.length,
-                                itemBuilder: (context, index) {
-                                  var item = controller.selectedPaymentMethod
-                                      .value?.children[index];
-                                  if (controller
-                                          .selectedPaymentMethod.value?.id ==
-                                      3) {
-                                    return Column(
-                                      children: [
-                                        Image.asset(
-                                          item!.image,
-                                          fit: BoxFit.cover,
-                                          width: 220,
-                                          height: 220,
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          item.name,
-                                          style: Get.textTheme.bodyLarge!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    );
-                                  } else {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Obx(
-                                        () => InkWell(
-                                          onTap: () =>
-                                              controller.selectPayment(item),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Image.asset(
-                                                    item!.image,
-                                                    width: 30,
-                                                    height: 30,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 20,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        item.name,
-                                                        style: Get.textTheme
-                                                            .bodySmall!
-                                                            .copyWith(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                      ),
-                                                      Text(
-                                                        controller
-                                                            .nameEditController
-                                                            .text,
-                                                        style: Get.textTheme
-                                                            .bodyMedium!
-                                                            .copyWith(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                      ),
-                                                      Text(
-                                                        item.soTaiKhoan,
-                                                        style: Get.textTheme
-                                                            .bodySmall!
-                                                            .copyWith(
-                                                                color: Colors
-                                                                    .grey[500]),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                              Icon(
-                                                controller.selectedPayment
-                                                            .value ==
-                                                        item
-                                                    ? Icons.check_circle
-                                                    : Icons.circle_outlined,
-                                                color: controller
-                                                            .selectedPayment
-                                                            .value ==
-                                                        item
-                                                    ? Colors.redAccent
-                                                    : null,
-                                              ),
-                                            ],
-                                          ),
+                          child: Obx(
+                            () => ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: controller
+                                  .selectedPaymentMethod.value?.children.length,
+                              itemBuilder: (context, index) {
+                                var item = controller.selectedPaymentMethod
+                                    .value?.children[index];
+                                if (controller
+                                        .selectedPaymentMethod.value?.id ==
+                                    3) {
+                                  return Column(
+                                    children: [
+                                      Image.asset(
+                                        item!.image,
+                                        fit: BoxFit.cover,
+                                        width: 220,
+                                        height: 220,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(
+                                        item.name,
+                                        style: Get.textTheme.bodyLarge!
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Obx(
+                                      () => InkWell(
+                                        onTap: () =>
+                                            controller.selectPayment(item),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  item!.image,
+                                                  width: 30,
+                                                  height: 30,
+                                                ),
+                                                const SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      item.name,
+                                                      style: Get
+                                                          .textTheme.bodySmall!
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                    ),
+                                                    Text(
+                                                      controller
+                                                          .nameEditController
+                                                          .text,
+                                                      style: Get
+                                                          .textTheme.bodyMedium!
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                    ),
+                                                    Text(
+                                                      item.soTaiKhoan,
+                                                      style: Get
+                                                          .textTheme.bodySmall!
+                                                          .copyWith(
+                                                              color: Colors
+                                                                  .grey[500]),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            Icon(
+                                              controller.selectedPayment
+                                                          .value ==
+                                                      item
+                                                  ? Icons.check_circle
+                                                  : Icons.circle_outlined,
+                                              color: controller.selectedPayment
+                                                          .value ==
+                                                      item
+                                                  ? Colors.redAccent
+                                                  : null,
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    );
-                                  }
-                                },
-                              )),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          ),
                         )
                       ],
                     ),
                     Obx(() => controller.selectedPaymentMethod.value!.id != 3
-                        ? Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SizedBox(
-                                width: 200,
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.redAccent.withOpacity(0.9)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.wallet,
-                                          color: Colors.white,
-                                        ),
-                                        Obx(() => Text(
+                        ? InkWell(
+                            onTap: () {
+                              Get.toNamed(AddNewPaymentPage.routeName);
+                            },
+                            child: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  width: 200,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color:
+                                            Colors.redAccent.withOpacity(0.9)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(
+                                            Icons.wallet,
+                                            color: Colors.white,
+                                          ),
+                                          Obx(
+                                            () => Text(
                                               controller.selectedPaymentMethod
                                                           .value?.id ==
                                                       1
@@ -294,8 +219,10 @@ class PaymentMethod extends GetView<BookingController> {
                                               style: Get.textTheme.bodyMedium!
                                                   .copyWith(
                                                       color: Colors.white),
-                                            )),
-                                      ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -310,6 +237,95 @@ class PaymentMethod extends GetView<BookingController> {
           ),
         )
       ],
+    );
+  }
+}
+
+class ListPaymentMethod extends GetView<BookingController> {
+  const ListPaymentMethod({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: Get.width,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Payment method',
+                style: Get.textTheme.titleMedium!.copyWith(),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Text(
+                  'Choose a payment method',
+                  style: Get.textTheme.bodySmall!.copyWith(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: controller.listPayment.length,
+                          itemBuilder: (context, index) {
+                            var item = controller.listPayment[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12.0, vertical: 10),
+                              child: Column(
+                                children: [
+                                  Obx(
+                                    () => InkWell(
+                                      onTap: () =>
+                                          controller.selectPaymentMethod(item),
+                                      child: Container(
+                                        width: 60,
+                                        height: 60,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          border: Border.all(
+                                              color: controller
+                                                          .selectedPaymentMethod
+                                                          .value ==
+                                                      item
+                                                  ? Colors.redAccent.shade100
+                                                  : Colors.grey[300]!,
+                                              width: 2),
+                                        ),
+                                        child: Icon(item.icon),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    item.namePay,
+                                    style: Get.textTheme.bodySmall!.copyWith(),
+                                  )
+                                ],
+                              ),
+                            );
+                          }),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

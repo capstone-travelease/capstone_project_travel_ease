@@ -13,11 +13,8 @@ import 'package:get/get.dart';
 
 class BookingController extends GetxController {
   late TextEditingController nameEditController;
-  late RxnString nameError = RxnString(null);
   late TextEditingController phoneEditController;
-  late RxnString phoneError = RxnString(null);
   late TextEditingController emailEditController;
-  late RxnString emailError = RxnString(null);
   late TextEditingController couponEditController;
   late TextEditingController noteEditController;
   final keyForm = GlobalKey<FormState>();
