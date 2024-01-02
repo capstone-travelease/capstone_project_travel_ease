@@ -1,6 +1,5 @@
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/mybookingtab.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +21,6 @@ class MyBookingController extends GetxController
       initialIndex: 0,
     );
     selected.call(tabs.first);
-    // checkLoginController.checkLogin();
     super.onInit();
   }
 

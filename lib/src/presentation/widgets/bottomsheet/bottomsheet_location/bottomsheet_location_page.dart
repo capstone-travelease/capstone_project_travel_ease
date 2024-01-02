@@ -64,6 +64,33 @@ class BottomSheetLocation extends StatelessWidget {
               Divider(
                 color: Colors.grey[400],
               ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextField(
+                    textAlignVertical: TextAlignVertical.center,
+                    style: context.theme.textTheme.titleMedium?.copyWith(),
+                    onSubmitted: (v) async {
+                      await controller.searchData(keySearch: v, refresh: true);
+                    },
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 10),
+                      isCollapsed: true,
+                      alignLabelWithHint: true,
+                      suffixIcon: const Icon(Icons.search),
+                      hintText: 'Search',
+                      hintStyle: context.theme.textTheme.bodyLarge
+                          ?.copyWith(color: Colors.grey.withOpacity(0.6)),
+                      // errorText: controller.noiDungError.value,
+                    ),
+                  ),
+                ),
+              ),
               Expanded(
                 child: Scrollbar(
                   child: Obx(

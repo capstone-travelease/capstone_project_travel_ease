@@ -30,9 +30,9 @@ class BookingRepository implements BookingService {
   }
 
   @override
-  Future<List<LocationModel>> getLocation() async {
+  Future<List<LocationModel>> getLocation(String location) async {
     try {
-      final res = await _bookingClient.getLocation();
+      final res = await _bookingClient.getLocation(location);
       if (res != null) {
         final data = (res['data'] as List)
             .map((e) => LocationModel.fromJson(e as Map<String, dynamic>))

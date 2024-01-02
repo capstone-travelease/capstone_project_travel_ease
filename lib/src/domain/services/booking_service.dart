@@ -6,7 +6,7 @@ import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_sear
 abstract interface class BookingService {
   Future<List<HotelModel>> searchHotel({required PostSearchHotelBody body});
 
-  Future<List<LocationModel>> getLocation();
+  Future<List<LocationModel>> getLocation(String location);
 
   Future<HotelModel> detailHotel({required int hotelId});
 

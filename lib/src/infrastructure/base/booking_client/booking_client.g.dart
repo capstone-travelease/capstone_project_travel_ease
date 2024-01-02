@@ -46,7 +46,7 @@ class _BookingClient implements BookingClient {
   }
 
   @override
-  Future<dynamic> getLocation() async {
+  Future<dynamic> getLocation(String locationName) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -58,7 +58,7 @@ class _BookingClient implements BookingClient {
     )
         .compose(
           _dio.options,
-          '/api/location/',
+          '/api/location/search?name=${locationName}',
           queryParameters: queryParameters,
           data: _data,
         )

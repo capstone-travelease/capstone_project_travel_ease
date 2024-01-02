@@ -10,8 +10,8 @@ abstract class BookingClient {
   @POST('/api/hotel/search')
   Future searchHotel(@Body() PostSearchHotelBody body);
 
-  @GET('/api/location/')
-  Future getLocation();
+  @GET('/api/location/search?name={locationName}')
+  Future getLocation(@Path('locationName') String locationName);
 
   @GET('/api/room/list?hotelId={hotelId}')
   Future listRooms(@Path('hotelId') int hotelId);

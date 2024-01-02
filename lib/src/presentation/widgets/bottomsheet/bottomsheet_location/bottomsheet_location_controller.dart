@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/location_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BottomSheetLocationController extends GetxController {
@@ -16,13 +17,14 @@ class BottomSheetLocationController extends GetxController {
   final RxBool isLoading = true.obs;
   @override
   void onInit() {
-    fetchData();
+    searchData(keySearch: '');
     super.onInit();
   }
 
-  Future<void> fetchData() async {
+  Future<void> searchData(
+      {required String keySearch, bool refresh = false}) async {
     try {
-      final res = await _bookingService.getLocation();
+      final res = await _bookingService.getLocation(keySearch);
       res.sort((a, b) => (a.placeName ?? '').compareTo((b.placeName ?? '')));
       listLocation.call(res);
     } catch (error) {
