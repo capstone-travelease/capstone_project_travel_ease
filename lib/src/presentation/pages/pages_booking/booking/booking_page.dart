@@ -2,7 +2,6 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_bookin
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import 'package:timeline_tile/timeline_tile.dart';
 
 class BookingPage extends GetView<BookingController> {
@@ -105,23 +104,25 @@ class AppbarBooking extends GetView<BookingController>
                           isFirst: index == 0,
                           isLast: index == controller.pages.length - 1,
                           beforeLineStyle: LineStyle(
-                              color: controller.currentStepAndPage >= index
-                                  ? Colors.white
-                                  : Colors.grey[300]!),
+                            color: controller.currentStepAndPage >= index
+                                ? Colors.white
+                                : Colors.grey[300]!,
+                          ),
                           indicatorStyle: IndicatorStyle(
-                              width: 20,
-                              color: controller.currentStepAndPage >= index
-                                  ? Colors.white
-                                  : Colors.grey[300]!,
-                              iconStyle: IconStyle(
-                                  iconData:
-                                      controller.currentStepAndPage >= index
-                                          ? Icons.done
-                                          : Icons.circle,
-                                  fontSize: 14,
-                                  color: controller.currentStepAndPage == index
-                                      ? Colors.redAccent
-                                      : Colors.redAccent)),
+                            width: 20,
+                            color: controller.currentStepAndPage >= index
+                                ? Colors.white
+                                : Colors.grey[300]!,
+                            iconStyle: IconStyle(
+                              iconData: controller.currentStepAndPage >= index
+                                  ? Icons.done
+                                  : Icons.circle,
+                              fontSize: 14,
+                              color: controller.currentStepAndPage == index
+                                  ? Colors.redAccent
+                                  : Colors.redAccent,
+                            ),
+                          ),
                         ),
                       );
                     },
@@ -173,20 +174,25 @@ class Footer extends GetView<BookingController> {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                        text: 'Total Price \n',
-                        style: Get.textTheme.bodySmall!),
+                      text: 'Total Price \n',
+                      style: Get.textTheme.bodySmall!,
+                    ),
                     TextSpan(
                       text: controller.room.value?.roomPrice != null
                           ? NumberFormat.currency(
                                   locale: 'vi_VN', symbol: 'VND')
-                              .format(controller.room.value?.roomPrice)
+                              .format(
+                              controller.room.value?.roomPrice,
+                            )
                           : '',
-                      style: Get.textTheme.titleLarge!
-                          .copyWith(fontWeight: FontWeight.bold),
+                      style: Get.textTheme.titleLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     TextSpan(
-                        text: '\nIncludes taxes',
-                        style: Get.textTheme.bodySmall!),
+                      text: '\nIncludes taxes',
+                      style: Get.textTheme.bodySmall!,
+                    ),
                   ],
                 ),
               ),

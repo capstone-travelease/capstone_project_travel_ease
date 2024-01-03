@@ -77,24 +77,25 @@ class RangePriceRoom extends GetView<FilterController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Obx(() => DecoratedBox(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.red,
-                          ),
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 6.0, horizontal: 8),
-                        child: Center(
-                          child: Text(
-                            NumberFormat.currency(
-                                    locale: 'vi_VN', symbol: 'VND')
-                                .format(controller.minPrice.value),
-                          ),
+                child: Obx(
+                  () => DecoratedBox(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.red,
+                        ),
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6.0, horizontal: 8),
+                      child: Center(
+                        child: Text(
+                          NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+                              .format(controller.minPrice.value),
                         ),
                       ),
-                    ),),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 10,
@@ -265,12 +266,14 @@ class Facilities extends StatelessWidget {
                           color: Colors.deepOrangeAccent,
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 5,
                         ),
-                        Text(
-                          '24-Hour Front Desk',
-                          style: Get.textTheme.bodySmall?.copyWith(
-                              fontSize: 11, fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            '24-Hour Front Desk',
+                            style: Get.textTheme.bodySmall?.copyWith(
+                                fontSize: 11, fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     ),

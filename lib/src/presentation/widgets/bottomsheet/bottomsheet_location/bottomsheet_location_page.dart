@@ -6,9 +6,7 @@ import 'package:get/get.dart';
 class BottomSheetLocation extends StatelessWidget {
   const BottomSheetLocation({Key? key, this.location}) : super(key: key);
   final LocationModel? location;
-
   static const String routeName = '/BottomSheetLocation';
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<BottomSheetLocationController>(

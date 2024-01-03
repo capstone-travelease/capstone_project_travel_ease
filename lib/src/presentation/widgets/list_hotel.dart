@@ -28,39 +28,37 @@ class ListHotelView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: ExtendedImage.network(
+                      Constant.baseImageUrl + (hotelModel.images ?? ''),
+                      fit: BoxFit.cover,
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      shape: BoxShape.rectangle,
+                      loadStateChanged: (ExtendedImageState state) {
+                        switch (state.extendedImageLoadState) {
+                          case LoadState.loading:
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          case LoadState.completed:
+                            return null;
+                          case LoadState.failed:
+                            return Image.asset(
+                              Assets.images.noImage.path,
+                            );
+                        }
+                      },
+                    ),
+                  ),
                   Expanded(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 80,
-                          height: 80,
-                          child: ExtendedImage.network(
-                            Constant.baseImageUrl + (hotelModel.images ?? ''),
-                            fit: BoxFit.cover,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
-                            shape: BoxShape.rectangle,
-                            loadStateChanged: (ExtendedImageState state) {
-                              switch (state.extendedImageLoadState) {
-                                case LoadState.loading:
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                case LoadState.completed:
-                                  return null;
-                                case LoadState.failed:
-                                  return Image.asset(
-                                    Assets.images.noImage.path,
-                                  );
-                              }
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 18,
-                        ),
-                        Expanded(
-                          child: Column(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -117,43 +115,39 @@ class ListHotelView extends StatelessWidget {
                               )
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            const WidgetSpan(
-                              alignment: PlaceholderAlignment.middle,
-                              child: Icon(
-                                Icons.star,
-                                size: 18,
-                                color: Colors.redAccent,
+                          Column(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    const WidgetSpan(
+                                      child: Icon(
+                                        Icons.star,
+                                        size: 18,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: hotelModel.starRating.toString(),
+                                      style:
+                                          Get.textTheme.bodySmall!.copyWith(),
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                            const TextSpan(
-                              text: ' ',
-                            ),
-                            TextSpan(
-                              text: hotelModel.starRating.toString(),
-                              style: Get.textTheme.bodySmall!.copyWith(),
-                            )
-                          ],
-                        ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Icon(
+                                  Icons.bookmark_outline_outlined,
+                                  size: 30,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Icon(
-                          Icons.bookmark_outline_outlined,
-                          size: 30,
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                  )
                 ],
               ),
             ),

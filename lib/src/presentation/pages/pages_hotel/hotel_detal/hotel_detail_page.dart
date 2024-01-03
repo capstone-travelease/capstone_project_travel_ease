@@ -30,42 +30,43 @@ class HotelDetailPage extends GetView<HotelDetailController> {
               Stack(
                 children: [
                   SafeArea(
-                    child: Obx(() => CarouselSlider.builder(
-                          itemCount: controller.listImage.length,
-                          itemBuilder: (BuildContext context, int itemIndex,
-                                  int pageViewIndex) =>
-                              SizedBox(
-                            width: Get.width,
-                            child: ExtendedImage.network(
-                              controller.listImage[itemIndex],
-                              fit: BoxFit.fill,
-                              shape: BoxShape.rectangle,
-                              loadStateChanged: (ExtendedImageState state) {
-                                switch (state.extendedImageLoadState) {
-                                  case LoadState.loading:
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  case LoadState.completed:
-                                    return null;
-
-                                  case LoadState.failed:
-                                    return Image.asset(
-                                      Assets.images.noImage.path,
-                                    );
-                                }
-                              },
-                            ),
+                    child: Obx(
+                      () => CarouselSlider.builder(
+                        itemCount: controller.listImage.length,
+                        itemBuilder: (BuildContext context, int itemIndex,
+                                int pageViewIndex) =>
+                            SizedBox(
+                          width: Get.width,
+                          child: ExtendedImage.network(
+                            controller.listImage[itemIndex],
+                            fit: BoxFit.fill,
+                            shape: BoxShape.rectangle,
+                            loadStateChanged: (ExtendedImageState state) {
+                              switch (state.extendedImageLoadState) {
+                                case LoadState.loading:
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                case LoadState.completed:
+                                  return null;
+                                case LoadState.failed:
+                                  return Image.asset(
+                                    Assets.images.noImage.path,
+                                  );
+                              }
+                            },
                           ),
-                          options: CarouselOptions(
-                              viewportFraction: 1,
-                              // pageSnapping: false,
-                              enableInfiniteScroll: false,
-                              autoPlay: true,
-                              enlargeCenterPage: true,
-                              onPageChanged: (index, reason) =>
-                                  controller.activeIndex.value = index),
-                        )),
+                        ),
+                        options: CarouselOptions(
+                            viewportFraction: 1,
+                            // pageSnapping: false,
+                            enableInfiniteScroll: false,
+                            autoPlay: true,
+                            enlargeCenterPage: true,
+                            onPageChanged: (index, reason) =>
+                                controller.activeIndex.value = index),
+                      ),
+                    ),
                   ),
                   Positioned(
                     top: 70,
@@ -138,54 +139,61 @@ class AddressView extends GetView<HotelDetailController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Obx(
-                () => Text(
-                  controller.hotelDetail.value?.hotelName ?? '',
-                  style: Get.textTheme.headlineSmall!
-                      .copyWith(fontWeight: FontWeight.bold),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Obx(
+              () => Text(
+                controller.hotelDetail.value?.hotelName ?? '',
+                style: Get.textTheme.headlineSmall!.copyWith(
+                  fontWeight: FontWeight.bold,
                 ),
-              )),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Obx(() => RichText(
-                  text: TextSpan(
-                    children: [
-                      const WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: Icon(
-                          Icons.location_on_outlined,
-                          size: 18,
-                          color: Colors.redAccent,
-                        ),
+            child: Obx(
+              () => RichText(
+                text: TextSpan(
+                  children: [
+                    const WidgetSpan(
+                      alignment: PlaceholderAlignment.middle,
+                      child: Icon(
+                        Icons.location_on_outlined,
+                        size: 18,
+                        color: Colors.redAccent,
                       ),
-                      const TextSpan(
-                        text: ' ',
+                    ),
+                    const TextSpan(
+                      text: ' ',
+                    ),
+                    TextSpan(
+                      text: controller.hotelDetail.value?.hotelAddress ?? '',
+                      style: Get.textTheme.bodySmall!.copyWith(
+                        color: Colors.grey[500],
                       ),
-                      TextSpan(
-                        text: controller.hotelDetail.value?.hotelAddress ?? '',
-                        style: Get.textTheme.bodySmall!
-                            .copyWith(color: Colors.grey[500]),
+                    ),
+                    const TextSpan(
+                      text: ' ',
+                    ),
+                    TextSpan(
+                      text: controller.hotelDetail.value?.hotelCity ?? '',
+                      style: Get.textTheme.bodySmall!.copyWith(
+                        color: Colors.grey[500],
                       ),
-                      const TextSpan(
-                        text: ' ',
+                    ),
+                    const TextSpan(
+                      text: ' ',
+                    ),
+                    TextSpan(
+                      text: controller.hotelDetail.value?.hotelCountry ?? '',
+                      style: Get.textTheme.bodySmall!.copyWith(
+                        color: Colors.grey[500],
                       ),
-                      TextSpan(
-                        text: controller.hotelDetail.value?.hotelCity ?? '',
-                        style: Get.textTheme.bodySmall!
-                            .copyWith(color: Colors.grey[500]),
-                      ),
-                      const TextSpan(
-                        text: ' ',
-                      ),
-                      TextSpan(
-                        text: controller.hotelDetail.value?.hotelCountry ?? '',
-                        style: Get.textTheme.bodySmall!
-                            .copyWith(color: Colors.grey[500]),
-                      )
-                    ],
-                  ),
-                )),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(6),
@@ -224,35 +232,36 @@ class Facilities extends StatelessWidget {
           child: SizedBox(
             height: Get.height * 0.1,
             child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: facilitiesModel.length,
-                itemBuilder: (context, index) {
-                  final item = facilitiesModel[index];
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0), //<-- SEE HERE
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemCount: facilitiesModel.length,
+              itemBuilder: (context, index) {
+                final item = facilitiesModel[index];
+                return Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(
+                          Icons.wifi,
+                          color: Colors.deepOrangeAccent,
+                        ),
+                        Text(
+                          item.facilityName ?? '',
+                          style: Get.textTheme.bodyMedium,
+                        ),
+                      ],
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Icon(
-                            Icons.wifi,
-                            color: Colors.deepOrangeAccent,
-                          ),
-                          Text(
-                            item.facilityName ?? '',
-                            style: Get.textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],
@@ -272,8 +281,9 @@ class Review extends GetView<HotelDetailController> {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
             'Review score',
-            style: Get.textTheme.titleMedium!
-                .copyWith(fontWeight: FontWeight.bold),
+            style: Get.textTheme.titleMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         Row(
@@ -295,8 +305,9 @@ class Review extends GetView<HotelDetailController> {
                               TextSpan(
                                 text: controller.hotelDetail.value?.starRating
                                     .toString(),
-                                style: Get.textTheme.headlineSmall!
-                                    .copyWith(color: Colors.white),
+                                style: Get.textTheme.headlineSmall!.copyWith(
+                                  color: Colors.white,
+                                ),
                               ),
                               TextSpan(
                                 text: '/5.0',
@@ -323,8 +334,9 @@ class Review extends GetView<HotelDetailController> {
                 ),
                 Text(
                   'Read reviews',
-                  style: Get.textTheme.bodyMedium!
-                      .copyWith(color: Colors.redAccent),
+                  style: Get.textTheme.bodyMedium!.copyWith(
+                    color: Colors.redAccent,
+                  ),
                 )
               ],
             )
@@ -347,8 +359,9 @@ class Description extends GetView<HotelDetailController> {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             'Location',
-            style: Get.textTheme.titleMedium!
-                .copyWith(fontWeight: FontWeight.bold),
+            style: Get.textTheme.titleMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         Padding(
@@ -364,11 +377,12 @@ class Description extends GetView<HotelDetailController> {
                 child: IgnorePointer(
                   child: FlutterMap(
                     options: MapOptions(
-                        initialZoom: controller.zoomLevel,
-                        initialCenter: controller.currentLocation,
-                        minZoom: controller.zoomLevel,
-                        maxZoom: controller.zoomLevel,
-                        onTap: null),
+                      initialZoom: controller.zoomLevel,
+                      initialCenter: controller.currentLocation,
+                      minZoom: controller.zoomLevel,
+                      maxZoom: controller.zoomLevel,
+                      onTap: null,
+                    ),
                     children: [
                       TileLayer(
                           urlTemplate:
@@ -391,8 +405,9 @@ class Description extends GetView<HotelDetailController> {
                                     controller.hotelDetail.value?.hotelName ??
                                         '',
                                     style: Get.textTheme.bodySmall!.copyWith(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold),
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 )
                               ],
@@ -491,9 +506,10 @@ class GetFooter extends GetView<HotelDetailController> {
                 ListRoomPage.routeName,
                 preventDuplicates: false,
                 arguments: ArgListRoom(
-                    location: controller.hotelDetail.value?.hotelCity ?? '',
-                    hotelName: controller.hotelDetail.value?.hotelName ?? '',
-                    hotelId: controller.hotelDetail.value?.hotelId ?? -1),
+                  location: controller.hotelDetail.value?.hotelCity ?? '',
+                  hotelName: controller.hotelDetail.value?.hotelName ?? '',
+                  hotelId: controller.hotelDetail.value?.hotelId ?? -1,
+                ),
               ),
               child: DecoratedBox(
                 decoration: BoxDecoration(

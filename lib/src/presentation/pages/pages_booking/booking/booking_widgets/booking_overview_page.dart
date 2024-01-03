@@ -37,23 +37,7 @@ class BookingOverviewPage extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Standard Room',
-                          style: Get.textTheme.titleMedium!.copyWith(),
-                        ),
-                        Obx(
-                          () => Text(
-                            NumberFormat.currency(
-                                    locale: 'vi_VN', symbol: 'VND')
-                                .format(controller.room.value?.roomPrice),
-                            style: Get.textTheme.titleMedium?.copyWith(),
-                          ),
-                        )
-                      ],
-                    ),
+                    const RoomDetail(),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Row(
@@ -353,7 +337,8 @@ class SearchViewBooking extends GetView<SearchHotelController> {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: '${controller.numberRoom.value} nights, ',
+                        text:
+                            '${(controller.dateRange.value?.end.difference(controller.dateRange.value!.start))?.inDays} nights, ',
                         style: Get.textTheme.bodySmall!.copyWith(),
                       ),
                       TextSpan(
@@ -368,6 +353,32 @@ class SearchViewBooking extends GetView<SearchHotelController> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class RoomDetail extends GetView<BookingController> {
+  const RoomDetail({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Obx(
+          () => Text(
+            controller.room.value?.roomName ?? '',
+            style: Get.textTheme.titleMedium!.copyWith(),
+          ),
+        ),
+        Obx(
+          () => Text(
+            NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+                .format(controller.room.value?.roomPrice),
+            style: Get.textTheme.titleMedium?.copyWith(),
+          ),
+        )
+      ],
     );
   }
 }

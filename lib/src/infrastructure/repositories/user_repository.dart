@@ -9,7 +9,6 @@ import 'package:capstone_project_travel_ease/src/domain/services/user_service.da
 import 'package:capstone_project_travel_ease/src/infrastructure/base/user_client/user_client.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as get_x;
-import 'package:http/http.dart' as http;
 
 class UserRepository implements UserService {
   final _userClient = get_x.Get.find<UserClient>(tag: Constant.userClientTAG);

@@ -36,13 +36,15 @@ class SearchHotelController extends GetxController {
     try {
       final res = await _bookingService.searchHotel(
         body: PostSearchHotelBody(
-            location: location.value ?? '',
-            fromDate: dateRange.value?.start ?? DateTime.now(),
-            toDate: DateTime.now().add(
-              const Duration(days: 2),
-            ),
-            adultNumber: numberAdult.value,
-            roomNumber: numberRoom.value),
+          location: location.value ?? '',
+          fromDate: dateRange.value?.start ?? DateTime.now(),
+          toDate: dateRange.value?.end ??
+              DateTime.now().add(
+                const Duration(days: 2),
+              ),
+          adultNumber: numberAdult.value,
+          roomNumber: numberRoom.value,
+        ),
       );
       listHotel.call(res);
       listHotel.length < _pageSize
@@ -58,7 +60,9 @@ class SearchHotelController extends GetxController {
         'Kết nối internet thất bại',
         backgroundColor: Get.theme.colorScheme.error,
       );
-      Get.log(error.toString());
+      Get.log(
+        error.toString(),
+      );
     }
   }
 }

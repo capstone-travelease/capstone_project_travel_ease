@@ -26,38 +26,36 @@ class ListHotelMyBooking extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: ExtendedImage.network(
+                      'https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_SEDK_01.jpg',
+                      fit: BoxFit.cover,
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      shape: BoxShape.rectangle,
+                      loadStateChanged: (ExtendedImageState state) {
+                        switch (state.extendedImageLoadState) {
+                          case LoadState.loading:
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          case LoadState.completed:
+                            return null;
+                          case LoadState.failed:
+                            return Image.asset(
+                              Assets.images.noImage.path,
+                            );
+                        }
+                      },
+                    ),
+                  ),
                   Expanded(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: 80,
-                          height: 80,
-                          child: ExtendedImage.network(
-                            'https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_SEDK_01.jpg',
-                            fit: BoxFit.cover,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12)),
-                            shape: BoxShape.rectangle,
-                            loadStateChanged: (ExtendedImageState state) {
-                              switch (state.extendedImageLoadState) {
-                                case LoadState.loading:
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                case LoadState.completed:
-                                  return null;
-                                case LoadState.failed:
-                                  return Image.asset(
-                                    Assets.images.noImage.path,
-                                  );
-                              }
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -88,44 +86,36 @@ class ListHotelMyBooking extends StatelessWidget {
                             ],
                           ),
                         ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.redAccent,
+                                  size: 18,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  '5.0',
+                                  style: Get.textTheme.bodySmall,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            const Icon(
+                              Icons.bookmark_outline_outlined,
+                              size: 30,
+                            )
+                          ],
+                        ),
                       ],
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.star,
-                            color: Colors.redAccent,
-                            size: 18,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            '5.0',
-                            style: Get.textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Text(
-                        '(1000 View)',
-                        style: Get.textTheme.bodySmall,
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Icon(
-                        Icons.bookmark_outline_outlined,
-                        size: 30,
-                      )
-                    ],
-                  ),
+                  )
                 ],
               ),
             ),

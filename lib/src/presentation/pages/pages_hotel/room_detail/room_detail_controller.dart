@@ -32,7 +32,9 @@ class RoomDetailController extends GetxController {
       final res = await _bookingService.detailRoom(roomId: roomId);
       room.call(res);
     } catch (e) {
-      Get.log(e.toString());
+      Get.log(
+        e.toString(),
+      );
     }
   }
 

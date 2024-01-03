@@ -33,7 +33,6 @@ class SearchHotelPage extends GetView<SearchHotelController> {
                 ),
                 child: TextField(
                   textAlignVertical: TextAlignVertical.center,
-                  // controller: controller.soBienNhanController,
                   style: context.theme.textTheme.titleMedium?.copyWith(),
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -104,36 +103,39 @@ class Appbar extends GetView<SearchHotelController>
                                 : controller.location.value ??
                                     'Choose your location',
                             style: Get.textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: controller.location.value == ""
-                                    ? Colors.white.withOpacity(0.4)
-                                    : Colors.white),
+                              fontWeight: FontWeight.bold,
+                              color: controller.location.value == ""
+                                  ? Colors.white.withOpacity(0.4)
+                                  : Colors.white,
+                            ),
                           ),
                         ),
                       ),
-                      Obx(() => RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: controller.dateRange.value!.start
-                                      .formatDateToString(),
-                                  style: Get.textTheme.bodySmall?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                      Obx(
+                        () => RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: controller.dateRange.value!.start
+                                    .formatDateToString(),
+                                style: Get.textTheme.bodySmall?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                const TextSpan(text: ' - '),
-                                TextSpan(
-                                  text: controller.dateRange.value!.end
-                                      .formatDateToString(),
-                                  style: Get.textTheme.bodySmall?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )
-                              ],
-                            ),
-                          )),
+                              ),
+                              const TextSpan(text: ' - '),
+                              TextSpan(
+                                text: controller.dateRange.value!.end
+                                    .formatDateToString(),
+                                style: Get.textTheme.bodySmall?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                       Obx(
                         () => Expanded(
                           child: Row(
@@ -188,7 +190,7 @@ class Appbar extends GetView<SearchHotelController>
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => const Size.fromHeight(80);
+  Size get preferredSize => const Size.fromHeight(100);
 }
 
 class FilterOverlay extends StatelessWidget {

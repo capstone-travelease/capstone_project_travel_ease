@@ -23,13 +23,17 @@ class HomePage extends GetView<HomeController> {
           padding: const EdgeInsets.all(12.0),
           child: Column(
             children: [
-              const AppBar(),
+              AppBar(
+                onTap: () => controller.geToNotification(),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12.0),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.grey[300]!),
+                      border: Border.all(
+                        color: Colors.grey[300]!,
+                      ),
                       color: Colors.white),
                   child: WidgetSearchHotelPage(
                     title: 'Search Your Hotel',
@@ -38,11 +42,14 @@ class HomePage extends GetView<HomeController> {
                         SearchHotelPage.routeName,
                         preventDuplicates: false,
                         arguments: ArgSearchHotel(
-                            dateTimeRange: DateTimeRange(
-                                end: data.todDay!, start: data.fromDay!),
-                            location: data.location ?? '',
-                            numberRoom: data.numberRoom ?? 0,
-                            numberAdult: data.numberAdult ?? 0),
+                          dateTimeRange: DateTimeRange(
+                            end: data.todDay!,
+                            start: data.fromDay!,
+                          ),
+                          location: data.location ?? '',
+                          numberRoom: data.numberRoom ?? 0,
+                          numberAdult: data.numberAdult ?? 0,
+                        ),
                       );
                     },
                   ),
@@ -233,8 +240,8 @@ class HomePage extends GetView<HomeController> {
 }
 
 class AppBar extends GetView<CheckLoginController> {
-  const AppBar({Key? key}) : super(key: key);
-
+  const AppBar({Key? key, required this.onTap}) : super(key: key);
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -251,7 +258,6 @@ class AppBar extends GetView<CheckLoginController> {
                         width: Get.width * 0.12,
                         height: Get.width * 0.12,
                         fit: BoxFit.cover,
-                        // shape: BoxShape.rectangle,
                         loadStateChanged: (ExtendedImageState state) {
                           switch (state.extendedImageLoadState) {
                             case LoadState.loading:
@@ -309,7 +315,7 @@ class AppBar extends GetView<CheckLoginController> {
             ],
           ),
           InkWell(
-            // onTap: () => controller.geToNotification(),
+            onTap: onTap,
             child: DecoratedBox(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),

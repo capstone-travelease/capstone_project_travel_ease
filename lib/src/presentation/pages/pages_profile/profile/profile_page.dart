@@ -87,58 +87,53 @@ class ProfilePage extends GetView<ProfileController> {
                     child: Row(
                       children: [
                         Expanded(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: InkWell(
-                              onTap: () => controller.pushEditProfile(),
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: Colors.redAccent,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Text(
-                                      'Edit Profile',
-                                      style: Get.textTheme.bodyMedium!
-                                          .copyWith(color: Colors.white),
-                                    ),
+                          child: InkWell(
+                            onTap: () => controller.pushEditProfile(),
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text(
+                                    'Edit Profile',
+                                    style: Get.textTheme.bodyMedium!
+                                        .copyWith(color: Colors.white),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         Expanded(
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: InkWell(
-                              onTap: () => Get.toNamed(
-                                ChangePassWordPage.routeName,
-                                arguments: {
-                                  'userId': controller
-                                      .checkLoginController.userid.value,
-                                },
-                              ),
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: Colors.grey[300]!,
-                                  ),
+                          child: InkWell(
+                            onTap: () => Get.toNamed(
+                              ChangePassWordPage.routeName,
+                              arguments: {
+                                'userId': controller
+                                    .checkLoginController.userid.value,
+                              },
+                            ),
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: Colors.grey[300]!,
                                 ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Text(
-                                      'Change Password',
-                                      style: Get.textTheme.bodyMedium!
-                                          .copyWith(color: Colors.redAccent),
-                                    ),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Text(
+                                    'Change Password',
+                                    style: Get.textTheme.bodyMedium!
+                                        .copyWith(color: Colors.redAccent),
                                   ),
                                 ),
                               ),

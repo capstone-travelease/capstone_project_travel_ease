@@ -18,7 +18,9 @@ class BottomSheetEditGenderUser extends StatelessWidget {
           width: Get.width,
           decoration: const BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20),
+            ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -128,21 +130,6 @@ class BottomSheetEditGenderUser extends StatelessWidget {
                                                   : const SizedBox.shrink()),
                                         ],
                                       ),
-                                      // child: Row(
-                                      //   mainAxisAlignment:
-                                      //       MainAxisAlignment.spaceBetween,
-                                      //   children: [
-                                      //     Text(
-                                      //       item ?? '',
-                                      //       style: Get.textTheme.bodyMedium,
-                                      //     ),
-                                      //)
-                                      //       Icon(
-                                      //         Icons.check,
-                                      //         color: Colors.green[800],
-                                      //       )
-                                      //   ],
-                                      // ),
                                     ),
                                   ),
                                 ),

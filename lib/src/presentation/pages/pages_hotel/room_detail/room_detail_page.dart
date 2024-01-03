@@ -307,13 +307,17 @@ class GetFooter extends GetView<RoomDetailController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-                    onTap: () => Get.toNamed(BookingPage.routeName, arguments: {
-                      "roomId": controller.room.value?.roomId ?? -1
-                    }),
+                    onTap: () => Get.toNamed(
+                      BookingPage.routeName,
+                      arguments: {
+                        "roomId": controller.room.value?.roomId ?? -1
+                      },
+                    ),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                          color: Colors.redAccent,
-                          borderRadius: BorderRadius.circular(18)),
+                        color: Colors.redAccent,
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 16.0, horizontal: 40),
@@ -384,7 +388,8 @@ class DataSearch extends GetView<SearchHotelController> {
                 ?.copyWith(color: Colors.black, fontSize: 13),
           ),
           TextSpan(
-            text: ', ${controller.numberRoom.value} Night(s)',
+            text:
+                ', ${(controller.dateRange.value?.end.difference(controller.dateRange.value!.start))?.inDays} Night(s)',
             style: Get.textTheme.bodySmall
                 ?.copyWith(color: Colors.black, fontSize: 13),
           ),

@@ -1,6 +1,3 @@
-import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
-import 'package:capstone_project_travel_ease/src/domain/models/user_model.dart';
-import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/notification/notification_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/login/login_page.dart';
@@ -22,7 +19,6 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     loadDataImage();
-    // checkLoginController.checkLogin();
     super.onInit();
   }
 
