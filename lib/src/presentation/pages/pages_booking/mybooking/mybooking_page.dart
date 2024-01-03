@@ -1,5 +1,5 @@
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_widgets/ongoingtab_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_widgets/Mybookingtab_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,14 +21,16 @@ class MyBookingPage extends GetView<MyBookingController> {
         ),
       ),
       body: NestedScrollView(
-        physics: const NeverScrollableScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         headerSliverBuilder: (context, value) => [
           SliverAppBar(
+            surfaceTintColor: Get.theme.colorScheme.background,
             automaticallyImplyLeading: false,
             elevation: 0,
-            snap: true,
             backgroundColor: Get.theme.colorScheme.background,
             floating: true,
+            snap: true,
+            pinned: true,
             flexibleSpace: const TabView(),
           )
         ],
@@ -105,6 +107,7 @@ class TabView extends GetView<MyBookingController> {
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: ListView.separated(
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemCount: controller.tabs.length,
         itemBuilder: (BuildContext context, int index) {

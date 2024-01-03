@@ -1,7 +1,4 @@
-import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
-import 'package:capstone_project_travel_ease/src/domain/enums/enum_value.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
-import 'package:capstone_project_travel_ease/src/domain/models/mybookingtab.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel_mybooking.dart';
@@ -26,25 +23,33 @@ class OngoingTab extends GetView<MyBookingController> {
                   HotelModel item,
                   int index,
                 ) {
-                  final itemHotel = controller.listHotel[index];
-                  return ListHotelMyBooking(
-                    decoratedBox: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: MyBookingTabType.cancelled.title == 'Cancelled'
-                            ? Colors.red[50]
-                            : Colors.green[50],
-                        borderRadius: BorderRadius.circular(22),
-                      ),
-                      child: Padding(
+                  // final itemHotel = controller.listHotel[index];
+                  return Obx(
+                    () => ListHotelMyBooking(
+                      decoratedBox: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: controller.selected.value?.type.title ==
+                                  'Cancelled'
+                              ? Colors.red[50]
+                              : Colors.green[50],
+                          borderRadius: BorderRadius.circular(22),
+                        ),
+                        child: Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 6.0, horizontal: 12),
                           child: Obx(
                             () => Text(
-                              controller.selected.value?.type.title ?? '',
-                              style: Get.textTheme.bodySmall
-                                  ?.copyWith(color: Colors.green),
+                              controller.selected.value?.status ?? '',
+                              style: Get.textTheme.bodySmall?.copyWith(
+                                color: controller.selected.value?.type.title ==
+                                        'Cancelled'
+                                    ? Colors.red
+                                    : Colors.green,
+                              ),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     ),
                   );
                 },

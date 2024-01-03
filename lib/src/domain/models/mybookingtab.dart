@@ -5,10 +5,12 @@ class MyBookingTab {
   final MyBookingTabType type;
   final String image;
   final String textNoLogin;
+  final String status;
   MyBookingTab(
     this.type,
     this.image,
     this.textNoLogin,
+    this.status,
   );
 
   factory MyBookingTab.onGoing() {
@@ -16,6 +18,7 @@ class MyBookingTab {
       MyBookingTabType.onGoing,
       Assets.images.ongoing.path,
       'Không có Đặt Chỗ',
+      'Paid',
     );
   }
 
@@ -24,6 +27,7 @@ class MyBookingTab {
       MyBookingTabType.completed,
       Assets.images.completed.path,
       'Không có đặt chỗ đã qua',
+      'Completed',
     );
   }
 
@@ -32,6 +36,7 @@ class MyBookingTab {
       MyBookingTabType.cancelled,
       Assets.images.cancelled.path,
       'Không có đặt chỗ đã hủy',
+      'Cancelled & Refunded',
     );
   }
 }
