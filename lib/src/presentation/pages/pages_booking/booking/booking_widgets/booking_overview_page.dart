@@ -242,8 +242,8 @@ class HotelSelected extends GetView<HotelDetailController> {
         Obx(
           () => Expanded(
             child: ExtendedImage.network(
-              Constant.baseImageUrl +
-                  (controller.hotelDetail.value?.images ?? ''),
+              Constant.baseImageUrl,
+              // (controller.hotelDetail.value?.images ?? ''),
               fit: BoxFit.cover,
               borderRadius: const BorderRadius.all(
                 Radius.circular(12),
@@ -362,22 +362,38 @@ class RoomDetail extends GetView<BookingController> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Obx(
-          () => Text(
-            controller.room.value?.roomName ?? '',
-            style: Get.textTheme.titleMedium!.copyWith(),
+        Text(
+          'Lựa Chọn Của bạn',
+          style: Get.textTheme.titleLarge!.copyWith(
+            fontWeight: FontWeight.bold,
           ),
         ),
-        Obx(
-          () => Text(
-            NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
-                .format(controller.room.value?.roomPrice),
-            style: Get.textTheme.titleMedium?.copyWith(),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Obx(
+                  () => Text(
+                    controller.room.value?.roomName ?? '',
+                    style: Get.textTheme.titleMedium!.copyWith(),
+                  ),
+                ),
+                Obx(
+                  () => Text(
+                    NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+                        .format(controller.room.value?.roomPrice),
+                    style: Get.textTheme.titleMedium?.copyWith(),
+                  ),
+                )
+              ],
+            ),
           ),
-        )
+        ),
       ],
     );
   }

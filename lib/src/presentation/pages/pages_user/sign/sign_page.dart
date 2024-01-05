@@ -1,11 +1,9 @@
-import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/core/utils/error_empty.dart';
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/sign/sign_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 
 class SignPage extends GetView<SignController> {
   static const String routeName = '/SignPage';

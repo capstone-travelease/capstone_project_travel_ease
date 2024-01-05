@@ -1,4 +1,3 @@
-import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/profile/profile_page.dart';

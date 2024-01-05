@@ -1,3 +1,4 @@
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
@@ -32,31 +33,36 @@ class HotelDetailPage extends GetView<HotelDetailController> {
                   SafeArea(
                     child: Obx(
                       () => CarouselSlider.builder(
-                        itemCount: controller.listImage.length,
+                        itemCount:
+                            (controller.hotelDetail.value?.images?.length ??
+                                -1),
                         itemBuilder: (BuildContext context, int itemIndex,
-                                int pageViewIndex) =>
-                            SizedBox(
-                          width: Get.width,
-                          child: ExtendedImage.network(
-                            controller.listImage[itemIndex],
-                            fit: BoxFit.fill,
-                            shape: BoxShape.rectangle,
-                            loadStateChanged: (ExtendedImageState state) {
-                              switch (state.extendedImageLoadState) {
-                                case LoadState.loading:
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                case LoadState.completed:
-                                  return null;
-                                case LoadState.failed:
-                                  return Image.asset(
-                                    Assets.images.noImage.path,
-                                  );
-                              }
-                            },
-                          ),
-                        ),
+                            int pageViewIndex) {
+                          final item =
+                              controller.hotelDetail.value?.images?[itemIndex];
+                          return SizedBox(
+                            width: Get.width,
+                            child: ExtendedImage.network(
+                              Constant.baseImageUrl + (item?.imageUrl ?? ''),
+                              fit: BoxFit.cover,
+                              shape: BoxShape.rectangle,
+                              loadStateChanged: (ExtendedImageState state) {
+                                switch (state.extendedImageLoadState) {
+                                  case LoadState.loading:
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  case LoadState.completed:
+                                    return null;
+                                  case LoadState.failed:
+                                    return Image.asset(
+                                      Assets.images.noImage.path,
+                                    );
+                                }
+                              },
+                            ),
+                          );
+                        },
                         options: CarouselOptions(
                             viewportFraction: 1,
                             // pageSnapping: false,
@@ -98,7 +104,8 @@ class HotelDetailPage extends GetView<HotelDetailController> {
                     child: Obx(
                       () => AnimatedSmoothIndicator(
                         activeIndex: controller.activeIndex.value,
-                        count: controller.listImage.length,
+                        count:
+                            controller.hotelDetail.value?.images?.length ?? -1,
                         effect: const ExpandingDotsEffect(
                             dotColor: Colors.white,
                             activeDotColor: Colors.deepOrangeAccent,

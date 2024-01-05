@@ -7,17 +7,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 class HotelDetailController extends GetxController {
   final activeIndex = 0.obs;
-  final RxList<String> listImage = <String>[].obs;
   late int hotelId;
   final BookingService _bookingService =
       Get.find(tag: Constant.bookingServiceTAG);
   final Rxn<HotelModel> hotelDetail = Rxn<HotelModel>();
-  List<String> dsImage = [
-    'https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_SEDK_01.jpg',
-    'https://images.squarespace-cdn.com/content/v1/5aadf482aa49a1d810879b88/1626698419120-J7CH9BPMB2YI728SLFPN/1.jpg',
-    'https://asiky.com/files/images/Article/tin-tuc/chup-anh-khach-san.jpg',
-    'https://cf.bstatic.com/xdata/images/hotel/max1024x768/382586584.jpg?k=c615c33d39628661129df3581cdf4eacc434cccdd69ed4fc62be839d28f526af&o=&hp=1'
-  ];
+
   final showItems = 0.obs;
   final isExpanded = false.obs;
   final RxBool _isLoading = RxBool(false);
@@ -29,7 +23,6 @@ class HotelDetailController extends GetxController {
   @override
   void onInit() {
     hotelId = Get.arguments['hotelId'];
-    loadData();
     fetchRoomDetail();
     super.onInit();
   }
@@ -41,10 +34,6 @@ class HotelDetailController extends GetxController {
     } catch (e) {
       Get.log(e.toString());
     }
-  }
-
-  Future<void> loadData() async {
-    listImage.call(dsImage);
   }
 
   void toggleExpanded() {

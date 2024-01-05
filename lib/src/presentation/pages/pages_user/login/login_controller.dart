@@ -44,13 +44,11 @@ class LoginController extends GetxController {
       final res = await _userService.loginUser(
           email: emailEditController.text.trim(),
           password: passwordEditController.text.trim());
-      if (res != null) {
-        await checkLoginController.login(
-          userId: res.userId ?? -1,
-          token: res.token ?? '',
-        );
-        Get.back();
-      }
+      await checkLoginController.login(
+        userId: res.userId ?? -1,
+        token: res.token ?? '',
+      );
+      Get.back();
     } catch (e) {
       notificationConfig.showSnackBar(
           title: 'Thông báo',

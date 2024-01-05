@@ -1,7 +1,6 @@
 import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/location_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class BottomSheetLocationController extends GetxController {

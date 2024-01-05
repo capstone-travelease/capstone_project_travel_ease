@@ -28,92 +28,93 @@ class ListHotelView extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
+                  ExtendedImage.network(
+                    Constant.baseImageUrl +
+                        (hotelModel.images?.first.imageUrl ?? ''),
+                    fit: BoxFit.cover,
                     width: 80,
                     height: 80,
-                    child: ExtendedImage.network(
-                      Constant.baseImageUrl + (hotelModel.images ?? ''),
-                      fit: BoxFit.cover,
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      shape: BoxShape.rectangle,
-                      loadStateChanged: (ExtendedImageState state) {
-                        switch (state.extendedImageLoadState) {
-                          case LoadState.loading:
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          case LoadState.completed:
-                            return null;
-                          case LoadState.failed:
-                            return Image.asset(
-                              Assets.images.noImage.path,
-                            );
-                        }
-                      },
-                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    shape: BoxShape.rectangle,
+                    loadStateChanged: (ExtendedImageState state) {
+                      switch (state.extendedImageLoadState) {
+                        case LoadState.loading:
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        case LoadState.completed:
+                          return null;
+                        case LoadState.failed:
+                          return Image.asset(
+                            Assets.images.noImage.path,
+                          );
+                      }
+                    },
                   ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                hotelModel.hotelName ?? '',
-                                style: Get.textTheme.bodyMedium!
-                                    .copyWith(fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    const WidgetSpan(
-                                      alignment: PlaceholderAlignment.middle,
-                                      child: Icon(
-                                        Icons.location_on_outlined,
-                                        size: 18,
-                                        color: Colors.redAccent,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  hotelModel.hotelName ?? '',
+                                  style: Get.textTheme.bodyMedium!
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      const WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: Icon(
+                                          Icons.location_on_outlined,
+                                          size: 18,
+                                          color: Colors.redAccent,
+                                        ),
                                       ),
-                                    ),
-                                    const TextSpan(
-                                      text: ' ',
-                                    ),
-                                    TextSpan(
-                                      text: hotelModel.hotelCity ?? '',
-                                      style: Get.textTheme.bodySmall!
-                                          .copyWith(color: Colors.grey[500]),
-                                    )
-                                  ],
+                                      const TextSpan(
+                                        text: ' ',
+                                      ),
+                                      TextSpan(
+                                        text: hotelModel.hotelCity ?? '',
+                                        style: Get.textTheme.bodySmall!
+                                            .copyWith(color: Colors.grey[500]),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: NumberFormat.currency(
-                                              locale: 'vi_VN', symbol: 'VND')
-                                          .format(hotelModel.price),
-                                      style: Get.textTheme.bodySmall!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.green),
-                                    ),
-                                    TextSpan(
-                                      text: "/per night",
-                                      style: Get.textTheme.bodySmall!
-                                          .copyWith(color: Colors.grey[500]),
-                                    )
-                                  ],
+                                const SizedBox(
+                                  height: 8,
                                 ),
-                              )
-                            ],
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: NumberFormat.currency(
+                                                locale: 'vi_VN', symbol: 'VND')
+                                            .format(hotelModel.price),
+                                        style: Get.textTheme.bodySmall!
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.green),
+                                      ),
+                                      TextSpan(
+                                        text: "/per night",
+                                        style: Get.textTheme.bodySmall!
+                                            .copyWith(color: Colors.grey[500]),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                           Column(
                             children: [

@@ -1,5 +1,4 @@
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_new_payment_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_payment_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

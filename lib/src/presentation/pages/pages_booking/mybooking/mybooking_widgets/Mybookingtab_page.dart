@@ -59,7 +59,9 @@ class OngoingTab extends GetView<MyBookingController> {
                   isSearch: false,
                 ),
                 firstPageProgressIndicatorBuilder: (context) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 },
                 newPageProgressIndicatorBuilder: (context) => SizedBox(
                   height: 30,

@@ -1,9 +1,9 @@
+import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
-import 'package:capstone_project_travel_ease/core/utils/extension.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/room_detail/room_detail_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/bookingInfo.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/gestures.dart';
@@ -27,14 +27,16 @@ class RoomDetailPage extends GetView<RoomDetailController> {
             Stack(
               children: [
                 SafeArea(
-                  child: Obx(() => CarouselSlider.builder(
-                        itemCount: controller.listImage.length,
-                        itemBuilder: (BuildContext context, int itemIndex,
-                                int pageViewIndex) =>
-                            SizedBox(
+                  child: Obx(
+                    () => CarouselSlider.builder(
+                      itemCount: (controller.room.value?.images?.length ?? -1),
+                      itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) {
+                        final item = controller.room.value?.images?[itemIndex];
+                        return SizedBox(
                           width: Get.width,
                           child: ExtendedImage.network(
-                            controller.listImage[itemIndex],
+                            Constant.baseImageUrl + (item?.imageUrl ?? ''),
                             fit: BoxFit.cover,
                             shape: BoxShape.rectangle,
                             loadStateChanged: (ExtendedImageState state) {
@@ -53,16 +55,18 @@ class RoomDetailPage extends GetView<RoomDetailController> {
                               }
                             },
                           ),
-                        ),
-                        options: CarouselOptions(
-                            viewportFraction: 1,
-                            // pageSnapping: false,
-                            enableInfiniteScroll: false,
-                            autoPlay: true,
-                            enlargeCenterPage: true,
-                            onPageChanged: (index, reason) =>
-                                controller.activeIndex.value = index),
-                      )),
+                        );
+                      },
+                      options: CarouselOptions(
+                          viewportFraction: 1,
+                          // pageSnapping: false,
+                          enableInfiniteScroll: false,
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          onPageChanged: (index, reason) =>
+                              controller.activeIndex.value = index),
+                    ),
+                  ),
                 ),
                 Positioned(
                   top: 60,
@@ -98,7 +102,7 @@ class RoomDetailPage extends GetView<RoomDetailController> {
                   child: Obx(
                     () => AnimatedSmoothIndicator(
                       activeIndex: controller.activeIndex.value,
-                      count: controller.listImage.length,
+                      count: (controller.room.value?.images?.length ?? -1),
                       effect: const ExpandingDotsEffect(
                           dotColor: Colors.white,
                           activeDotColor: Colors.deepOrangeAccent,
@@ -299,7 +303,7 @@ class GetFooter extends GetView<RoomDetailController> {
           children: [
             const Padding(
               padding: EdgeInsets.all(12.0),
-              child: DataSearch(),
+              child: WidgetBookingInfo(),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -359,46 +363,6 @@ class GetFooter extends GetView<RoomDetailController> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class DataSearch extends GetView<SearchHotelController> {
-  const DataSearch({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: controller.dateRange.value?.start.formatDateToString(),
-            style: Get.textTheme.bodySmall
-                ?.copyWith(color: Colors.black, fontSize: 13),
-          ),
-          TextSpan(
-            text: ' - ',
-            style: Get.textTheme.bodySmall?.copyWith(
-                color: Colors.black, fontSize: 11, fontWeight: FontWeight.bold),
-          ),
-          TextSpan(
-            text: controller.dateRange.value?.end.formatDateToString(),
-            style: Get.textTheme.bodySmall
-                ?.copyWith(color: Colors.black, fontSize: 13),
-          ),
-          TextSpan(
-            text:
-                ', ${(controller.dateRange.value?.end.difference(controller.dateRange.value!.start))?.inDays} Night(s)',
-            style: Get.textTheme.bodySmall
-                ?.copyWith(color: Colors.black, fontSize: 13),
-          ),
-          TextSpan(
-            text: ', ${controller.numberAdult.value} Room(s)',
-            style: Get.textTheme.bodySmall
-                ?.copyWith(color: Colors.black, fontSize: 13),
-          ),
-        ],
       ),
     );
   }

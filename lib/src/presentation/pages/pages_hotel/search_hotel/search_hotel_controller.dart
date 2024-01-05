@@ -32,7 +32,9 @@ class SearchHotelController extends GetxController {
     super.onInit();
   }
 
-  Future<void> fetchListHotel(int pageKey) async {
+  Future<void> fetchListHotel(
+    int pageKey,
+  ) async {
     try {
       final res = await _bookingService.searchHotel(
         body: PostSearchHotelBody(

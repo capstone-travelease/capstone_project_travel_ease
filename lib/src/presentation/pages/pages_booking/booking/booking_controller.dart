@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/payment_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/room_model.dart';
@@ -110,4 +112,13 @@ class BookingController extends GetxController {
       return;
     }
   }
+}
+
+class ArgSearchHotel {
+  ArgSearchHotel({
+    required this.roomName,
+    required this.price,
+  });
+  final String roomName;
+  final Double price;
 }

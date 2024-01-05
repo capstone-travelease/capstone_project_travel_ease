@@ -1,4 +1,5 @@
 import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/images_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'room_model.g.dart';
@@ -13,7 +14,7 @@ class RoomModel {
       this.roomBedQuantity,
       this.roomCapacity,
       this.roomPrice,
-      this.fileUrl,
+      this.images,
       this.facilities});
   @JsonKey(name: 'room_id')
   int? roomId;
@@ -27,8 +28,8 @@ class RoomModel {
   int? roomBedQuantity;
   @JsonKey(name: 'room_capacity')
   int? roomCapacity;
-  @JsonKey(name: 'file_url')
-  String? fileUrl;
+  @JsonKey(name: 'images')
+  List<ImagesModel>? images;
   @JsonKey(name: 'facilities')
   List<FacilitiesModel>? facilities;
   @JsonKey(name: 'room_price')

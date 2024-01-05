@@ -172,6 +172,7 @@ class Appbar extends GetView<SearchHotelController>
                       controller.numberAdult.value = data.numberAdult ?? -1;
                       controller.numberRoom.value = data.numberRoom ?? -1;
                       controller.location.value = data.location ?? '';
+                      controller.pagingController.refresh();
                     }
                   },
                   child: Text(
@@ -193,7 +194,7 @@ class Appbar extends GetView<SearchHotelController>
   Size get preferredSize => const Size.fromHeight(100);
 }
 
-class FilterOverlay extends StatelessWidget {
+class FilterOverlay extends GetView<SearchHotelController> {
   const FilterOverlay({
     super.key,
   });
@@ -223,6 +224,7 @@ class FilterOverlay extends StatelessWidget {
                     title: 'Modify',
                     onChange: (SearchModel data) {
                       final result = data;
+
                       Get.back(result: result);
                     },
                   ),
@@ -244,6 +246,7 @@ class ListHotel extends GetView<SearchHotelController> {
     return PagedListView<int, HotelModel>.separated(
       shrinkWrap: true,
       pagingController: controller.pagingController,
+      physics: const NeverScrollableScrollPhysics(),
       builderDelegate: PagedChildBuilderDelegate(
         itemBuilder: (
           BuildContext context,

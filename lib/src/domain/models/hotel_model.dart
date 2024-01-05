@@ -1,4 +1,5 @@
 import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/images_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'hotel_model.g.dart';
@@ -27,8 +28,8 @@ class HotelModel {
   String? hotelDescription;
   @JsonKey(name: 'star_rating')
   double? starRating;
-  @JsonKey(name: 'hotel_images')
-  String? images;
+  @JsonKey(name: 'images')
+  List<ImagesModel>? images;
   @JsonKey(name: 'price')
   double? price;
   @JsonKey(name: 'facilities')

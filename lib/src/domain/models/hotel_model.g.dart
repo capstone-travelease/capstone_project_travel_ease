@@ -11,7 +11,9 @@ HotelModel _$HotelModelFromJson(Map<String, dynamic> json) => HotelModel(
       hotelName: json['hotel_name'] as String?,
       hotelCity: json['hotel_city'] as String?,
       starRating: (json['star_rating'] as num?)?.toDouble(),
-      images: json['hotel_images'] as String?,
+      images: (json['images'] as List<dynamic>?)
+          ?.map((e) => ImagesModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       price: (json['price'] as num?)?.toDouble(),
     )
       ..hotelAddress = json['hotel_address'] as String?
@@ -30,7 +32,7 @@ Map<String, dynamic> _$HotelModelToJson(HotelModel instance) =>
       'hotel_country': instance.hotelCountry,
       'hotel_description': instance.hotelDescription,
       'star_rating': instance.starRating,
-      'hotel_images': instance.images,
+      'images': instance.images?.map((e) => e.toJson()).toList(),
       'price': instance.price,
       'facilities': instance.facilities?.map((e) => e.toJson()).toList(),
     };

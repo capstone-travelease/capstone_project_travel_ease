@@ -12,6 +12,7 @@ class MyBookingPage extends GetView<MyBookingController> {
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.background,
       appBar: AppBar(
+        surfaceTintColor: Get.theme.colorScheme.background,
         backgroundColor: Get.theme.colorScheme.background,
         title: Text(
           'My Booking',

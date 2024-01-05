@@ -5,11 +5,14 @@ part 'facilities_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class FacilitiesModel extends Equatable {
-  const FacilitiesModel({this.facilityId, this.facilityName, this.hotelId});
+  const FacilitiesModel(this.facilityImage,
+      {this.facilityId, this.facilityName, this.hotelId});
   @JsonKey(name: 'facility_id')
   final int? facilityId;
   @JsonKey(name: 'facility_name')
   final String? facilityName;
+  @JsonKey(name: 'facility_image')
+  final String? facilityImage;
   @JsonKey(name: 'hotel_id')
   final int? hotelId;
 
@@ -20,5 +23,5 @@ class FacilitiesModel extends Equatable {
 
   @override
   // TODO: implement props
-  List<Object?> get props => [facilityName];
+  List<Object?> get props => [facilityName, facilityImage];
 }

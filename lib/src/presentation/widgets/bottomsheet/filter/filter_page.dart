@@ -234,8 +234,10 @@ class Facilities extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             'Facilities',
-            style: Get.textTheme.bodyMedium!
-                .copyWith(fontWeight: FontWeight.bold, color: Colors.grey[400]),
+            style: Get.textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[400],
+            ),
           ),
         ),
         Padding(
@@ -246,7 +248,9 @@ class Facilities extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8),
             itemCount: 10,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 0.9, crossAxisCount: 4),
+              childAspectRatio: 0.9,
+              crossAxisCount: 4,
+            ),
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),

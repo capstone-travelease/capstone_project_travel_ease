@@ -1,6 +1,5 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/payment_model.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_payment_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
