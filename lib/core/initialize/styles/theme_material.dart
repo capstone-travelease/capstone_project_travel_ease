@@ -1,4 +1,4 @@
-import 'package:capstone_project_travel_ease/core/constrants/color_constants.dart';
+import 'package:capstone_project_travel_ease/core/constraints/color_constants.dart';
 import 'package:flutter/material.dart';
 
 class CoreTheme {

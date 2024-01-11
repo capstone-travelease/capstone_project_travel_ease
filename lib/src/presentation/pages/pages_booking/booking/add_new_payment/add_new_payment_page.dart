@@ -1,4 +1,7 @@
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
+import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_new_payment_controller.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +14,7 @@ class AddNewPaymentPage extends GetView<AddNewPaymentController> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => Get.back(),
+          onPressed: () => controller.back(),
           icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
@@ -30,50 +33,71 @@ class AddNewPaymentPage extends GetView<AddNewPaymentController> {
           Scrollbar(
             child: Obx(
               () {
-                // if (controller.isLoading.value) {
-                //   return const Center(
-                //     child: CircularProgressIndicator(),
-                //   );
-                // }
+                if (controller.isLoading.value) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
                 return ListView.separated(
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      final item = controller.listPayment[index];
+                      final item = controller.listBanks[index];
                       return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Obx(
-                          () => InkWell(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: InkWell(
                             onTap: () async {
                               controller.selectLocation(item);
                             },
                             child: DecoratedBox(
                               decoration: BoxDecoration(
-                                color: controller.selectedPayment.value == item
-                                    ? Colors.red[50]
-                                    : null,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 8.0, horizontal: 12),
                                 child: InkWell(
-                                  onTap: () => controller.selectedPayment(item),
+                                  onTap: () => controller.selectLocation(item),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: [
-                                          Image.asset(
-                                            item.image,
-                                            width: 30,
-                                            height: 30,
+                                          ExtendedImage.network(
+                                            Constant.baseImageUserUrl +
+                                                (item.imageBankUrl ?? ''),
+                                            width: 60,
+                                            height: 60,
+                                            fit: BoxFit.cover,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(6),
+                                            ),
+                                            shape: BoxShape.rectangle,
+                                            loadStateChanged:
+                                                (ExtendedImageState state) {
+                                              switch (state
+                                                  .extendedImageLoadState) {
+                                                case LoadState.loading:
+                                                  return const Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                case LoadState.completed:
+                                                  return null;
+                                                case LoadState.failed:
+                                                  return Image.asset(
+                                                    Assets.images.nodata.path,
+                                                    fit: BoxFit.cover,
+                                                  );
+                                              }
+                                            },
                                           ),
                                           const SizedBox(
                                             width: 20,
                                           ),
                                           Text(
-                                            item.name,
+                                            item.nameBank ?? '',
                                             style: Get.textTheme.bodySmall!
                                                 .copyWith(
                                                     fontWeight:
@@ -81,42 +105,22 @@ class AddNewPaymentPage extends GetView<AddNewPaymentController> {
                                           )
                                         ],
                                       ),
-                                      Icon(
-                                        controller.selectedPayment.value == item
-                                            ? Icons.check
-                                            : null,
-                                        color:
-                                            controller.selectedPayment.value ==
-                                                    item
-                                                ? Colors.green
-                                                : null,
-                                      ),
                                     ],
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
+                          ));
                     },
                     separatorBuilder: (context, index) {
-                      final previousItem = controller.listPayment[index];
-                      final nextItem = controller.listPayment[index + 1];
-                      return Obx(
-                        () => Divider(
-                          indent: 20,
-                          endIndent: 20,
-                          color: controller.selectedPayment.value ==
-                                      previousItem ||
-                                  controller.selectedPayment.value == nextItem
-                              ? Colors.transparent
-                              : Colors.grey[400],
-                          height: 0,
-                        ),
+                      return Divider(
+                        indent: 90,
+                        endIndent: 20,
+                        color: Colors.grey[400],
+                        height: 0,
                       );
                     },
-                    itemCount: controller.listPayment.length);
+                    itemCount: controller.listBanks.length);
               },
             ),
           )

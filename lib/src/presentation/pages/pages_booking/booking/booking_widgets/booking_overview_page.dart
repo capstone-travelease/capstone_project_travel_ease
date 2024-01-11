@@ -1,4 +1,4 @@
-import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
@@ -31,7 +31,9 @@ class BookingOverviewPage extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const SearchViewBooking(),
+                SearchViewBooking(
+                  roomQuantity: controller.numberRoom,
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -139,7 +141,7 @@ class BookingOverviewPage extends StatelessWidget {
                           () => Text(
                             NumberFormat.currency(
                                     locale: 'vi_VN', symbol: 'VND')
-                                .format(controller.room.value?.roomPrice),
+                                .format(controller.totalPrice.value.toInt()),
                             style: Get.textTheme.titleLarge?.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
@@ -196,43 +198,43 @@ class HotelSelected extends GetView<HotelDetailController> {
                   style: Get.textTheme.titleMedium!.copyWith(),
                 ),
               ),
-              Obx(() => RichText(
-                    text: TextSpan(
-                      children: [
-                        const WidgetSpan(
-                          alignment: PlaceholderAlignment.middle,
-                          child: Icon(
-                            Icons.location_on_outlined,
-                            size: 18,
-                            color: Colors.redAccent,
-                          ),
+              Obx(
+                () => RichText(
+                  text: TextSpan(
+                    children: [
+                      const WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Icon(
+                          Icons.location_on_outlined,
+                          size: 18,
+                          color: Colors.redAccent,
                         ),
-                        const TextSpan(
-                          text: ' ',
-                        ),
-                        TextSpan(
-                          text:
-                              controller.hotelDetail.value?.hotelAddress ?? '',
-                          style: Get.textTheme.bodySmall!.copyWith(),
-                        ),
-                        const TextSpan(
-                          text: ' ',
-                        ),
-                        TextSpan(
-                          text: controller.hotelDetail.value?.hotelCity ?? '',
-                          style: Get.textTheme.bodySmall!.copyWith(),
-                        ),
-                        const TextSpan(
-                          text: ' ',
-                        ),
-                        TextSpan(
-                          text:
-                              controller.hotelDetail.value?.hotelCountry ?? '',
-                          style: Get.textTheme.bodySmall!.copyWith(),
-                        )
-                      ],
-                    ),
-                  )),
+                      ),
+                      const TextSpan(
+                        text: ' ',
+                      ),
+                      TextSpan(
+                        text: controller.hotelDetail.value?.hotelAddress ?? '',
+                        style: Get.textTheme.bodySmall!.copyWith(),
+                      ),
+                      const TextSpan(
+                        text: ' ',
+                      ),
+                      TextSpan(
+                        text: controller.hotelDetail.value?.hotelCity ?? '',
+                        style: Get.textTheme.bodySmall!.copyWith(),
+                      ),
+                      const TextSpan(
+                        text: ' ',
+                      ),
+                      TextSpan(
+                        text: controller.hotelDetail.value?.hotelCountry ?? '',
+                        style: Get.textTheme.bodySmall!.copyWith(),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -242,8 +244,8 @@ class HotelSelected extends GetView<HotelDetailController> {
         Obx(
           () => Expanded(
             child: ExtendedImage.network(
-              Constant.baseImageUrl,
-              // (controller.hotelDetail.value?.images ?? ''),
+              Constant.baseImageUrl +
+                  (controller.hotelDetail.value?.images?.first.imageUrl ?? ''),
               fit: BoxFit.cover,
               borderRadius: const BorderRadius.all(
                 Radius.circular(12),
@@ -272,8 +274,9 @@ class HotelSelected extends GetView<HotelDetailController> {
 }
 
 class SearchViewBooking extends GetView<SearchHotelController> {
-  const SearchViewBooking({Key? key}) : super(key: key);
-
+  const SearchViewBooking({Key? key, required this.roomQuantity})
+      : super(key: key);
+  final int roomQuantity;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -342,7 +345,7 @@ class SearchViewBooking extends GetView<SearchHotelController> {
                         style: Get.textTheme.bodySmall!.copyWith(),
                       ),
                       TextSpan(
-                        text: '${controller.numberAdult.value} room ',
+                        text: '$roomQuantity room ',
                         style: Get.textTheme.bodySmall!.copyWith(),
                       )
                     ],
@@ -371,28 +374,46 @@ class RoomDetail extends GetView<BookingController> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Obx(
-                  () => Text(
-                    controller.room.value?.roomName ?? '',
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: controller.roomCards.length,
+          itemBuilder: (context, index) {
+            final item = controller.roomCards[index];
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    item.name,
                     style: Get.textTheme.titleMedium!.copyWith(),
                   ),
-                ),
-                Obx(
-                  () => Text(
-                    NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
-                        .format(controller.room.value?.roomPrice),
-                    style: Get.textTheme.titleMedium?.copyWith(),
-                  ),
-                )
-              ],
-            ),
-          ),
+                  Column(
+                    children: [
+                      Text(
+                        NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+                            .format(item.price),
+                        style: Get.textTheme.titleMedium?.copyWith(),
+                      ),
+                      Text(
+                        'Number of room:${item.roomQuantity} ',
+                        style: Get.textTheme.titleSmall?.copyWith(),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Divider(
+                color: Colors.grey[400],
+              ),
+            );
+          },
         ),
       ],
     );

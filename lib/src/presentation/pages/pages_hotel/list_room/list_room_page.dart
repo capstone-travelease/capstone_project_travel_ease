@@ -1,7 +1,9 @@
-import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/images_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/room_model.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/room_detail/room_detail_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bookingInfo.dart';
@@ -20,70 +22,73 @@ class ListRoomPage extends GetView<ListRoomController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Get.theme.colorScheme.background,
-      appBar: const Appbar(),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const ProposeRoom(),
-            PagedListView<int, RoomModel>.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              pagingController: controller.pagingController,
-              builderDelegate: PagedChildBuilderDelegate(
-                itemBuilder: (
-                  BuildContext context,
-                  RoomModel item,
-                  int index,
-                ) {
-                  // final itemPA = controller.listPhanAnh[index];
-                  return InkWell(
-                      onTap: () {},
-                      child: ListRooms(
-                        roomModel: item,
-                      ));
-                },
-                noItemsFoundIndicatorBuilder: (context) =>
-                    const CustomNoDataWidget(
-                  noiDung: 'Không có dữ liệu',
-                  isSearch: false,
-                ),
-                firstPageProgressIndicatorBuilder: (context) {
-                  return const Center(child: CircularProgressIndicator());
-                },
-                newPageProgressIndicatorBuilder: (context) => SizedBox(
-                  height: 30,
-                  child: Center(
-                    child: CupertinoActivityIndicator(
-                      color: Get.theme.colorScheme.primary,
+        backgroundColor: Get.theme.colorScheme.background,
+        appBar: const Appbar(),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // const ProposeRoom(),
+              PagedListView<int, RoomModel>.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                pagingController: controller.pagingController,
+                builderDelegate: PagedChildBuilderDelegate(
+                  itemBuilder: (
+                    BuildContext context,
+                    RoomModel item,
+                    int index,
+                  ) {
+                    // final itemPA = controller.listPhanAnh[index];
+                    return InkWell(
+                        onTap: () {},
+                        child: ListRooms(
+                          roomModel: item,
+                        ));
+                  },
+                  noItemsFoundIndicatorBuilder: (context) =>
+                      const CustomNoDataWidget(
+                    noiDung: 'Không có dữ liệu',
+                    isSearch: false,
+                  ),
+                  firstPageProgressIndicatorBuilder: (context) {
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                  newPageProgressIndicatorBuilder: (context) => SizedBox(
+                    height: 30,
+                    child: Center(
+                      child: CupertinoActivityIndicator(
+                        color: Get.theme.colorScheme.primary,
+                      ),
                     ),
                   ),
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      const CustomNoDataWidget(
+                    noiDung: 'Không có dữ liệu',
+                    isSearch: false,
+                  ),
+                  newPageErrorIndicatorBuilder: (context) =>
+                      const CustomNoDataWidget(
+                    noiDung: 'Có lỗi xảy ra. Vui lòng thử lại!',
+                    isSearch: false,
+                  ),
                 ),
-                firstPageErrorIndicatorBuilder: (context) =>
-                    const CustomNoDataWidget(
-                  noiDung: 'Không có dữ liệu',
-                  isSearch: false,
-                ),
-                newPageErrorIndicatorBuilder: (context) =>
-                    const CustomNoDataWidget(
-                  noiDung: 'Có lỗi xảy ra. Vui lòng thử lại!',
-                  isSearch: false,
+                separatorBuilder: (_, __) => const Divider(
+                  endIndent: 0,
+                  thickness: 1,
+                  indent: 0,
+                  height: 0,
+                  color: Colors.transparent,
                 ),
               ),
-              separatorBuilder: (_, __) => const Divider(
-                endIndent: 0,
-                thickness: 1,
-                indent: 0,
-                height: 0,
-                color: Colors.transparent,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: const GetFooter(),
-    );
+        bottomNavigationBar: Obx(
+          () => (controller.totalPrice.value) != 0
+              ? const GetFooter()
+              : const SizedBox.shrink(),
+        ));
   }
 }
 
@@ -173,110 +178,119 @@ class Appbar extends GetView<ListRoomController>
   Size get preferredSize => const Size.fromHeight(70);
 }
 
-class ProposeRoom extends GetView<ListRoomController> {
-  const ProposeRoom({Key? key}) : super(key: key);
+// class ProposeRoom extends GetView<ListRoomController> {
+//   const ProposeRoom({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(12.0),
+//       child: Card(
+//         shape: OutlineInputBorder(
+//           borderSide: BorderSide(color: Colors.grey[400]!),
+//         ),
+//         child: Padding(
+//           padding: const EdgeInsets.all(12.0),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Obx(
+//                 () => Text(
+//                   'Được Đề Xuất cho ${controller.searchHotelController.numberAdult.toInt()} người',
+//                   style: Get.textTheme.titleMedium!.copyWith(
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//               ),
+//               Obx(
+//                 () => ListView.builder(
+//                   physics: const NeverScrollableScrollPhysics(),
+//                   shrinkWrap: true,
+//                   itemCount: controller.rooms.length,
+//                   itemBuilder: (context, index) {
+//                     final item = controller.rooms[index];
+//                     return Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: [
+//                         Expanded(
+//                           child: Text(
+//                             item.name,
+//                             maxLines: 1,
+//                             overflow: TextOverflow.ellipsis,
+//                             style: Get.textTheme.titleMedium!.copyWith(
+//                               fontWeight: FontWeight.bold,
+//                             ),
+//                           ),
+//                         ),
+//                         const SizedBox(
+//                           width: 10,
+//                         ),
+//                         Text(
+//                           NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+//                               .format(item.price),
+//                           style: Get.textTheme.titleMedium!.copyWith(
+//                             fontWeight: FontWeight.bold,
+//                           ),
+//                         ),
+//                       ],
+//                     );
+//                   },
+//                 ),
+//               ),
+//               Divider(
+//                 color: Colors.grey[400]!,
+//               ),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   Text(
+//                     'Tổng Cộng',
+//                     style: Get.textTheme.titleMedium!.copyWith(
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                   Obx(
+//                     () => Text(
+//                       NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+//                           .format(controller.totalPropose.toInt()),
+//                       style: Get.textTheme.titleMedium!.copyWith(
+//                         fontWeight: FontWeight.bold,
+//                       ),
+//                     ),
+//                   )
+//                 ],
+//               ),
+//               Padding(
+//                 padding: const EdgeInsets.symmetric(vertical: 8.0),
+//                 child: SizedBox(
+//                   width: Get.width,
+//                   child: DecoratedBox(
+//                     decoration: BoxDecoration(
+//                       color: Colors.redAccent,
+//                       borderRadius: BorderRadius.circular(12),
+//                     ),
+//                     child: Padding(
+//                       padding: const EdgeInsets.all(12.0),
+//                       child: Center(
+//                         child: Text(
+//                           "Đặt Ngay",
+//                           style: Get.textTheme.titleMedium!
+//                               .copyWith(color: Colors.white),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               )
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Card(
-        shape: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey[400]!),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Obx(
-                () => Text(
-                  'Được Đề Xuất cho ${controller.searchHotelController.numberAdult.toInt()} người',
-                  style: Get.textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Obx(
-                () => ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: controller.rooms.length,
-                  itemBuilder: (context, index) {
-                    final item = controller.rooms[index];
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          item.name,
-                          style: Get.textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          item.price.toString(),
-                          style: Get.textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              Divider(
-                color: Colors.grey[400]!,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Tổng Cộng',
-                    style: Get.textTheme.titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Obx(
-                    () => Text(
-                      controller.total.toString(),
-                      style: Get.textTheme.titleMedium!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: SizedBox(
-                  width: Get.width,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.redAccent,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Center(
-                        child: Text(
-                          "Đặt Ngay",
-                          style: Get.textTheme.titleMedium!
-                              .copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ListRooms extends StatelessWidget {
+class ListRooms extends GetView<ListRoomController> {
   const ListRooms({Key? key, required this.roomModel}) : super(key: key);
   final RoomModel roomModel;
   @override
@@ -391,7 +405,10 @@ class ListRooms extends StatelessWidget {
                     right: 10,
                     child: Column(
                       children: [
-                        Text('${roomModel.roomPrice! + 100}',
+                        Text(
+                            NumberFormat.currency(
+                                    locale: 'vi_VN', symbol: 'VND')
+                                .format(roomModel.roomPrice! + 1000000),
                             style: Get.textTheme.bodySmall!.copyWith(
                               fontStyle: FontStyle.italic,
                               color: Colors.grey.shade500,
@@ -422,25 +439,124 @@ class ListRooms extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(''),
+                    Obx(
+                      () {
+                        bool isRoomSelected = controller.roomCards.any(
+                            (element) => element.roomId == roomModel.roomId);
+                        return isRoomSelected
+                            ? Row(
+                                children: [
+                                  if ((controller
+                                          .getRoomQuantity(
+                                              roomModel.roomId ?? 0)
+                                          .toInt() ==
+                                      (roomModel.roomQuantity?.toInt() ?? -1)))
+                                    Text(
+                                      'Đã tới giới hạn số phòng',
+                                      style: Get.textTheme.bodySmall!
+                                          .copyWith(color: Colors.red),
+                                    ),
+                                  TextButton(
+                                    onPressed: () {
+                                      controller.cleanRoomsSelected(
+                                          roomModel.roomId ?? 0);
+                                    },
+                                    child: Text(
+                                      'Xóa',
+                                      style: Get.textTheme.bodySmall!.copyWith(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : const Text('');
+                      },
+                    ),
                     InkWell(
-                      // onTap: () => Get.toNamed(BookingPage.routeName,
-                      //     arguments: {"roomId": roomModel.roomId}),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                            color: Colors.redAccent,
-                            borderRadius: BorderRadius.circular(16)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12.0, horizontal: 16),
-                          child: Center(
-                            child: Text(
-                              'Select room',
-                              style: Get.textTheme.bodyMedium!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ),
-                        ),
+                      onTap: () {},
+                      child: Obx(
+                        () {
+                          bool isRoomSelected = controller.roomCards.any(
+                              (element) => element.roomId == roomModel.roomId);
+                          return !isRoomSelected
+                              ? DecoratedBox(
+                                  decoration: BoxDecoration(
+                                      color: Colors.redAccent,
+                                      borderRadius: BorderRadius.circular(16)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 16),
+                                    child: Center(
+                                      child: InkWell(
+                                        onTap: () {
+                                          controller.addSelectedRoom(roomModel);
+                                        },
+                                        child: Text(
+                                          'Select room',
+                                          style: Get.textTheme.bodyMedium!
+                                              .copyWith(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : DecoratedBox(
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Colors.redAccent),
+                                      borderRadius: BorderRadius.circular(16)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 16),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            controller.incrementRoom(roomModel);
+                                          },
+                                          child: const Icon(
+                                            Icons.add,
+                                            size: 26,
+                                            color: Colors.redAccent,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 12,
+                                        ),
+                                        Obx(
+                                          () => Text(
+                                            controller
+                                                .getRoomQuantity(
+                                                    roomModel.roomId ?? 0)
+                                                .value
+                                                .toString(),
+                                            style: Get.textTheme.bodyLarge!
+                                                .copyWith(
+                                                    color: Colors.redAccent),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 12,
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            controller.decrementRoom(roomModel);
+                                          },
+                                          child: const Icon(
+                                            Icons.remove,
+                                            size: 26,
+                                            color: Colors.redAccent,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                        },
                       ),
                     ),
                   ],
@@ -460,40 +576,66 @@ class ListImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: images.length,
-        itemBuilder: (context, index) {
-          final item = images[index];
-          return Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: ExtendedImage.network(
-              Constant.baseImageUrl + (item.imageUrl ?? ''),
-              width: 155,
-              height: 100,
-              fit: BoxFit.cover,
-              borderRadius: const BorderRadius.all(Radius.circular(6)),
-              shape: BoxShape.rectangle,
-              loadStateChanged: (ExtendedImageState state) {
-                switch (state.extendedImageLoadState) {
-                  case LoadState.loading:
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  case LoadState.completed:
-                    return null;
+      height: 120,
+      child: images.length > 1
+          ? ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: images.length,
+              itemBuilder: (context, index) {
+                final item = images[index];
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: ExtendedImage.network(
+                    Constant.baseImageUrl + (item.imageUrl ?? ''),
+                    width: 155,
+                    height: 100,
+                    fit: BoxFit.cover,
+                    borderRadius: const BorderRadius.all(Radius.circular(6)),
+                    shape: BoxShape.rectangle,
+                    loadStateChanged: (ExtendedImageState state) {
+                      switch (state.extendedImageLoadState) {
+                        case LoadState.loading:
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        case LoadState.completed:
+                          return null;
 
-                  case LoadState.failed:
-                    return Image.asset(
-                      Assets.images.noImage.path,
-                    );
-                }
+                        case LoadState.failed:
+                          return Image.asset(
+                            Assets.images.noImage.path,
+                          );
+                      }
+                    },
+                  ),
+                );
               },
+            )
+          : Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: ExtendedImage.network(
+                Constant.baseImageUrl + (images.first.imageUrl ?? ''),
+                width: Get.width,
+                fit: BoxFit.cover,
+                borderRadius: const BorderRadius.all(Radius.circular(6)),
+                shape: BoxShape.rectangle,
+                loadStateChanged: (ExtendedImageState state) {
+                  switch (state.extendedImageLoadState) {
+                    case LoadState.loading:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case LoadState.completed:
+                      return null;
+
+                    case LoadState.failed:
+                      return Image.asset(
+                        Assets.images.noImage.path,
+                      );
+                  }
+                },
+              ),
             ),
-          );
-        },
-      ),
     );
   }
 }
@@ -521,9 +663,13 @@ class GetFooter extends GetView<ListRoomController> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(12.0),
-              child: WidgetBookingInfo(),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Obx(
+                () => WidgetBookingInfo(
+                  roomQuantity: controller.totalRoom.toInt(),
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -531,6 +677,16 @@ class GetFooter extends GetView<ListRoomController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
+                    onTap: () {
+                      Get.toNamed(
+                        BookingPage.routeName,
+                        arguments: ArgRooms(
+                          roomCardModel: controller.roomCards,
+                          price: (controller.totalPrice.toInt()),
+                          numberRoom: controller.totalRoom.toInt(),
+                        ),
+                      );
+                    },
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         color: Colors.redAccent,
@@ -547,29 +703,31 @@ class GetFooter extends GetView<ListRoomController> {
                       ),
                     ),
                   ),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'Total Price \n ',
-                          style: Get.textTheme.titleLarge!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        // TextSpan(
-                        //   text: controller.room.value?.roomPrice != null
-                        //       ? NumberFormat.currency(
-                        //               locale: 'vi_VN', symbol: 'VND')
-                        //           .format(controller.room.value?.roomPrice)
-                        //       : "",
-                        //   style: Get.textTheme.titleMedium!
-                        //       .copyWith(fontWeight: FontWeight.bold),
-                        // ),
-                        TextSpan(
-                            text: '\n/per night',
-                            style: Get.textTheme.bodySmall!),
-                      ],
+                  Obx(
+                    () => RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Total Price \n ',
+                            style: Get.textTheme.titleLarge!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                            text: (controller.totalPrice.value) > 0
+                                ? NumberFormat.currency(
+                                        locale: 'vi_VN', symbol: 'VND')
+                                    .format(controller.totalPrice.toInt())
+                                : "",
+                            style: Get.textTheme.titleMedium!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                              text: '\n/per night',
+                              style: Get.textTheme.bodySmall!),
+                        ],
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

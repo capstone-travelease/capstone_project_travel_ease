@@ -1,14 +1,17 @@
-import 'dart:ffi';
-
-import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
+import 'package:capstone_project_travel_ease/core/utils/snack_bar_and_loading.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/bank_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/payment_model.dart';
-import 'package:capstone_project_travel_ease/src/domain/models/room_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/room_card_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_booking_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_widgets/booking_overview_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_widgets/detail_customer_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_widgets/finish_booking_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_successful.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,16 +33,24 @@ class BookingController extends GetxController {
   ].obs;
   final RegExp phoneRegex = RegExp(r'^([1-9])?\d{10}$');
   final RxList<PaymentModel> listPayment = <PaymentModel>[].obs;
-  final Rxn<Children> selectedPayment = Rxn();
   final CheckLoginController checkLoginController = Get.find();
   final Rxn<PaymentModel> selectedPaymentMethod = Rxn();
-  late int roomId;
+  final Rxn<BanksModel> selectedPayment = Rxn();
   final BookingService _bookingService =
       Get.find(tag: Constant.bookingServiceTAG);
-  final Rxn<RoomModel> room = Rxn<RoomModel>();
+  RxList<RoomCardModel> roomCards = <RoomCardModel>[].obs;
+  final RxInt totalPrice = 0.obs;
+  late int numberRoom;
+  late ArgRooms argRooms;
+  final RxList<BanksModel> listBanksAccount = <BanksModel>[].obs;
+  final HotelDetailController hotelDetailController = Get.find();
+  final SearchHotelController searchHotelController = Get.find();
   @override
   void onInit() {
-    roomId = Get.arguments['roomId'];
+    argRooms = Get.arguments as ArgRooms;
+    roomCards.value = argRooms.roomCardModel;
+    totalPrice.value = argRooms.price;
+    numberRoom = argRooms.numberRoom;
     pageController.addListener(
       () {
         _currentStepAndPage.value = pageController.page!.round();
@@ -53,19 +64,7 @@ class BookingController extends GetxController {
         text: checkLoginController.user.value?.phoneNumber ?? '');
     listPayment.call(payment);
     selectPaymentMethod(listPayment.first);
-    fetchRoomDetail();
     super.onInit();
-  }
-
-  Future<void> fetchRoomDetail() async {
-    try {
-      final res = await _bookingService.detailRoom(roomId: roomId);
-      room.call(res);
-    } catch (e) {
-      Get.log(
-        e.toString(),
-      );
-    }
   }
 
   void goToStepAndPage(int index) {
@@ -78,8 +77,15 @@ class BookingController extends GetxController {
     final isNextPage = _currentStepAndPage.value == pages.length - 2;
     final next = _currentStepAndPage.value + 1;
     if (isLastPage) {
+      if (selectedPayment.value == null) {
+        SnackBarAndLoading.showSnackBar(
+          'Bạn Chưa Chọn Phương Thức Thanh Toán',
+          textColor: Colors.black,
+          backgroundColor: Colors.white,
+        );
+        return;
+      }
       onPayment();
-      return;
     } else if (isNextPage) {
       goToStepAndPage(next);
     } else {
@@ -89,36 +95,80 @@ class BookingController extends GetxController {
     }
   }
 
-  Future<void> onPayment() async {
-    Get.dialog(
-      DiaLogSuccessful(
-        onTap: () => Get.offAllNamed(NavigatorMenuPage.routeName),
-        text: 'You have successfully booked. Please check your email inbox',
-      ),
-    );
-  }
-
-  void selectPaymentMethod(PaymentModel? value) {
+  void selectPaymentMethod(PaymentModel? value) async {
     if (selectedPaymentMethod.value != value) {
       selectedPaymentMethod.call(value);
-      selectPayment(value?.children.first);
+      await fetchListBankAccount();
       return;
     }
   }
 
-  void selectPayment(Children? value) {
+  Future<void> fetchListBankAccount() async {
+    try {
+      final res = await _bookingService.listBankAccount(
+        userId: checkLoginController.userid.value,
+      );
+      listBanksAccount.call(res);
+    } catch (error) {
+      Get.log(
+        error.toString(),
+      );
+    }
+  }
+
+  void selectPayment(BanksModel? value) {
     if (selectedPayment.value != value) {
       selectedPayment.call(value);
       return;
     }
   }
+
+  Future<void> onPayment() async {
+    final List<ProductList> roomInfoList = roomCards
+        .map(
+          (room) => ProductList(
+            roomId: room.roomId,
+            roomQuantity: room.roomQuantity.toInt(),
+          ),
+        )
+        .toList();
+
+    try {
+      await _bookingService.booking(
+        body: PostBookingBody(
+          hotelId: hotelDetailController.hotelId,
+          checkinDate:
+              searchHotelController.dateRange.value?.start ?? DateTime.now(),
+          checkoutDate:
+              searchHotelController.dateRange.value?.end ?? DateTime.now(),
+          userId: checkLoginController.userid.toInt(),
+          totalPrice: totalPrice.toInt(),
+          productList: roomInfoList,
+          accountId: selectedPayment.value?.accountId,
+          taxes: '10',
+        ),
+      );
+      Get.dialog(
+        DiaLogSuccessful(
+          onTap: () => Get.offAllNamed(NavigatorMenuPage.routeName),
+          text: 'You have successfully booked. Please check your email inbox',
+        ),
+      );
+    } catch (error) {
+      Get.log(
+        error.toString(),
+      );
+    }
+  }
 }
 
-class ArgSearchHotel {
-  ArgSearchHotel({
-    required this.roomName,
+class ArgRooms {
+  ArgRooms({
+    required this.roomCardModel,
     required this.price,
+    required this.numberRoom,
   });
-  final String roomName;
-  final Double price;
+  final List<RoomCardModel> roomCardModel;
+  final int price;
+  final int numberRoom;
 }

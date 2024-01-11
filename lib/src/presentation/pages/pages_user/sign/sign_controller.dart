@@ -1,4 +1,4 @@
-import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/utils/noti_config.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_sign_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
@@ -24,11 +24,11 @@ class SignController extends GetxController {
   final NotificationConfig notificationConfig = Get.find();
   @override
   void onInit() {
-    emailEditController = TextEditingController(text: 'anh@gmail.com');
-    passwordEditController = TextEditingController(text: 'Anh12345@');
-    nameEditController = TextEditingController(text: 'Xuan Anh');
-    phoneEditController = TextEditingController(text: '1234567890');
-    confirmPasswordEditController = TextEditingController(text: 'Anh12345@');
+    emailEditController = TextEditingController();
+    passwordEditController = TextEditingController();
+    nameEditController = TextEditingController();
+    phoneEditController = TextEditingController();
+    confirmPasswordEditController = TextEditingController();
     super.onInit();
   }
 
@@ -55,9 +55,10 @@ class SignController extends GetxController {
         _cleanInput();
         Get.back();
         notificationConfig.showSnackBar(
-            title: 'Thông báo',
-            'Đăng Kí Tài Khoản Thành Công <3',
-            backgroundColor: Get.theme.colorScheme.primary);
+          title: 'Thông báo',
+          'Đăng Kí Tài Khoản Thành Công <3',
+          backgroundColor: Get.theme.colorScheme.primary,
+        );
       } catch (error) {
         String errorMessage = "Có lỗi xảy ra, thử lại nhé!";
         if (error is DioException) {
@@ -68,10 +69,13 @@ class SignController extends GetxController {
           }
         }
         notificationConfig.showSnackBar(
-            title: 'Thông báo',
-            errorMessage,
-            backgroundColor: Get.theme.colorScheme.primary);
-        Get.log(error.toString());
+          title: 'Thông báo',
+          errorMessage,
+          backgroundColor: Get.theme.colorScheme.primary,
+        );
+        Get.log(
+          error.toString(),
+        );
       }
     }
     isLoading.call(false);

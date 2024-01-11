@@ -1,4 +1,4 @@
-import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/modules/other_modules/other_modules.dart';
 import 'package:capstone_project_travel_ease/core/utils/noti_config.dart';
 import 'package:capstone_project_travel_ease/core/utils/notication_config_implement.dart';

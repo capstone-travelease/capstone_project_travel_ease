@@ -1,9 +1,11 @@
-import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
+import 'package:capstone_project_travel_ease/core/utils/extension.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/room_detail/room_detail_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/widgets/bookingInfo.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/gestures.dart';
@@ -96,21 +98,23 @@ class RoomDetailPage extends GetView<RoomDetailController> {
                     ],
                   ),
                 ),
-                Positioned(
-                  bottom: 10,
-                  right: 150,
-                  child: Obx(
-                    () => AnimatedSmoothIndicator(
-                      activeIndex: controller.activeIndex.value,
-                      count: (controller.room.value?.images?.length ?? -1),
-                      effect: const ExpandingDotsEffect(
+                if ((controller.room.value?.images?.length ?? -1) > 1)
+                  Positioned(
+                    bottom: 10,
+                    right: 150,
+                    child: Obx(
+                      () => AnimatedSmoothIndicator(
+                        activeIndex: controller.activeIndex.value,
+                        count: (controller.room.value?.images?.length ?? -1),
+                        effect: const ExpandingDotsEffect(
                           dotColor: Colors.white,
                           activeDotColor: Colors.deepOrangeAccent,
                           dotHeight: 10,
-                          dotWidth: 10),
+                          dotWidth: 10,
+                        ),
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
             Padding(
@@ -119,13 +123,7 @@ class RoomDetailPage extends GetView<RoomDetailController> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Obx(
-                    () => Text(
-                      controller.room.value?.roomName ?? '',
-                      style: Get.textTheme.titleLarge!
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  const RoomInformation(),
                   const Divider(
                     color: Colors.grey,
                   ),
@@ -254,6 +252,228 @@ class RoomDetailPage extends GetView<RoomDetailController> {
   }
 }
 
+class RoomInformation extends GetView<RoomDetailController> {
+  const RoomInformation({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Obx(
+          () => Text(
+            controller.room.value?.roomName ?? '',
+            style:
+                Get.textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Obx(
+          () => Text(
+            'Giá cho ${controller.room.value?.roomCapacity.toString() ?? ''} người lớn',
+            style: Get.textTheme.bodyMedium!.copyWith(),
+          ),
+        ),
+        const DateBooking(),
+        Obx(
+          () => RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: controller.room.value?.roomPrice != null
+                      ? NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+                          .format(controller.room.value?.roomPrice)
+                      : "",
+                  style: Get.textTheme.titleMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+                TextSpan(text: '/per night', style: Get.textTheme.bodySmall!),
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8),
+          child: Obx(
+            () {
+              bool isRoomSelected = controller.listRoomController.roomCards.any(
+                  (element) => element.roomId == controller.room.value?.roomId);
+              return !isRoomSelected
+                  ? InkWell(
+                      onTap: () {
+                        if (controller.room.value == null) return;
+                        controller.listRoomController
+                            .addSelectedRoom(controller.room.value!);
+                      },
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(16)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Center(
+                            child: Text(
+                              'Select room',
+                              style: Get.textTheme.bodyLarge!
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Row(
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            controller.listRoomController.cleanRoomsSelected(
+                                controller.room.value?.roomId ?? 0);
+                          },
+                          child: Text(
+                            'Xóa',
+                            style: Get.textTheme.bodySmall!.copyWith(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.redAccent),
+                                borderRadius: BorderRadius.circular(16)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12.0, horizontal: 16),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      if (controller.room.value == null) return;
+                                      controller.listRoomController
+                                          .incrementRoom(
+                                              controller.room.value!);
+                                    },
+                                    child: const Icon(
+                                      Icons.add,
+                                      size: 26,
+                                      color: Colors.redAccent,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
+                                  Obx(
+                                    () => Text(
+                                      controller.listRoomController
+                                          .getRoomQuantity(
+                                              controller.room.value?.roomId ??
+                                                  0)
+                                          .value
+                                          .toString(),
+                                      style: Get.textTheme.bodyLarge!
+                                          .copyWith(color: Colors.redAccent),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 12,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      if (controller.room.value == null) return;
+                                      controller.listRoomController
+                                          .decrementRoom(
+                                              controller.room.value!);
+                                    },
+                                    child: const Icon(
+                                      Icons.remove,
+                                      size: 26,
+                                      color: Colors.redAccent,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+            },
+          ),
+        ),
+        // Obx(
+        //   () {
+        //     bool isRoomSelected = controller.listRoomController.roomCards.any(
+        //         (element) => element.roomId == controller.room.value?.roomId);
+        //     return isRoomSelected
+        //         ? Row(
+        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //             children: [
+        //               Text(''),
+        //               if ((controller.listRoomController
+        //                       .getRoomQuantity(
+        //                           controller.room.value?.roomId ?? 0)
+        //                       .toInt() ==
+        //                   (controller.room.value?.roomQuantity?.toInt() ?? -1)))
+        //                 Text(
+        //                   'Đã tới giới hạn số phòng',
+        //                   style: Get.textTheme.bodySmall!
+        //                       .copyWith(color: Colors.red),
+        //                 ),
+        //             ],
+        //           )
+        //         : const SizedBox.shrink();
+        //   },
+        // ),
+      ],
+    );
+  }
+}
+
+class DateBooking extends GetView<SearchHotelController> {
+  const DateBooking({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: 'Giá cho',
+            style: Get.textTheme.bodyMedium?.copyWith(),
+          ),
+          TextSpan(
+            text:
+                ' ${(controller.dateRange.value?.end.difference(controller.dateRange.value!.start))?.inDays} Đêm ( ',
+            style: Get.textTheme.bodyMedium?.copyWith(),
+          ),
+          TextSpan(
+            text: controller.dateRange.value?.start.formatDateAndTimeToString(),
+            style: Get.textTheme.bodyMedium?.copyWith(),
+          ),
+          TextSpan(
+            text: ' - ',
+            style: Get.textTheme.bodyMedium?.copyWith(),
+          ),
+          TextSpan(
+            text: controller.dateRange.value?.end.formatDateAndTimeToString(),
+            style: Get.textTheme.bodyMedium?.copyWith(),
+          ),
+          TextSpan(
+            text: ' ) ',
+            style: Get.textTheme.bodyMedium?.copyWith(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class Facilities extends StatelessWidget {
   const Facilities({Key? key, required this.facilitiesModel}) : super(key: key);
   final List<FacilitiesModel> facilitiesModel;
@@ -301,21 +521,22 @@ class GetFooter extends GetView<RoomDetailController> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(12.0),
-              child: WidgetBookingInfo(),
-            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
                     onTap: () => Get.toNamed(
                       BookingPage.routeName,
-                      arguments: {
-                        "roomId": controller.room.value?.roomId ?? -1
-                      },
+                      arguments: ArgRooms(
+                        roomCardModel: controller.listRoomController.roomCards,
+                        price:
+                            (controller.listRoomController.totalPrice.toInt()),
+                        numberRoom:
+                            controller.listRoomController.totalRoom.toInt(),
+                      ),
                     ),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
@@ -324,9 +545,11 @@ class GetFooter extends GetView<RoomDetailController> {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 40),
+                          vertical: 16.0,
+                          horizontal: 40,
+                        ),
                         child: Text(
-                          'Book Room',
+                          'Book Now',
                           style: Get.textTheme.titleMedium!.copyWith(
                               fontWeight: FontWeight.bold, color: Colors.white),
                         ),
@@ -343,11 +566,10 @@ class GetFooter extends GetView<RoomDetailController> {
                                 .copyWith(fontWeight: FontWeight.bold),
                           ),
                           TextSpan(
-                            text: controller.room.value?.roomPrice != null
-                                ? NumberFormat.currency(
-                                        locale: 'vi_VN', symbol: 'VND')
-                                    .format(controller.room.value?.roomPrice)
-                                : "",
+                            text: NumberFormat.currency(
+                                    locale: 'vi_VN', symbol: 'VND')
+                                .format(controller.listRoomController.totalPrice
+                                    .toInt()),
                             style: Get.textTheme.titleMedium!
                                 .copyWith(fontWeight: FontWeight.bold),
                           ),

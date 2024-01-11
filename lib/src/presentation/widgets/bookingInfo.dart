@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WidgetBookingInfo extends GetView<SearchHotelController> {
-  const WidgetBookingInfo({Key? key}) : super(key: key);
+  const WidgetBookingInfo({Key? key, required this.roomQuantity})
+      : super(key: key);
+  final int roomQuantity;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class WidgetBookingInfo extends GetView<SearchHotelController> {
                 ?.copyWith(color: Colors.black, fontSize: 13),
           ),
           TextSpan(
-            text: ', ${controller.numberRoom.value} Room(s)',
+            text: ', ${roomQuantity.toInt()} Room(s)',
             style: Get.textTheme.bodySmall
                 ?.copyWith(color: Colors.black, fontSize: 13),
           ),

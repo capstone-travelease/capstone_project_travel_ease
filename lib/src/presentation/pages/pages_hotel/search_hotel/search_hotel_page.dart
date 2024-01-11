@@ -26,6 +26,7 @@ class SearchHotelPage extends GetView<SearchHotelController> {
         padding: const EdgeInsets.all(12.0),
         child: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               DecoratedBox(
                 decoration: BoxDecoration(
@@ -49,7 +50,7 @@ class SearchHotelPage extends GetView<SearchHotelController> {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
+                padding: EdgeInsets.only(bottom: 40.0),
                 child: ListHotel(),
               )
             ],
@@ -258,7 +259,9 @@ class ListHotel extends GetView<SearchHotelController> {
             hotelModel: item,
             onTap: () => Get.toNamed(
               HotelDetailPage.routeName,
-              arguments: {'hotelId': itemHotel.hotelId},
+              arguments: {
+                'hotelId': itemHotel.hotelId,
+              },
             ),
           );
         },

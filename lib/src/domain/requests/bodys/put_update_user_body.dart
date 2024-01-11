@@ -22,12 +22,12 @@ class PutUpdateUserBody extends Equatable {
 
   PutUpdateUserBody copyWith(
       {String? email,
-      String? fullname,
+      String? fullName,
       String? phone,
       DateTime? birthday,
       bool? gender}) {
     return PutUpdateUserBody(
-        fullName: fullname ?? this.fullName,
+        fullName: fullName ?? this.fullName,
         gender: gender ?? this.gender,
         phone: phone ?? this.phone,
         birthday: birthday ?? this.birthday);

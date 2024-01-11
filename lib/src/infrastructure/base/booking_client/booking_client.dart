@@ -1,3 +1,5 @@
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_add_card_body.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_booking_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_search_hotel_body.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
@@ -21,4 +23,19 @@ abstract class BookingClient {
 
   @GET('/api/hotel/detail?hotelId={hotelId}')
   Future detailHotel(@Path('hotelId') int hotelId);
+
+  @GET('/booking/getbank?banktype={bankType}')
+  Future listBank(@Path('bankType') int bankType);
+
+  @POST('/booking/addnewbank?userid={userId}')
+  Future bankLink(@Path('userId') int userId, @Body() PutAddCardBody body);
+
+  @GET('/booking/getlistaccount?userid={userId}')
+  Future listBankAccount(@Path('userId') int userId);
+
+  @GET('/api/facility/list-all')
+  Future listFacilities();
+
+  @POST('/booking/order')
+  Future booking(@Body() PostBookingBody body);
 }

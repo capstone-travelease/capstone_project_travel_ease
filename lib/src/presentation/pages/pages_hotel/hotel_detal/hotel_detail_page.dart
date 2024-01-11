@@ -1,4 +1,4 @@
-import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
@@ -98,22 +98,23 @@ class HotelDetailPage extends GetView<HotelDetailController> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    bottom: 10,
-                    right: 150,
-                    child: Obx(
-                      () => AnimatedSmoothIndicator(
-                        activeIndex: controller.activeIndex.value,
-                        count:
-                            controller.hotelDetail.value?.images?.length ?? -1,
-                        effect: const ExpandingDotsEffect(
-                            dotColor: Colors.white,
-                            activeDotColor: Colors.deepOrangeAccent,
-                            dotHeight: 10,
-                            dotWidth: 10),
+                  if ((controller.hotelDetail.value?.images?.length ?? -1) > 1)
+                    Positioned(
+                      bottom: 10,
+                      right: 150,
+                      child: Obx(
+                        () => AnimatedSmoothIndicator(
+                          activeIndex: controller.activeIndex.value,
+                          count: controller.hotelDetail.value?.images?.length ??
+                              -1,
+                          effect: const ExpandingDotsEffect(
+                              dotColor: Colors.white,
+                              activeDotColor: Colors.deepOrangeAccent,
+                              dotHeight: 10,
+                              dotWidth: 10),
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
               const AddressView(),
@@ -239,7 +240,7 @@ class Facilities extends StatelessWidget {
           child: SizedBox(
             height: Get.height * 0.1,
             child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
+              // physics: const NeverScrollableScrollPhysics(),
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
               itemCount: facilitiesModel.length,
@@ -255,9 +256,30 @@ class Facilities extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
-                          Icons.wifi,
-                          color: Colors.deepOrangeAccent,
+                        ExtendedImage.network(
+                          Constant.baseImageUrl + (item.facilityImage ?? ''),
+                          width: 24,
+                          height: 24,
+                          color: Colors.redAccent,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(6),
+                          ),
+                          shape: BoxShape.rectangle,
+                          loadStateChanged: (ExtendedImageState state) {
+                            switch (state.extendedImageLoadState) {
+                              case LoadState.loading:
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              case LoadState.completed:
+                                return null;
+                              case LoadState.failed:
+                                return Image.asset(
+                                  Assets.images.nodata.path,
+                                  fit: BoxFit.cover,
+                                );
+                            }
+                          },
                         ),
                         Text(
                           item.facilityName ?? '',
@@ -532,22 +554,24 @@ class GetFooter extends GetView<HotelDetailController> {
                 ),
               ),
             ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: controller.hotelDetail.value?.price == null
-                        ? '200000'
-                        : NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
-                            .format(controller.hotelDetail.value?.price),
-                    style: Get.textTheme.titleLarge!
-                        .copyWith(fontWeight: FontWeight.bold),
+            Obx(() => RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: controller.hotelDetail.value?.price == null
+                            ? '200000'
+                            : NumberFormat.currency(
+                                    locale: 'vi_VN', symbol: 'VND')
+                                .format(controller.hotelDetail.value?.price),
+                        style: Get.textTheme.titleLarge!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                          text: '\n/per night',
+                          style: Get.textTheme.bodySmall!),
+                    ],
                   ),
-                  TextSpan(
-                      text: '\n/per night', style: Get.textTheme.bodySmall!),
-                ],
-              ),
-            )
+                ))
           ],
         ),
       ),

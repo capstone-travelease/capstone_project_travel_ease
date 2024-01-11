@@ -193,12 +193,5 @@ class RouterConfigs {
         () => Get.lazyPut(AddNewPaymentController.new),
       ),
     ),
-    GetPage(
-      name: AddPay.routeName,
-      page: () => const AddPay(),
-      binding: BindingsBuilder<void>(
-        () => Get.lazyPut(AddNewPaymentController.new),
-      ),
-    ),
   ];
 }

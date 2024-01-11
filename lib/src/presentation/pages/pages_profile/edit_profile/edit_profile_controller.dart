@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/utils/noti_config.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/user_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/put_update_user_body.dart';

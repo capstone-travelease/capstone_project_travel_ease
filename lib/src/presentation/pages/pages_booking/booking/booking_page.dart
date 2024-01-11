@@ -25,6 +25,7 @@ class BookingPage extends GetView<BookingController> {
             (controller.currentStepAndPage == controller.pages.length - 1)
                 ? 'Confirm Booking'
                 : 'Next Step',
+            textAlign: TextAlign.center,
             style: Get.textTheme.bodyMedium!
                 .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
           ),
@@ -167,6 +168,7 @@ class Footer extends GetView<BookingController> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Obx(
@@ -178,13 +180,11 @@ class Footer extends GetView<BookingController> {
                       style: Get.textTheme.bodySmall!,
                     ),
                     TextSpan(
-                      text: controller.room.value?.roomPrice != null
-                          ? NumberFormat.currency(
-                                  locale: 'vi_VN', symbol: 'VND')
+                      text:
+                          NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
                               .format(
-                              controller.room.value?.roomPrice,
-                            )
-                          : '',
+                        controller.totalPrice.value.toInt(),
+                      ),
                       style: Get.textTheme.titleLarge!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -197,17 +197,21 @@ class Footer extends GetView<BookingController> {
                 ),
               ),
             ),
-            InkWell(
-              onTap: onTap,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.redAccent,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 22),
-                  child: text,
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: onTap,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: text,
+                  ),
                 ),
               ),
             )

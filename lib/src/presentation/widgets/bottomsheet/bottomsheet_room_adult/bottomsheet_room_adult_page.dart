@@ -85,13 +85,15 @@ class BottomSheetRoomAdultPage extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(6)),
                                     child: Padding(
                                       padding: const EdgeInsets.all(6.0),
-                                      child: Obx(() => Icon(
-                                            Icons.remove,
-                                            color:
-                                                controller.numberRoom.value == 0
-                                                    ? Colors.grey
-                                                    : Colors.redAccent,
-                                          )),
+                                      child: Obx(
+                                        () => Icon(
+                                          Icons.remove,
+                                          color:
+                                              controller.numberRoom.value == 0
+                                                  ? Colors.grey
+                                                  : Colors.redAccent,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

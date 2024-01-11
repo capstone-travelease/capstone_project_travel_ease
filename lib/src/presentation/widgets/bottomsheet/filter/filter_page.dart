@@ -1,4 +1,7 @@
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
+import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/filter/filter_controller.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -80,10 +83,11 @@ class RangePriceRoom extends GetView<FilterController> {
                 child: Obx(
                   () => DecoratedBox(
                     decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.red,
-                        ),
-                        borderRadius: BorderRadius.circular(12)),
+                      border: Border.all(
+                        color: Colors.red,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 6.0, horizontal: 8),
@@ -112,8 +116,9 @@ class RangePriceRoom extends GetView<FilterController> {
                 child: Obx(
                   () => DecoratedBox(
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.red),
-                        borderRadius: BorderRadius.circular(12)),
+                      border: Border.all(color: Colors.red),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 6.0, horizontal: 8),
@@ -222,7 +227,7 @@ class CustomerReview extends GetView<FilterController> {
   }
 }
 
-class Facilities extends StatelessWidget {
+class Facilities extends GetView<FilterController> {
   const Facilities({Key? key}) : super(key: key);
 
   @override
@@ -242,50 +247,93 @@ class Facilities extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            padding: const EdgeInsets.only(top: 8),
-            itemCount: 10,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 0.9,
-              crossAxisCount: 4,
-            ),
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.redAccent)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12.0, horizontal: 6),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.star_border_purple500_outlined,
-                          color: Colors.deepOrangeAccent,
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Expanded(
-                          child: Text(
-                            '24-Hour Front Desk',
-                            style: Get.textTheme.bodySmall?.copyWith(
-                                fontSize: 11, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+          child: Obx(() => GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(top: 8),
+                itemCount: controller.facilitiesList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 0.9,
+                  crossAxisCount: 4,
                 ),
-              );
-            },
-          ),
+                itemBuilder: (context, index) {
+                  final item = controller.facilitiesList[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                        onTap: () => controller.selectListFacilities(item),
+                        child: Obx(() => DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: controller.selectedFacilities
+                                          .contains(item)
+                                      ? Colors.redAccent
+                                      : Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(color: Colors.redAccent)),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 6),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ExtendedImage.network(
+                                      Constant.baseImageUrl +
+                                          (item.facilityImage ?? ''),
+                                      width: 24,
+                                      height: 24,
+                                      color: controller.selectedFacilities
+                                              .contains(item)
+                                          ? Colors.white
+                                          : Colors.black,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(6),
+                                      ),
+                                      shape: BoxShape.rectangle,
+                                      loadStateChanged:
+                                          (ExtendedImageState state) {
+                                        switch (state.extendedImageLoadState) {
+                                          case LoadState.loading:
+                                            return const Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                          case LoadState.completed:
+                                            return null;
+                                          case LoadState.failed:
+                                            return Image.asset(
+                                              Assets.images.nodata.path,
+                                              fit: BoxFit.cover,
+                                            );
+                                        }
+                                      },
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          item.facilityName ?? '',
+                                          textAlign: TextAlign.center,
+                                          style: Get.textTheme.bodySmall
+                                              ?.copyWith(
+                                                  fontSize: 11,
+                                                  color: controller
+                                                          .selectedFacilities
+                                                          .contains(item)
+                                                      ? Colors.white
+                                                      : null,
+                                                  fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ))),
+                  );
+                },
+              )),
         ),
       ],
     );

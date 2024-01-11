@@ -28,6 +28,8 @@ class RoomModel {
   int? roomBedQuantity;
   @JsonKey(name: 'room_capacity')
   int? roomCapacity;
+  @JsonKey(name: 'room_quantity')
+  int? roomQuantity;
   @JsonKey(name: 'images')
   List<ImagesModel>? images;
   @JsonKey(name: 'facilities')

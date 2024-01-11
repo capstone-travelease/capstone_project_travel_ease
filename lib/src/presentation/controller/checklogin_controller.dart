@@ -1,4 +1,4 @@
-import 'package:capstone_project_travel_ease/core/constrants/Constant.dart';
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/user_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/login/login_page.dart';
@@ -22,7 +22,9 @@ class CheckLoginController extends GetxController {
       final res = await _userService.getUser(userId: userid.value);
       user.call(res);
     } catch (e) {
-      Get.log(e.toString());
+      Get.log(
+        e.toString(),
+      );
     }
   }
 

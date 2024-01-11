@@ -26,4 +26,7 @@ class ErrorAndIsEmtys {
   ///Help
   static const String ticketId = 'Bạn Chưa Nhập Id';
   static const String messageHelp = 'Bạn Chưa Nhập Nội Dung';
+
+  ///Lien ket bank
+  static const String stk = 'Bạn chưa nhập số tài khoản';
 }
