@@ -6,7 +6,7 @@ class ForgotPassWordController extends GetxController {
   late TextEditingController emailEditController;
   @override
   void onInit() {
-    emailEditController = TextEditingController(text: 'anh@gmail.com');
+    emailEditController = TextEditingController();
     super.onInit();
   }
 

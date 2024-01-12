@@ -20,53 +20,54 @@ class DetailCustomerPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Obx(() => controller.checkLoginController.isLogin.value == false
-                  ? Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16.0),
-                            child: Text(
-                              'Đăng nhập để đặt nhanh Hơn!',
-                              style: Get.textTheme.bodyMedium!.copyWith(),
+              Obx(
+                () => controller.checkLoginController.isLogin.value == false
+                    ? Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: Text(
+                                'Đăng nhập để đặt nhanh Hơn!',
+                                style: Get.textTheme.bodyMedium!.copyWith(),
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: InkWell(
-                              onTap: () =>
-                                  controller.checkLoginController.pushLogin(),
-                              child: SizedBox(
-                                width: Get.width,
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    color: Colors.redAccent,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Center(
-                                      child: Text(
-                                        'Đăng Nhập/Đăng Kí',
-                                        style: Get.textTheme.bodyMedium!
-                                            .copyWith(color: Colors.white),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: InkWell(
+                                onTap: () =>
+                                    controller.checkLoginController.pushLogin(),
+                                child: SizedBox(
+                                  width: Get.width,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Colors.redAccent,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: Text(
+                                          'Đăng Nhập/Đăng Kí',
+                                          style: Get.textTheme.bodyMedium!
+                                              .copyWith(color: Colors.white),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          Divider(
-                            color: Colors.grey[400],
-                          )
-                        ],
-                      ),
-                    )
-                  : const SizedBox.shrink()),
-
+                            Divider(
+                              color: Colors.grey[400],
+                            )
+                          ],
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 10, left: 12),
                 child: Text(

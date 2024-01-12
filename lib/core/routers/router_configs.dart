@@ -7,7 +7,6 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/notification
 import 'package:capstone_project_travel_ease/src/presentation/pages/notification/notification_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_new_payment_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_new_payment_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_payment_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_controller.dart';

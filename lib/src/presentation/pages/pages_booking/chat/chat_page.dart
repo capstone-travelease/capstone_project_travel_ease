@@ -1,4 +1,6 @@
+import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_controller.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,38 +29,52 @@ class ChatPage extends GetView<ChatController> {
         padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8),
         child: Column(
           children: [
-            // ListView.builder(
-            //   reverse: true,
-            //   itemCount: 3,
-            //   itemBuilder: (context, index) {
-            //     final reversedList = List.from(controller.messages.reversed);
-            //     final message = reversedList[index];
-            //     MessageModel? lastItem;
-            //     if (index > 0) {
-            //       lastItem = controller.messages[index - 1];
-            //     }
-            //     MessageModel? currentItem = message;
-            //
-            //     MessageModel? nextItem;
-            //     if ((controller.messages.length - 1) > index) {
-            //       nextItem = controller.messages[index + 1];
-            //     }
-            //
-            //     if (currentItem?.sendby != controller.userId) {
-            //       return LeftContent(
-            //         current: currentItem!,
-            //         last: lastItem,
-            //         next: nextItem,
-            //       );
-            //     }
-            //     return RightContent(
-            //       current: currentItem!,
-            //       last: lastItem,
-            //       next: nextItem,
-            //       currentIndex: index,
-            //     );
-            //   },
-            // ),
+            Expanded(
+              child: Center(
+                child: Container(
+                  width: 300,
+                  height: 260,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(14)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Xin chào bạn hãy gửi tin nhắn cho chúng tôi để được hỗ trợ !",
+                          textAlign: TextAlign.center,
+                          style: Get.theme.textTheme.titleMedium,
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: ExtendedImage.network(
+                            'https://cdn.dribbble.com/userupload/3271927/file/original-223856aa8fef836d7bc818da6154f3ab.gif',
+                            fit: BoxFit.cover,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(5)),
+                            shape: BoxShape.rectangle,
+                            loadStateChanged: (ExtendedImageState state) {
+                              switch (state.extendedImageLoadState) {
+                                case LoadState.loading:
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                case LoadState.completed:
+                                  return null;
+                                case LoadState.failed:
+                                  return Image.asset(
+                                    Assets.images.noImage.path,
+                                  );
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             const GetBottomBar()
           ],
         ),

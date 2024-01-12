@@ -1,14 +1,21 @@
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/my_booking_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/ticket/ticket_page.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListHotelMyBooking extends StatelessWidget {
-  final DecoratedBox decoratedBox;
-  const ListHotelMyBooking({Key? key, required this.decoratedBox})
+  const ListHotelMyBooking(
+      {Key? key,
+      required this.decoratedBox,
+      required this.myBooking,
+      required this.onTap})
       : super(key: key);
-
+  final DecoratedBox decoratedBox;
+  final MyBookingModel myBooking;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -16,7 +23,7 @@ class ListHotelMyBooking extends StatelessWidget {
       child: Hero(
         tag: UniqueKey(),
         child: InkWell(
-          onTap: () => Get.toNamed(TicketPage.routeName),
+          onTap: onTap,
           child: DecoratedBox(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12), color: Colors.white),
@@ -30,7 +37,7 @@ class ListHotelMyBooking extends StatelessWidget {
                     width: 80,
                     height: 80,
                     child: ExtendedImage.network(
-                      'https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_SEDK_01.jpg',
+                      Constant.baseImageUrl + (myBooking.fileUrl ?? ''),
                       fit: BoxFit.cover,
                       borderRadius: const BorderRadius.all(Radius.circular(12)),
                       shape: BoxShape.rectangle,
@@ -60,7 +67,7 @@ class ListHotelMyBooking extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Intercontinental Hotel',
+                                myBooking.hotelName ?? '',
                                 style: Get.textTheme.bodyMedium!
                                     .copyWith(fontWeight: FontWeight.bold),
                               ),
@@ -74,7 +81,7 @@ class ListHotelMyBooking extends StatelessWidget {
                                     size: 16,
                                   ),
                                   Text(
-                                    'Hồ Chí Minh',
+                                    myBooking.hotelCity ?? '',
                                     style: Get.textTheme.bodySmall!.copyWith(),
                                   ),
                                 ],
@@ -99,7 +106,7 @@ class ListHotelMyBooking extends StatelessWidget {
                                   width: 5,
                                 ),
                                 Text(
-                                  '5.0',
+                                  myBooking.ratePoint.toString(),
                                   style: Get.textTheme.bodySmall,
                                 ),
                               ],

@@ -1,9 +1,12 @@
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/bank_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/booking_ticket_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/location_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/my_booking_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/room_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/get_my_booking_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_add_card_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_booking_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_search_hotel_body.dart';
@@ -169,6 +172,40 @@ class BookingRepository implements BookingService {
       final res = await _bookingClient.booking(body);
       if (res != null) {
         return res['message'];
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<MyBookingModel>> listMyBooking(
+      {required GetMyBookingBody body}) async {
+    try {
+      final res = await _bookingClient.listMyBooking(body);
+      if (res != null) {
+        final data = (res['data'] as List)
+            .map((e) => MyBookingModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+        return data;
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<BookingTicketModel> ticket({required int bookingId}) async {
+    try {
+      final res = await _bookingClient.ticket(bookingId);
+      if (res != null) {
+        final data =
+            BookingTicketModel.fromJson(res['data'] as Map<String, dynamic>);
+        return data;
       } else {
         throw Exception('Request Error: $res');
       }

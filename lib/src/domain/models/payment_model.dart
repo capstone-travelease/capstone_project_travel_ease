@@ -1,4 +1,3 @@
-import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class PaymentModel {

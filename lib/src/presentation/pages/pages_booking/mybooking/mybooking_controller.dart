@@ -1,7 +1,7 @@
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/utils/snack_bar_and_loading.dart';
-import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
-import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_search_hotel_body.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/my_booking_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/get_my_booking_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/mybookingtab.dart';
@@ -18,8 +18,8 @@ class MyBookingController extends GetxController
     MyBookingTab.completed(),
     MyBookingTab.cancelled(),
   ];
-  final RxList<HotelModel> listHotel = <HotelModel>[].obs;
-  late PagingController<int, HotelModel> pagingController;
+  final RxList<MyBookingModel> listBooking = <MyBookingModel>[].obs;
+  late PagingController<int, MyBookingModel> pagingController;
   final scrollController = ScrollController();
   int currentPage = 1;
   final BookingService _bookingService =
@@ -29,29 +29,23 @@ class MyBookingController extends GetxController
   void onInit() {
     selected.call(tabs.first);
     pagingController = PagingController(firstPageKey: 0);
-    pagingController.addPageRequestListener(fetchListHotel);
+    pagingController.addPageRequestListener(fetchListMyBooking);
     super.onInit();
   }
 
-  Future<void> fetchListHotel(int pageKey) async {
+  Future<void> fetchListMyBooking(int pageKey) async {
     try {
-      final res = await _bookingService.searchHotel(
-        body: PostSearchHotelBody(
-          location: 'Hồ Chí Minh',
-          fromDate: DateTime.now(),
-          toDate: DateTime.now().add(
-            const Duration(days: 2),
-          ),
-          adultNumber: 2,
-          roomNumber: 1,
-        ),
+      final res = await _bookingService.listMyBooking(
+        body: GetMyBookingBody(
+            userId: checkLoginController.userid.value,
+            statusName: selected.value?.type.title ?? ''),
       );
-      listHotel.call(res);
-      listHotel.length < _pageSize
-          ? pagingController.appendLastPage(listHotel)
+      listBooking.call(res);
+      listBooking.length < _pageSize
+          ? pagingController.appendLastPage(listBooking)
           : pagingController.appendPage(
-              listHotel,
-              pageKey + listHotel.length,
+              listBooking,
+              pageKey + listBooking.length,
             );
     } catch (error) {
       pagingController.error = error;
@@ -68,5 +62,6 @@ class MyBookingController extends GetxController
 
   Future<void> onTabChanged(MyBookingTab tab) async {
     selected.call(tab);
+    pagingController.refresh();
   }
 }

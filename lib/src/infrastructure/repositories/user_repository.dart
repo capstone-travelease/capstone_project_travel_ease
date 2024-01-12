@@ -96,11 +96,7 @@ class UserRepository implements UserService {
         'http://34.142.198.2:3634/user/updateimage?userid=$userId',
         data: FormData.fromMap({'image': filed}),
       );
-      if (res != null) {
-        return res.toString();
-      } else {
-        throw Exception('Request Error: $res');
-      }
+      return res.toString();
     } catch (e) {
       rethrow;
     }

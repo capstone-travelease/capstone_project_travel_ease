@@ -1,3 +1,4 @@
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/get_my_booking_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_add_card_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_booking_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_search_hotel_body.dart';
@@ -38,4 +39,10 @@ abstract class BookingClient {
 
   @POST('/booking/order')
   Future booking(@Body() PostBookingBody body);
+
+  @GET('/booking/get-orders')
+  Future listMyBooking(@Body() GetMyBookingBody body);
+
+  @GET('/booking/getTicket?bookingId={bookingId}')
+  Future ticket(@Path('bookingId') int bookingId);
 }

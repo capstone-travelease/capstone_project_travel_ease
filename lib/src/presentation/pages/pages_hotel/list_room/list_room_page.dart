@@ -483,8 +483,9 @@ class ListRooms extends GetView<ListRoomController> {
                           return !isRoomSelected
                               ? DecoratedBox(
                                   decoration: BoxDecoration(
-                                      color: Colors.redAccent,
-                                      borderRadius: BorderRadius.circular(16)),
+                                    color: Colors.redAccent,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 12.0, horizontal: 16),

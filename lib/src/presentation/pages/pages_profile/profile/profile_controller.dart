@@ -9,10 +9,10 @@ import 'package:get/get.dart';
 class ProfileController extends GetxController {
   final CheckLoginController checkLoginController = Get.find();
   final RxBool isLoading = false.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
   Future<void> geToBookMark() async {
     if (checkLoginController.isLogin.value == false) {

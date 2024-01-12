@@ -1,3 +1,4 @@
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_page.dart';
@@ -6,6 +7,7 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class TicketPage extends GetView<TicketController> {
   static const String routeName = '/TicketPage';
@@ -67,32 +69,34 @@ class TicketPage extends GetView<TicketController> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: SizedBox(
-                  width: Get.width,
-                  child: InkWell(
-                    onTap: () => controller.onCanCelBooking(),
-                    child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.redAccent,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Center(
-                            child: Text(
-                              'Cancel Booking',
-                              style: Get.textTheme.bodyMedium!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+              if (controller.bookingType == 'Ongoing') ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: SizedBox(
+                    width: Get.width,
+                    child: InkWell(
+                      onTap: () => controller.onCanCelBooking(),
+                      child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Center(
+                              child: Text(
+                                'Cancel Booking',
+                                style: Get.textTheme.bodyMedium!.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
-                        )),
+                          )),
+                    ),
                   ),
-                ),
-              )
+                )
+              ]
             ],
           ),
         ),
@@ -106,124 +110,131 @@ class HotelAndUserBooking extends GetView<TicketController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: () => Get.toNamed(HotelDetailPage.routeName),
-          child: Column(
-            children: [
-              SizedBox(
-                width: Get.width,
-                height: 150,
-                child: ExtendedImage.network(
-                  'https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_SEDK_01.jpg',
-                  fit: BoxFit.cover,
-                  borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  shape: BoxShape.rectangle,
-                  loadStateChanged: (ExtendedImageState state) {
-                    switch (state.extendedImageLoadState) {
-                      case LoadState.loading:
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      case LoadState.completed:
-                        return null;
-                      case LoadState.failed:
-                        return Image.asset(
-                          Assets.images.noImage.path,
-                        );
-                    }
-                  },
-                ),
+    return Obx(() => Column(
+          children: [
+            InkWell(
+              onTap: () => Get.toNamed(HotelDetailPage.routeName),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: Get.width,
+                    height: 150,
+                    child: ExtendedImage.network(
+                      Constant.baseImageUrl +
+                          (controller.ticket.value?.fileUrl ?? ''),
+                      fit: BoxFit.cover,
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      shape: BoxShape.rectangle,
+                      loadStateChanged: (ExtendedImageState state) {
+                        switch (state.extendedImageLoadState) {
+                          case LoadState.loading:
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          case LoadState.completed:
+                            return null;
+                          case LoadState.failed:
+                            return Image.asset(
+                              Assets.images.noImage.path,
+                            );
+                        }
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text(
+                      controller.ticket.value?.hotelName ?? '',
+                      textAlign: TextAlign.center,
+                      style: Get.textTheme.titleMedium!.copyWith(),
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  'Royale President Hotel',
-                  style: Get.textTheme.titleMedium!.copyWith(),
-                ),
+            ),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'ID: ',
+                    style: Get.textTheme.bodySmall!.copyWith(),
+                  ),
+                  TextSpan(
+                    text: controller.ticket.value?.ticketId.toString(),
+                    style: Get.textTheme.bodySmall!.copyWith(),
+                  ),
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: IconButton(
+                      onPressed: () => controller.copyText(),
+                      icon: const Icon(Icons.copy_rounded),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: 'ID: ',
-                style: Get.textTheme.bodySmall!.copyWith(),
-              ),
-              TextSpan(
-                text: controller.idEditController.text,
-                style: Get.textTheme.bodySmall!.copyWith(),
-              ),
-              WidgetSpan(
-                  alignment: PlaceholderAlignment.middle,
-                  child: IconButton(
-                    onPressed: () => controller.copyText(),
-                    icon: const Icon(Icons.copy_rounded),
-                  )),
-            ],
-          ),
-        ),
-        Text(
-          'Hoàng Văn Thắng',
-          style: Get.textTheme.titleMedium!.copyWith(),
-        ),
-        Text(
-          'hvthang002@gmail.com',
-          style: Get.textTheme.bodyMedium!.copyWith(),
-        ),
-        Text(
-          '0847263884',
-          style: Get.textTheme.bodyMedium!.copyWith(),
-        ),
-      ],
-    );
+            ),
+            Text(
+              controller.ticket.value?.userName ?? '',
+              style: Get.textTheme.titleMedium!.copyWith(),
+            ),
+            Text(
+              controller.ticket.value?.userEmail ?? '',
+              style: Get.textTheme.bodyMedium!.copyWith(),
+            ),
+            Text(
+              controller.ticket.value?.userPhone ?? '',
+              style: Get.textTheme.bodyMedium!.copyWith(),
+            ),
+          ],
+        ));
   }
 }
 
-class BookingDate extends StatelessWidget {
+class BookingDate extends GetView<TicketController> {
   const BookingDate({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              Text(
-                'Check-in',
-                style: Get.textTheme.bodySmall!.copyWith(),
-              ),
-              Text(
-                DateTime.now().formatDateToString(),
-                style: Get.textTheme.bodyMedium!.copyWith(),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: CustomPaint(painter: DashedLinePainter()),
+      child: Obx(
+        () => Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Text(
+                  'Check-in',
+                  style: Get.textTheme.bodySmall!.copyWith(),
+                ),
+                Text(
+                  controller.ticket.value?.checkInDate.formatDateToString() ??
+                      '',
+                  style: Get.textTheme.bodyMedium!.copyWith(),
+                ),
+              ],
             ),
-          ),
-          Column(
-            children: [
-              Text(
-                'Check-in',
-                style: Get.textTheme.bodySmall!.copyWith(),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: CustomPaint(painter: DashedLinePainter()),
               ),
-              Text(
-                DateTime.now().formatDateToString(),
-                style: Get.textTheme.bodySmall!.copyWith(),
-              ),
-            ],
-          ),
-        ],
+            ),
+            Column(
+              children: [
+                Text(
+                  'Check-out',
+                  style: Get.textTheme.bodySmall!.copyWith(),
+                ),
+                Text(
+                  controller.ticket.value?.checkOutDate.formatDateToString() ??
+                      '',
+                  style: Get.textTheme.bodySmall!.copyWith(),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -246,7 +257,7 @@ class DashedLinePainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
-class BookingDetailRoom extends StatelessWidget {
+class BookingDetailRoom extends GetView<TicketController> {
   const BookingDetailRoom({Key? key}) : super(key: key);
 
   @override
@@ -260,54 +271,61 @@ class BookingDetailRoom extends StatelessWidget {
             painter: DashedLinePainter(),
           ),
         ),
-        ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Standard Room',
-                        style: Get.textTheme.titleMedium!
-                            .copyWith(color: Colors.redAccent),
+        Obx(
+          () => controller.ticket.value?.productList != null
+              ? ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount:
+                      (controller.ticket.value?.productList?.length ?? -1),
+                  itemBuilder: (context, index) {
+                    final item = controller.ticket.value?.productList?[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                item?.roomName ?? '',
+                                style: Get.textTheme.titleMedium!.copyWith(
+                                    color: Colors.redAccent,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'NumberRoom: ${item?.numberRoom.toString()}',
+                                style: Get.textTheme.bodyMedium!
+                                    .copyWith(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              'Max Guests: ${item?.maxGuest.toString()}',
+                              style: Get.textTheme.bodyMedium!
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Number: 1',
-                        style: Get.textTheme.bodySmall!
-                            .copyWith(fontWeight: FontWeight.bold),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8),
+                      child: CustomPaint(
+                        size: Size(Get.width, 10),
+                        painter: DashedLinePainter(),
                       ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      'Max Guests: 2',
-                      style: Get.textTheme.bodySmall!
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
-              child: CustomPaint(
-                size: Size(Get.width, 10),
-                painter: DashedLinePainter(),
-              ),
-            );
-          },
+                    );
+                  },
+                )
+              : const SizedBox.shrink(),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
@@ -321,45 +339,50 @@ class BookingDetailRoom extends StatelessWidget {
   }
 }
 
-class MethodAndTotalPayment extends StatelessWidget {
+class MethodAndTotalPayment extends GetView<TicketController> {
   const MethodAndTotalPayment({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              Text(
-                'Payment Method',
-                style: Get.textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold, color: Colors.redAccent),
-              ),
-              Text(
-                'Credit card',
-                style: Get.textTheme.bodyMedium!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Text(
-                'Total Price:',
-                style: Get.textTheme.titleMedium!.copyWith(
-                    fontWeight: FontWeight.bold, color: Colors.redAccent),
-              ),
-              Text(
-                '4,500,000đ',
-                style: Get.textTheme.bodyMedium!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-            ],
-          )
-        ],
+      child: Obx(
+        () => Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                Text(
+                  'Payment Method',
+                  style: Get.textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold, color: Colors.redAccent),
+                ),
+                Text(
+                  controller.ticket.value?.paymentMethod ?? '',
+                  style: Get.textTheme.bodyMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Text(
+                  'Total Price:',
+                  style: Get.textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold, color: Colors.redAccent),
+                ),
+                Text(
+                  controller.ticket.value?.totalPrice == null
+                      ? '200000'
+                      : NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+                          .format(controller.ticket.value?.totalPrice),
+                  style: Get.textTheme.bodyMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

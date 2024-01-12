@@ -1,22 +1,38 @@
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/booking_ticket_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_cancel.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_successful.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class TicketController extends GetxController {
-  late TextEditingController idEditController;
-
+  final BookingService _bookingService =
+      Get.find(tag: Constant.bookingServiceTAG);
+  final Rxn<BookingTicketModel> ticket = Rxn<BookingTicketModel>();
+  late int bookingId;
+  late String bookingType;
   @override
   void onInit() {
-    idEditController = TextEditingController(text: '123213123');
+    bookingId = Get.arguments['bookingId'];
+    bookingType = Get.arguments['bookingType'];
+    fetchTicket();
     super.onInit();
   }
 
+  Future<void> fetchTicket() async {
+    try {
+      final res = await _bookingService.ticket(bookingId: bookingId);
+      ticket.call(res);
+    } catch (e) {
+      Get.log(e.toString());
+    }
+  }
+
   void copyText() {
-    final text = idEditController.text;
-    Clipboard.setData(ClipboardData(text: text));
+    Clipboard.setData(
+        ClipboardData(text: (ticket.value?.ticketId.toString() ?? '')));
     // Get.snackbar("Copied", "Text copied to clipboard");
   }
 

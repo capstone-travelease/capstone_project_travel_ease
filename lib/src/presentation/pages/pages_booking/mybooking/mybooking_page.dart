@@ -41,7 +41,7 @@ class MyBookingPage extends GetView<MyBookingController> {
             const Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.0),
-                child: OngoingTab(),
+                child: MyBookingTab(),
               ),
             ),
             Obx(

@@ -117,16 +117,24 @@ class HotelDetailPage extends GetView<HotelDetailController> {
                     ),
                 ],
               ),
-              const AddressView(),
-              Obx(
-                () => controller.hotelDetail.value?.facilities != null
-                    ? Facilities(
-                        facilitiesModel:
-                            controller.hotelDetail.value?.facilities ?? [])
-                    : const SizedBox.shrink(),
-              ),
-              const Review(),
-              const Description(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    const AddressView(),
+                    Obx(
+                      () => controller.hotelDetail.value?.facilities != null
+                          ? Facilities(
+                              facilitiesModel:
+                                  controller.hotelDetail.value?.facilities ??
+                                      [])
+                          : const SizedBox.shrink(),
+                    ),
+                    const Review(),
+                    const Description(),
+                  ],
+                ),
+              )
             ],
           ),
         ),
@@ -543,7 +551,7 @@ class GetFooter extends GetView<HotelDetailController> {
               child: DecoratedBox(
                 decoration: BoxDecoration(
                     color: Colors.deepOrange,
-                    borderRadius: BorderRadius.circular(18)),
+                    borderRadius: BorderRadius.circular(12)),
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(

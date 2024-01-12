@@ -1,5 +1,6 @@
-import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/my_booking_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/ticket/ticket_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel_mybooking.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,23 +8,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class OngoingTab extends GetView<MyBookingController> {
-  const OngoingTab({super.key});
+class MyBookingTab extends GetView<MyBookingController> {
+  const MyBookingTab({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => controller.checkLoginController.isLogin.value != false
-          ? PagedListView<int, HotelModel>.separated(
+          ? PagedListView<int, MyBookingModel>.separated(
               shrinkWrap: true,
               pagingController: controller.pagingController,
               builderDelegate: PagedChildBuilderDelegate(
                 itemBuilder: (
                   BuildContext context,
-                  HotelModel item,
+                  MyBookingModel item,
                   int index,
                 ) {
-                  // final itemHotel = controller.listHotel[index];
+                  final itemBooking = controller.listBooking[index];
                   return Obx(
                     () => ListHotelMyBooking(
                       decoratedBox: DecoratedBox(
@@ -49,6 +50,14 @@ class OngoingTab extends GetView<MyBookingController> {
                             ),
                           ),
                         ),
+                      ),
+                      myBooking: item,
+                      onTap: () => Get.toNamed(
+                        TicketPage.routeName,
+                        arguments: {
+                          'bookingId': itemBooking.bookingId,
+                          'bookingType': itemBooking.bookingStatus,
+                        },
                       ),
                     ),
                   );

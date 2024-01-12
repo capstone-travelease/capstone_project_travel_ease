@@ -21,10 +21,14 @@ class ListHotelView extends StatelessWidget {
           onTap: onTap,
           child: DecoratedBox(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12), color: Colors.white),
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
+            ),
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12.0,
+                vertical: 12,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -34,7 +38,9 @@ class ListHotelView extends StatelessWidget {
                     fit: BoxFit.cover,
                     width: 80,
                     height: 80,
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(12),
+                    ),
                     shape: BoxShape.rectangle,
                     loadStateChanged: (ExtendedImageState state) {
                       switch (state.extendedImageLoadState) {

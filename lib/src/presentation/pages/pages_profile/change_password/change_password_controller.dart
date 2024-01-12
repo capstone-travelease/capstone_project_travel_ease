@@ -28,9 +28,9 @@ class ChangePassWordController extends GetxController {
   @override
   void onInit() {
     userId = Get.arguments['userId'];
-    currentPasswordEditController = TextEditingController(text: 'Anh123456@');
-    newPasswordEditController = TextEditingController(text: 'Anh123456@');
-    confirmPasswordEditController = TextEditingController(text: 'Anh123456@');
+    currentPasswordEditController = TextEditingController();
+    newPasswordEditController = TextEditingController();
+    confirmPasswordEditController = TextEditingController();
     super.onInit();
   }
 
