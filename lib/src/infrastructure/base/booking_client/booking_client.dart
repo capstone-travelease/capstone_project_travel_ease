@@ -45,4 +45,7 @@ abstract class BookingClient {
 
   @GET('/booking/getTicket?bookingId={bookingId}')
   Future ticket(@Path('bookingId') int bookingId);
+
+  @PUT('/booking/cancelBooking?bookingId={bookingId}')
+  Future cancelBooking(@Path('bookingId') int bookingId);
 }

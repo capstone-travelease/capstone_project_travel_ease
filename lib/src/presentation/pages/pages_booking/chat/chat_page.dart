@@ -32,8 +32,8 @@ class ChatPage extends GetView<ChatController> {
             Expanded(
               child: Center(
                 child: Container(
-                  width: 300,
-                  height: 260,
+                  width: Get.width * 0.8,
+                  height: Get.height * 0.35,
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(14)),
                   child: Padding(

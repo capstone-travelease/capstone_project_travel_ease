@@ -34,4 +34,6 @@ abstract interface class BookingService {
   Future<List<MyBookingModel>> listMyBooking({required GetMyBookingBody body});
 
   Future<BookingTicketModel> ticket({required int bookingId});
+
+  Future<String> cancelBooking({required int bookingId});
 }

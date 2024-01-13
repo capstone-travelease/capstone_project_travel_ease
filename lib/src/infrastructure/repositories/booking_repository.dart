@@ -213,4 +213,18 @@ class BookingRepository implements BookingService {
       rethrow;
     }
   }
+
+  @override
+  Future<String> cancelBooking({required int bookingId}) async {
+    try {
+      final res = await _bookingClient.cancelBooking(bookingId);
+      if (res != null) {
+        return res['message'];
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

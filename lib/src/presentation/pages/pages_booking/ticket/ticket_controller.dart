@@ -32,8 +32,17 @@ class TicketController extends GetxController {
 
   void copyText() {
     Clipboard.setData(
-        ClipboardData(text: (ticket.value?.ticketId.toString() ?? '')));
+      ClipboardData(text: (ticket.value?.ticketId.toString() ?? '')),
+    );
     // Get.snackbar("Copied", "Text copied to clipboard");
+  }
+
+  Future<void> canCelBooking() async {
+    try {
+      await _bookingService.cancelBooking(bookingId: bookingId);
+    } catch (e) {
+      Get.log(e.toString());
+    }
   }
 
   Future<void> onCanCelBooking() async {
@@ -41,7 +50,10 @@ class TicketController extends GetxController {
       DiaLogCancel(
         onTap: () => Get.dialog(
           DiaLogSuccessful(
-            onTap: () => Get.offAllNamed(NavigatorMenuPage.routeName),
+            onTap: () {
+              canCelBooking();
+              Get.offAllNamed(NavigatorMenuPage.routeName);
+            },
             text:
                 'You have successfully canceled your order. 80% funds will be returned to your account',
           ),

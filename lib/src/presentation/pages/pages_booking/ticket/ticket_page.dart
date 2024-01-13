@@ -36,7 +36,7 @@ class TicketPage extends GetView<TicketController> {
                 height: 30,
               ),
             ),
-          )
+          ),
         ],
         backgroundColor: Get.theme.colorScheme.background,
         title: Text(
@@ -54,7 +54,9 @@ class TicketPage extends GetView<TicketController> {
               DecoratedBox(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border.all(color: Colors.grey[300]!),
+                  border: Border.all(
+                    color: Colors.grey[300]!,
+                  ),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Padding(
@@ -77,26 +79,27 @@ class TicketPage extends GetView<TicketController> {
                     child: InkWell(
                       onTap: () => controller.onCanCelBooking(),
                       child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: Colors.redAccent,
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Center(
-                              child: Text(
-                                'Cancel Booking',
-                                style: Get.textTheme.bodyMedium!.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Center(
+                            child: Text(
+                              'Cancel Booking',
+                              style: Get.textTheme.bodyMedium!.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                )
-              ]
+                ),
+              ],
             ],
           ),
         ),
@@ -282,7 +285,9 @@ class BookingDetailRoom extends GetView<TicketController> {
                     final item = controller.ticket.value?.productList?[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10),
+                        horizontal: 20.0,
+                        vertical: 10,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -292,13 +297,15 @@ class BookingDetailRoom extends GetView<TicketController> {
                               Text(
                                 item?.roomName ?? '',
                                 style: Get.textTheme.titleMedium!.copyWith(
-                                    color: Colors.redAccent,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               Text(
                                 'NumberRoom: ${item?.numberRoom.toString()}',
-                                style: Get.textTheme.bodyMedium!
-                                    .copyWith(fontWeight: FontWeight.bold),
+                                style: Get.textTheme.bodyMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ],
                           ),

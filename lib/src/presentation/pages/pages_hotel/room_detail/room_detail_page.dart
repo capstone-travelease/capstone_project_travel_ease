@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
+import 'package:capstone_project_travel_ease/core/utils/snack_bar_and_loading.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_page.dart';
@@ -60,13 +61,14 @@ class RoomDetailPage extends GetView<RoomDetailController> {
                         );
                       },
                       options: CarouselOptions(
-                          viewportFraction: 1,
-                          // pageSnapping: false,
-                          enableInfiniteScroll: false,
-                          autoPlay: true,
-                          enlargeCenterPage: true,
-                          onPageChanged: (index, reason) =>
-                              controller.activeIndex.value = index),
+                        viewportFraction: 1,
+                        // pageSnapping: false,
+                        enableInfiniteScroll: false,
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        onPageChanged: (index, reason) =>
+                            controller.activeIndex.value = index,
+                      ),
                     ),
                   ),
                 ),
@@ -528,16 +530,28 @@ class GetFooter extends GetView<RoomDetailController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-                    onTap: () => Get.toNamed(
-                      BookingPage.routeName,
-                      arguments: ArgRooms(
-                        roomCardModel: controller.listRoomController.roomCards,
-                        price:
-                            (controller.listRoomController.totalPrice.toInt()),
-                        numberRoom:
-                            controller.listRoomController.totalRoom.toInt(),
-                      ),
-                    ),
+                    onTap: () {
+                      if (controller.listRoomController.totalPrice.toInt() ==
+                          0) {
+                        SnackBarAndLoading.showSnackBar(
+                          'Vui lòng chọn phòng để đặt ngay !',
+                          textColor: Colors.redAccent,
+                          backgroundColor: Colors.white,
+                        );
+                      } else {
+                        Get.toNamed(
+                          BookingPage.routeName,
+                          arguments: ArgRooms(
+                            roomCardModel:
+                                controller.listRoomController.roomCards,
+                            price: (controller.listRoomController.totalPrice
+                                .toInt()),
+                            numberRoom:
+                                controller.listRoomController.totalRoom.toInt(),
+                          ),
+                        );
+                      }
+                    },
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         color: Colors.redAccent,

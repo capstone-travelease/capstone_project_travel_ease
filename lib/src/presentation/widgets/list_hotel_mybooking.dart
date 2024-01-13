@@ -5,6 +5,7 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_bookin
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ListHotelMyBooking extends StatelessWidget {
   const ListHotelMyBooking(
@@ -58,69 +59,82 @@ class ListHotelMyBooking extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                myBooking.hotelName ?? '',
-                                style: Get.textTheme.bodyMedium!
-                                    .copyWith(fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.location_on_outlined,
-                                    size: 16,
-                                  ),
-                                  Text(
-                                    myBooking.hotelCity ?? '',
-                                    style: Get.textTheme.bodySmall!.copyWith(),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              decoratedBox,
-                            ],
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Row(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(
-                                  Icons.star,
-                                  color: Colors.redAccent,
-                                  size: 18,
+                                Text(
+                                  myBooking.hotelName ?? '',
+                                  style: Get.textTheme.bodyMedium!
+                                      .copyWith(fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(
-                                  width: 5,
+                                  height: 8,
                                 ),
-                                Text(
-                                  myBooking.ratePoint.toString(),
-                                  style: Get.textTheme.bodySmall,
+                                RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      const WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: Icon(
+                                          Icons.location_on_outlined,
+                                          size: 18,
+                                          color: Colors.redAccent,
+                                        ),
+                                      ),
+                                      const TextSpan(
+                                        text: ' ',
+                                      ),
+                                      TextSpan(
+                                        text: myBooking.hotelCity ?? '',
+                                        style: Get.textTheme.bodySmall!
+                                            .copyWith(color: Colors.grey[500]),
+                                      )
+                                    ],
+                                  ),
                                 ),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                decoratedBox,
                               ],
                             ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            const Icon(
-                              Icons.bookmark_outline_outlined,
-                              size: 30,
-                            )
-                          ],
-                        ),
-                      ],
+                          ),
+                          Column(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    const WidgetSpan(
+                                      child: Icon(
+                                        Icons.star,
+                                        size: 18,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: myBooking.ratePoint.toString(),
+                                      style:
+                                          Get.textTheme.bodySmall!.copyWith(),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Icon(
+                                  Icons.bookmark_outline_outlined,
+                                  size: 30,
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
