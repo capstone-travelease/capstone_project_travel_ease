@@ -22,73 +22,74 @@ class ListRoomPage extends GetView<ListRoomController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Get.theme.colorScheme.background,
-        appBar: const Appbar(),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // const ProposeRoom(),
-              PagedListView<int, RoomModel>.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                pagingController: controller.pagingController,
-                builderDelegate: PagedChildBuilderDelegate(
-                  itemBuilder: (
-                    BuildContext context,
-                    RoomModel item,
-                    int index,
-                  ) {
-                    // final itemPA = controller.listPhanAnh[index];
-                    return InkWell(
-                        onTap: () {},
-                        child: ListRooms(
-                          roomModel: item,
-                        ));
-                  },
-                  noItemsFoundIndicatorBuilder: (context) =>
-                      const CustomNoDataWidget(
-                    noiDung: 'Không có dữ liệu',
-                    isSearch: false,
-                  ),
-                  firstPageProgressIndicatorBuilder: (context) {
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                  newPageProgressIndicatorBuilder: (context) => SizedBox(
-                    height: 30,
-                    child: Center(
-                      child: CupertinoActivityIndicator(
-                        color: Get.theme.colorScheme.primary,
-                      ),
+      backgroundColor: Get.theme.colorScheme.background,
+      appBar: const Appbar(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // const ProposeRoom(),
+            PagedListView<int, RoomModel>.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              pagingController: controller.pagingController,
+              builderDelegate: PagedChildBuilderDelegate(
+                itemBuilder: (
+                  BuildContext context,
+                  RoomModel item,
+                  int index,
+                ) {
+                  // final itemPA = controller.listPhanAnh[index];
+                  return InkWell(
+                      onTap: () {},
+                      child: ListRooms(
+                        roomModel: item,
+                      ));
+                },
+                noItemsFoundIndicatorBuilder: (context) =>
+                    const CustomNoDataWidget(
+                  noiDung: 'Không có dữ liệu',
+                  isSearch: false,
+                ),
+                firstPageProgressIndicatorBuilder: (context) {
+                  return const Center(child: CircularProgressIndicator());
+                },
+                newPageProgressIndicatorBuilder: (context) => SizedBox(
+                  height: 30,
+                  child: Center(
+                    child: CupertinoActivityIndicator(
+                      color: Get.theme.colorScheme.primary,
                     ),
                   ),
-                  firstPageErrorIndicatorBuilder: (context) =>
-                      const CustomNoDataWidget(
-                    noiDung: 'Không có dữ liệu',
-                    isSearch: false,
-                  ),
-                  newPageErrorIndicatorBuilder: (context) =>
-                      const CustomNoDataWidget(
-                    noiDung: 'Có lỗi xảy ra. Vui lòng thử lại!',
-                    isSearch: false,
-                  ),
                 ),
-                separatorBuilder: (_, __) => const Divider(
-                  endIndent: 0,
-                  thickness: 1,
-                  indent: 0,
-                  height: 0,
-                  color: Colors.transparent,
+                firstPageErrorIndicatorBuilder: (context) =>
+                    const CustomNoDataWidget(
+                  noiDung: 'Không có dữ liệu',
+                  isSearch: false,
+                ),
+                newPageErrorIndicatorBuilder: (context) =>
+                    const CustomNoDataWidget(
+                  noiDung: 'Có lỗi xảy ra. Vui lòng thử lại!',
+                  isSearch: false,
                 ),
               ),
-            ],
-          ),
+              separatorBuilder: (_, __) => const Divider(
+                endIndent: 0,
+                thickness: 1,
+                indent: 0,
+                height: 0,
+                color: Colors.transparent,
+              ),
+            ),
+          ],
         ),
-        bottomNavigationBar: Obx(
-          () => (controller.totalPrice.value) != 0
-              ? const GetFooter()
-              : const SizedBox.shrink(),
-        ));
+      ),
+      bottomNavigationBar: Obx(
+        () => (controller.totalPrice.value) != 0
+            ? const GetFooter()
+            : const SizedBox.shrink(),
+      ),
+    );
   }
 }
 
@@ -148,8 +149,9 @@ class Appbar extends GetView<ListRoomController>
                               ),
                               TextSpan(
                                 text: controller.argListRoom.location,
-                                style: Get.textTheme.bodySmall!
-                                    .copyWith(color: Colors.white),
+                                style: Get.textTheme.bodySmall!.copyWith(
+                                  color: Colors.white,
+                                ),
                               )
                             ],
                           ),
@@ -318,6 +320,27 @@ class ListRooms extends GetView<ListRoomController> {
                 ),
               ),
               Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8.0,
+                  vertical: 6,
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.monetization_on_outlined,
+                      color: Colors.redAccent,
+                    ),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    Text(
+                      'Không hoàn tiền',
+                      style: Get.textTheme.titleSmall!.copyWith(),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SizedBox(
                   height: 30,
@@ -406,14 +429,14 @@ class ListRooms extends GetView<ListRoomController> {
                     child: Column(
                       children: [
                         Text(
-                            NumberFormat.currency(
-                                    locale: 'vi_VN', symbol: 'VND')
-                                .format(roomModel.roomPrice! + 1000000),
-                            style: Get.textTheme.bodySmall!.copyWith(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.grey.shade500,
-                              decoration: TextDecoration.lineThrough,
-                            )),
+                          NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+                              .format(roomModel.roomPrice! + 1000000),
+                          style: Get.textTheme.bodySmall!.copyWith(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.grey.shade500,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
                         Text(
                           NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
                               .format(roomModel.roomPrice),

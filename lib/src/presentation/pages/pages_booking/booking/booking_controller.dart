@@ -29,7 +29,7 @@ class BookingController extends GetxController {
   final pages = const [
     DetailCustomerPage(),
     BookingOverviewPage(),
-    FinishBookingPage()
+    FinishBookingPage(),
   ].obs;
   final RegExp phoneRegex = RegExp(r'^([1-9])?\d{10}$');
   final RxList<PaymentModel> listPayment = <PaymentModel>[].obs;
@@ -117,7 +117,8 @@ class BookingController extends GetxController {
   }
 
   void selectPayment(BanksModel? value) {
-    if (selectedPayment.value != value) {
+    if (selectedPayment.value?.accountId != value?.accountId) {
+      selectedPayment.value = null;
       selectedPayment.call(value);
       return;
     }

@@ -26,7 +26,9 @@ class TicketController extends GetxController {
       final res = await _bookingService.ticket(bookingId: bookingId);
       ticket.call(res);
     } catch (e) {
-      Get.log(e.toString());
+      Get.log(
+        e.toString(),
+      );
     }
   }
 
@@ -41,7 +43,9 @@ class TicketController extends GetxController {
     try {
       await _bookingService.cancelBooking(bookingId: bookingId);
     } catch (e) {
-      Get.log(e.toString());
+      Get.log(
+        e.toString(),
+      );
     }
   }
 

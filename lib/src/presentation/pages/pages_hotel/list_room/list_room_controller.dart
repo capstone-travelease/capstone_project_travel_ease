@@ -75,7 +75,9 @@ class ListRoomController extends GetxController {
     final RxInt roomQuantity = getRoomQuantity(roomModel.roomId ?? 0);
     if (roomQuantity.value > 1) {
       roomQuantity.value = roomQuantity.value + -1;
-      removeSelectedRoom((roomModel.roomId ?? -1));
+      removeSelectedRoom(
+        (roomModel.roomId ?? -1),
+      );
     }
   }
 
@@ -126,7 +128,7 @@ class ListRoomController extends GetxController {
     );
     roomCards.remove(selectedRoom);
     totalPrice.value -= selectedRoom.price.toInt() * roomQuantity.value.toInt();
-    totalRoom.value -= 1;
+    totalRoom.value -= roomQuantity.value.toInt();
     roomQuantities.remove(roomId);
   }
 }

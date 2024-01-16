@@ -99,70 +99,68 @@ class BottomSheetLocation extends StatelessWidget {
                         );
                       }
                       return ListView.separated(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final item = controller.listLocation[index];
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child: Obx(
-                                () => InkWell(
-                                  onTap: () {
-                                    controller.selectLocation(item);
-                                  },
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      color:
-                                          controller.selectedLocation.value ==
-                                                  item
-                                              ? Colors.red[50]
-                                              : null,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0, horizontal: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            item.placeName ?? '',
-                                            style: Get.textTheme.bodyMedium,
-                                          ),
-                                          if (controller
-                                                  .selectedLocation.value ==
-                                              item)
-                                            Icon(
-                                              Icons.check,
-                                              color: Colors.green[800],
-                                            )
-                                        ],
-                                      ),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final item = controller.listLocation[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Obx(
+                              () => InkWell(
+                                onTap: () {
+                                  controller.selectLocation(item);
+                                },
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: controller.selectedLocation.value ==
+                                            item
+                                        ? Colors.red[50]
+                                        : null,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8.0, horizontal: 12),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          item.placeName ?? '',
+                                          style: Get.textTheme.bodyMedium,
+                                        ),
+                                        if (controller.selectedLocation.value ==
+                                            item)
+                                          Icon(
+                                            Icons.check,
+                                            color: Colors.green[800],
+                                          )
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            final previousItem = controller.listLocation[index];
-                            final nextItem = controller.listLocation[index + 1];
-                            return Obx(
-                              () => Divider(
-                                indent: 20,
-                                endIndent: 20,
-                                color: controller.selectedLocation.value ==
-                                            previousItem ||
-                                        controller.selectedLocation.value ==
-                                            nextItem
-                                    ? Colors.transparent
-                                    : Colors.grey[400],
-                                height: 0,
-                              ),
-                            );
-                          },
-                          itemCount: controller.listLocation.length);
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          final previousItem = controller.listLocation[index];
+                          final nextItem = controller.listLocation[index + 1];
+                          return Obx(
+                            () => Divider(
+                              indent: 20,
+                              endIndent: 20,
+                              color: controller.selectedLocation.value ==
+                                          previousItem ||
+                                      controller.selectedLocation.value ==
+                                          nextItem
+                                  ? Colors.transparent
+                                  : Colors.grey[400],
+                              height: 0,
+                            ),
+                          );
+                        },
+                        itemCount: controller.listLocation.length,
+                      );
                     },
                   ),
                 ),

@@ -448,10 +448,12 @@ class WidgetBankAccount extends GetView<BookingController> {
             ),
             Obx(
               () => Icon(
-                controller.selectedPayment.value == banksModel
+                controller.selectedPayment.value?.accountId ==
+                        banksModel.accountId
                     ? Icons.check_circle
                     : Icons.circle_outlined,
-                color: controller.selectedPayment.value == banksModel
+                color: controller.selectedPayment.value?.accountId ==
+                        banksModel.accountId
                     ? Colors.redAccent
                     : null,
               ),

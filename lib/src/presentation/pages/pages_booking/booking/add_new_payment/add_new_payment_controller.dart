@@ -7,7 +7,6 @@ import 'package:capstone_project_travel_ease/src/presentation/controller/checklo
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'add_payment_page.dart';
 
 class AddNewPaymentController extends GetxController {
