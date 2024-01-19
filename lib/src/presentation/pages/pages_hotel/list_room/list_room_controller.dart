@@ -52,7 +52,9 @@ class ListRoomController extends GetxController {
         'Kết nối internet thất bại',
         backgroundColor: Get.theme.colorScheme.error,
       );
-      Get.log(error.toString());
+      Get.log(
+        error.toString(),
+      );
     }
   }
 

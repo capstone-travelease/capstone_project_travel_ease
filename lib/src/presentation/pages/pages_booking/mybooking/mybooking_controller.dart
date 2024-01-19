@@ -22,8 +22,9 @@ class MyBookingController extends GetxController
   late PagingController<int, MyBookingModel> pagingController;
   final scrollController = ScrollController();
   int currentPage = 1;
-  final BookingService _bookingService =
-      Get.find(tag: Constant.bookingServiceTAG);
+  final BookingService _bookingService = Get.find(
+    tag: Constant.bookingServiceTAG,
+  );
   final int _pageSize = 10;
   @override
   void onInit() {
@@ -37,8 +38,9 @@ class MyBookingController extends GetxController
     try {
       final res = await _bookingService.listMyBooking(
         body: GetMyBookingBody(
-            userId: checkLoginController.userid.value,
-            statusName: selected.value?.type.title ?? ''),
+          userId: checkLoginController.userid.value,
+          statusName: selected.value?.type.title ?? '',
+        ),
       );
       listBooking.call(res);
       listBooking.length < _pageSize

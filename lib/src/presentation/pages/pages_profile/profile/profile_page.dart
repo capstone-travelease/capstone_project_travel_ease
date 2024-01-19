@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/rating/rating_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/change_password/change_password_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/help/help_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/profile/profile_controller.dart';
@@ -175,7 +176,9 @@ class ProfilePage extends GetView<ProfileController> {
                 Icons.settings_outlined,
                 size: 30,
               ),
-              onTap: () {},
+              onTap: () => Get.toNamed(
+                RatingPage.routeName,
+              ),
             ),
             CustomButton(
               text: Text(

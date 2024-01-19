@@ -214,13 +214,14 @@ class ListPaymentMethod extends GetView<BookingController> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(16),
                                         border: Border.all(
-                                            color: controller
-                                                        .selectedPaymentMethod
-                                                        .value ==
-                                                    item
-                                                ? Colors.redAccent.shade100
-                                                : Colors.grey[300]!,
-                                            width: 2),
+                                          color: controller
+                                                      .selectedPaymentMethod
+                                                      .value ==
+                                                  item
+                                              ? Colors.redAccent.shade100
+                                              : Colors.grey[300]!,
+                                          width: 2,
+                                        ),
                                       ),
                                       child: Icon(item.icon),
                                     ),

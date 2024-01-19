@@ -22,240 +22,239 @@ class RoomDetailPage extends GetView<RoomDetailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Get.theme.colorScheme.background,
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  SafeArea(
-                    child: Obx(
-                      () => CarouselSlider.builder(
-                        itemCount:
-                            (controller.room.value?.images?.length ?? -1),
-                        itemBuilder: (BuildContext context, int itemIndex,
-                            int pageViewIndex) {
-                          final item =
-                              controller.room.value?.images?[itemIndex];
-                          return SizedBox(
-                            width: Get.width,
-                            child: ExtendedImage.network(
-                              Constant.baseImageUrl + (item?.imageUrl ?? ''),
-                              fit: BoxFit.cover,
-                              shape: BoxShape.rectangle,
-                              loadStateChanged: (ExtendedImageState state) {
-                                switch (state.extendedImageLoadState) {
-                                  case LoadState.loading:
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  case LoadState.completed:
-                                    return null;
+      backgroundColor: Get.theme.colorScheme.background,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                SafeArea(
+                  child: Obx(
+                    () => CarouselSlider.builder(
+                      itemCount: (controller.room.value?.images?.length ?? -1),
+                      itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) {
+                        final item = controller.room.value?.images?[itemIndex];
+                        return SizedBox(
+                          width: Get.width,
+                          child: ExtendedImage.network(
+                            Constant.baseImageUrl + (item?.imageUrl ?? ''),
+                            fit: BoxFit.cover,
+                            shape: BoxShape.rectangle,
+                            loadStateChanged: (ExtendedImageState state) {
+                              switch (state.extendedImageLoadState) {
+                                case LoadState.loading:
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                case LoadState.completed:
+                                  return null;
 
-                                  case LoadState.failed:
-                                    return Image.asset(
-                                      Assets.images.noImage.path,
-                                    );
-                                }
-                              },
-                            ),
-                          );
-                        },
-                        options: CarouselOptions(
-                          viewportFraction: 1,
-                          // pageSnapping: false,
-                          enableInfiniteScroll: false,
-                          autoPlay: true,
-                          enlargeCenterPage: true,
-                          onPageChanged: (index, reason) =>
-                              controller.activeIndex.value = index,
+                                case LoadState.failed:
+                                  return Image.asset(
+                                    Assets.images.noImage.path,
+                                  );
+                              }
+                            },
+                          ),
+                        );
+                      },
+                      options: CarouselOptions(
+                        viewportFraction: 1,
+                        // pageSnapping: false,
+                        enableInfiniteScroll: false,
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        onPageChanged: (index, reason) =>
+                            controller.activeIndex.value = index,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 60,
+                  left: 10,
+                  child: InkWell(
+                    onTap: () => Get.back(),
+                    child: const Icon(
+                      size: 30,
+                      Icons.arrow_back_outlined,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 60,
+                  right: 10,
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: const Icon(
+                          size: 40,
+                          Icons.bookmark_outline_outlined,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if ((controller.room.value?.images?.length ?? -1) > 1)
+                  Positioned(
+                    bottom: 10,
+                    right: 150,
+                    child: Obx(
+                      () => AnimatedSmoothIndicator(
+                        activeIndex: controller.activeIndex.value,
+                        count: (controller.room.value?.images?.length ?? -1),
+                        effect: const ExpandingDotsEffect(
+                          dotColor: Colors.white,
+                          activeDotColor: Colors.deepOrangeAccent,
+                          dotHeight: 10,
+                          dotWidth: 10,
                         ),
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 60,
-                    left: 10,
-                    child: InkWell(
-                      onTap: () => Get.back(),
-                      child: const Icon(
-                        size: 30,
-                        Icons.arrow_back_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const RoomInformation(),
+                  const Divider(
+                    color: Colors.grey,
                   ),
-                  Positioned(
-                    top: 60,
-                    right: 10,
-                    child: Row(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
                       children: [
-                        InkWell(
-                          onTap: () {},
-                          child: const Icon(
-                            size: 40,
-                            Icons.bookmark_outline_outlined,
-                            color: Colors.white,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Obx(
+                              () => TienIch(
+                                textTile: 'Room Size',
+                                text: controller.room.value?.roomSize ?? '',
+                                icon: const Icon(
+                                  Icons.square_foot_outlined,
+                                ),
+                              ),
+                            ),
+                            Obx(
+                              () => TienIch(
+                                textTile: 'Guest(s)',
+                                text:
+                                    "${controller.room.value?.roomCapacity.toString()} guest",
+                                icon: const Icon(
+                                  Icons.square_foot_outlined,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Obx(
+                          () => TienIch(
+                            textTile: 'Bed Type',
+                            text:
+                                "${controller.room.value?.roomBedQuantity.toString()}  king bed ",
+                            icon: const Icon(
+                              Icons.square_foot_outlined,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  if ((controller.room.value?.images?.length ?? -1) > 1)
-                    Positioned(
-                      bottom: 10,
-                      right: 150,
-                      child: Obx(
-                        () => AnimatedSmoothIndicator(
-                          activeIndex: controller.activeIndex.value,
-                          count: (controller.room.value?.images?.length ?? -1),
-                          effect: const ExpandingDotsEffect(
-                            dotColor: Colors.white,
-                            activeDotColor: Colors.deepOrangeAccent,
-                            dotHeight: 10,
-                            dotWidth: 10,
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const RoomInformation(),
-                    const Divider(
-                      color: Colors.grey,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Column(
+                  const Divider(
+                    color: Colors.grey,
+                  ),
+                  Text(
+                    'Room Facilities',
+                    style: Get.textTheme.bodyMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  Obx(
+                    () => controller.room.value?.facilities != null
+                        ? Facilities(
+                            facilitiesModel:
+                                controller.room.value?.facilities ?? [])
+                        : const SizedBox.shrink(),
+                  ),
+                  Text(
+                    'About this room',
+                    style: Get.textTheme.bodyMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Obx(
+                      () => Column(
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Obx(
-                                () => TienIch(
-                                  textTile: 'Room Size',
-                                  text: controller.room.value?.roomSize ?? '',
-                                  icon: const Icon(
-                                    Icons.square_foot_outlined,
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: controller.isExpanded.value
+                                      ? controller.room.value?.roomDescription
+                                      : ((controller
+                                                      .room
+                                                      .value
+                                                      ?.roomDescription!
+                                                      .length ??
+                                                  -1) >
+                                              200
+                                          ? controller
+                                              .room.value!.roomDescription
+                                              ?.substring(0, 200)
+                                          : controller
+                                              .room.value?.roomDescription),
+                                  style:
+                                      Get.theme.textTheme.bodyMedium?.copyWith(
+                                    color: Get.theme.colorScheme.onSurface,
                                   ),
                                 ),
-                              ),
-                              Obx(
-                                () => TienIch(
-                                  textTile: 'Guest(s)',
-                                  text:
-                                      "${controller.room.value?.roomCapacity.toString()} guest",
-                                  icon: const Icon(
-                                    Icons.square_foot_outlined,
+                                if ((controller.room.value?.roomDescription!
+                                            .length ??
+                                        -1) >
+                                    200)
+                                  TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = controller.toggleExpanded,
+                                    text: controller.isExpanded.value
+                                        ? ' Read Less'
+                                        : ' Read More..',
+                                    style: Get.theme.textTheme.bodyMedium
+                                        ?.copyWith(
+                                      color: Colors.red,
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Obx(
-                            () => TienIch(
-                              textTile: 'Bed Type',
-                              text:
-                                  "${controller.room.value?.roomBedQuantity.toString()}  king bed ",
-                              icon: const Icon(
-                                Icons.square_foot_outlined,
-                              ),
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const Divider(
-                      color: Colors.grey,
-                    ),
-                    Text(
-                      'Room Facilities',
-                      style: Get.textTheme.bodyMedium!
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    Obx(
-                      () => controller.room.value?.facilities != null
-                          ? Facilities(
-                              facilitiesModel:
-                                  controller.room.value?.facilities ?? [])
-                          : const SizedBox.shrink(),
-                    ),
-                    Text(
-                      'About this room',
-                      style: Get.textTheme.bodyMedium!
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Obx(
-                        () => Column(
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: controller.isExpanded.value
-                                        ? controller.room.value?.roomDescription
-                                        : ((controller
-                                                        .room
-                                                        .value
-                                                        ?.roomDescription!
-                                                        .length ??
-                                                    -1) >
-                                                200
-                                            ? controller
-                                                .room.value!.roomDescription
-                                                ?.substring(0, 200)
-                                            : controller
-                                                .room.value?.roomDescription),
-                                    style: Get.theme.textTheme.bodyMedium
-                                        ?.copyWith(
-                                      color: Get.theme.colorScheme.onSurface,
-                                    ),
-                                  ),
-                                  if ((controller.room.value?.roomDescription!
-                                              .length ??
-                                          -1) >
-                                      200)
-                                    TextSpan(
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = controller.toggleExpanded,
-                                      text: controller.isExpanded.value
-                                          ? ' Read Less'
-                                          : ' Read More..',
-                                      style: Get.theme.textTheme.bodyMedium
-                                          ?.copyWith(
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
-        bottomNavigationBar: Obx(
-          () => (controller.listRoomController.totalPrice.value) != 0
-              ? const GetFooter()
-              : const SizedBox.shrink(),
-        ));
+      ),
+      bottomNavigationBar: Obx(
+        () => (controller.listRoomController.totalPrice.value) != 0
+            ? const GetFooter()
+            : const SizedBox.shrink(),
+      ),
+    );
   }
 }
 
@@ -363,11 +362,14 @@ class RoomInformation extends GetView<RoomDetailController> {
                         Expanded(
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.redAccent),
-                                borderRadius: BorderRadius.circular(16)),
+                              border: Border.all(color: Colors.redAccent),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  vertical: 12.0, horizontal: 16),
+                                vertical: 12.0,
+                                horizontal: 16,
+                              ),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,

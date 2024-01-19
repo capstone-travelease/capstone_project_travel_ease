@@ -4,6 +4,7 @@ import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/review/review_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/gestures.dart';
@@ -369,12 +370,14 @@ class Review extends GetView<HotelDetailController> {
                   style: Get.textTheme.bodySmall!
                       .copyWith(color: Colors.grey[500]),
                 ),
-                Text(
-                  'Read reviews',
-                  style: Get.textTheme.bodyMedium!.copyWith(
-                    color: Colors.redAccent,
-                  ),
-                )
+                TextButton(
+                    onPressed: () => Get.toNamed(ReviewPage.routeName),
+                    child: Text(
+                      'Read reviews',
+                      style: Get.textTheme.bodyMedium!.copyWith(
+                        color: Colors.redAccent,
+                      ),
+                    ))
               ],
             )
           ],

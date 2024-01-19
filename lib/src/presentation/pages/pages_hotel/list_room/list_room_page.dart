@@ -180,118 +180,6 @@ class Appbar extends GetView<ListRoomController>
   Size get preferredSize => const Size.fromHeight(70);
 }
 
-// class ProposeRoom extends GetView<ListRoomController> {
-//   const ProposeRoom({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(12.0),
-//       child: Card(
-//         shape: OutlineInputBorder(
-//           borderSide: BorderSide(color: Colors.grey[400]!),
-//         ),
-//         child: Padding(
-//           padding: const EdgeInsets.all(12.0),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Obx(
-//                 () => Text(
-//                   'Được Đề Xuất cho ${controller.searchHotelController.numberAdult.toInt()} người',
-//                   style: Get.textTheme.titleMedium!.copyWith(
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               ),
-//               Obx(
-//                 () => ListView.builder(
-//                   physics: const NeverScrollableScrollPhysics(),
-//                   shrinkWrap: true,
-//                   itemCount: controller.rooms.length,
-//                   itemBuilder: (context, index) {
-//                     final item = controller.rooms[index];
-//                     return Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Expanded(
-//                           child: Text(
-//                             item.name,
-//                             maxLines: 1,
-//                             overflow: TextOverflow.ellipsis,
-//                             style: Get.textTheme.titleMedium!.copyWith(
-//                               fontWeight: FontWeight.bold,
-//                             ),
-//                           ),
-//                         ),
-//                         const SizedBox(
-//                           width: 10,
-//                         ),
-//                         Text(
-//                           NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
-//                               .format(item.price),
-//                           style: Get.textTheme.titleMedium!.copyWith(
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ],
-//                     );
-//                   },
-//                 ),
-//               ),
-//               Divider(
-//                 color: Colors.grey[400]!,
-//               ),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Text(
-//                     'Tổng Cộng',
-//                     style: Get.textTheme.titleMedium!.copyWith(
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                   Obx(
-//                     () => Text(
-//                       NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
-//                           .format(controller.totalPropose.toInt()),
-//                       style: Get.textTheme.titleMedium!.copyWith(
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                   )
-//                 ],
-//               ),
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-//                 child: SizedBox(
-//                   width: Get.width,
-//                   child: DecoratedBox(
-//                     decoration: BoxDecoration(
-//                       color: Colors.redAccent,
-//                       borderRadius: BorderRadius.circular(12),
-//                     ),
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(12.0),
-//                       child: Center(
-//                         child: Text(
-//                           "Đặt Ngay",
-//                           style: Get.textTheme.titleMedium!
-//                               .copyWith(color: Colors.white),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 class ListRooms extends GetView<ListRoomController> {
   const ListRooms({Key? key, required this.roomModel}) : super(key: key);
   final RoomModel roomModel;
@@ -624,7 +512,6 @@ class ListImage extends StatelessWidget {
                           );
                         case LoadState.completed:
                           return null;
-
                         case LoadState.failed:
                           return Image.asset(
                             Assets.images.noImage.path,
@@ -706,7 +593,7 @@ class GetFooter extends GetView<ListRoomController> {
                         BookingPage.routeName,
                         arguments: ArgRooms(
                           roomCardModel: controller.roomCards,
-                          price: (controller.totalPrice.toInt()),
+                          price: controller.totalPrice.toInt(),
                           numberRoom: controller.totalRoom.toInt(),
                         ),
                       );
@@ -722,7 +609,9 @@ class GetFooter extends GetView<ListRoomController> {
                         child: Text(
                           'Book Room',
                           style: Get.textTheme.titleMedium!.copyWith(
-                              fontWeight: FontWeight.bold, color: Colors.white),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -742,12 +631,14 @@ class GetFooter extends GetView<ListRoomController> {
                                         locale: 'vi_VN', symbol: 'VND')
                                     .format(controller.totalPrice.toInt())
                                 : "",
-                            style: Get.textTheme.titleMedium!
-                                .copyWith(fontWeight: FontWeight.bold),
+                            style: Get.textTheme.titleMedium!.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           TextSpan(
-                              text: '\n/per night',
-                              style: Get.textTheme.bodySmall!),
+                            text: '\n/per night',
+                            style: Get.textTheme.bodySmall!,
+                          ),
                         ],
                       ),
                     ),
@@ -761,3 +652,115 @@ class GetFooter extends GetView<ListRoomController> {
     );
   }
 }
+
+// class ProposeRoom extends GetView<ListRoomController> {
+//   const ProposeRoom({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(12.0),
+//       child: Card(
+//         shape: OutlineInputBorder(
+//           borderSide: BorderSide(color: Colors.grey[400]!),
+//         ),
+//         child: Padding(
+//           padding: const EdgeInsets.all(12.0),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Obx(
+//                 () => Text(
+//                   'Được Đề Xuất cho ${controller.searchHotelController.numberAdult.toInt()} người',
+//                   style: Get.textTheme.titleMedium!.copyWith(
+//                     fontWeight: FontWeight.bold,
+//                   ),
+//                 ),
+//               ),
+//               Obx(
+//                 () => ListView.builder(
+//                   physics: const NeverScrollableScrollPhysics(),
+//                   shrinkWrap: true,
+//                   itemCount: controller.rooms.length,
+//                   itemBuilder: (context, index) {
+//                     final item = controller.rooms[index];
+//                     return Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                       children: [
+//                         Expanded(
+//                           child: Text(
+//                             item.name,
+//                             maxLines: 1,
+//                             overflow: TextOverflow.ellipsis,
+//                             style: Get.textTheme.titleMedium!.copyWith(
+//                               fontWeight: FontWeight.bold,
+//                             ),
+//                           ),
+//                         ),
+//                         const SizedBox(
+//                           width: 10,
+//                         ),
+//                         Text(
+//                           NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+//                               .format(item.price),
+//                           style: Get.textTheme.titleMedium!.copyWith(
+//                             fontWeight: FontWeight.bold,
+//                           ),
+//                         ),
+//                       ],
+//                     );
+//                   },
+//                 ),
+//               ),
+//               Divider(
+//                 color: Colors.grey[400]!,
+//               ),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   Text(
+//                     'Tổng Cộng',
+//                     style: Get.textTheme.titleMedium!.copyWith(
+//                       fontWeight: FontWeight.bold,
+//                     ),
+//                   ),
+//                   Obx(
+//                     () => Text(
+//                       NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
+//                           .format(controller.totalPropose.toInt()),
+//                       style: Get.textTheme.titleMedium!.copyWith(
+//                         fontWeight: FontWeight.bold,
+//                       ),
+//                     ),
+//                   )
+//                 ],
+//               ),
+//               Padding(
+//                 padding: const EdgeInsets.symmetric(vertical: 8.0),
+//                 child: SizedBox(
+//                   width: Get.width,
+//                   child: DecoratedBox(
+//                     decoration: BoxDecoration(
+//                       color: Colors.redAccent,
+//                       borderRadius: BorderRadius.circular(12),
+//                     ),
+//                     child: Padding(
+//                       padding: const EdgeInsets.all(12.0),
+//                       child: Center(
+//                         child: Text(
+//                           "Đặt Ngay",
+//                           style: Get.textTheme.titleMedium!
+//                               .copyWith(color: Colors.white),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               )
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

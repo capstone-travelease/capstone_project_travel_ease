@@ -34,11 +34,11 @@ class RightContent extends StatelessWidget {
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
                         bottomLeft: Radius.circular(10))),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     '',
-                    style: const TextStyle(fontSize: 17, color: Colors.white),
+                    style: TextStyle(fontSize: 17, color: Colors.white),
                   ),
                 ),
               ),

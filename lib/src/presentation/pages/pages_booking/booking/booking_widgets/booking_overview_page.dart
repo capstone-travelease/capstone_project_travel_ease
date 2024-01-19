@@ -135,7 +135,9 @@ class BookingOverviewPage extends StatelessWidget {
                         Text(
                           'Final price',
                           style: Get.textTheme.titleLarge!.copyWith(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         Obx(
                           () => Text(
@@ -143,8 +145,9 @@ class BookingOverviewPage extends StatelessWidget {
                                     locale: 'vi_VN', symbol: 'VND')
                                 .format(controller.totalPrice.value.toInt()),
                             style: Get.textTheme.titleLarge?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         )
                       ],
@@ -158,8 +161,9 @@ class BookingOverviewPage extends StatelessWidget {
                     children: [
                       Text(
                         'Review your booking conditions',
-                        style: Get.textTheme.titleMedium!
-                            .copyWith(fontWeight: FontWeight.bold),
+                        style: Get.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         'Non-refundable',

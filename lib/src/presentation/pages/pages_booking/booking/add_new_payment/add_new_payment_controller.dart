@@ -36,7 +36,9 @@ class AddNewPaymentController extends GetxController {
       final res = await _bookingService.listBank(bankType: bankType);
       listBanks.call(res);
     } catch (error) {
-      Get.log(error.toString());
+      Get.log(
+        error.toString(),
+      );
     }
     isLoading.call(false);
   }
@@ -68,9 +70,10 @@ class AddNewPaymentController extends GetxController {
       _cleanInput();
       Get.back();
       notificationConfig.showSnackBar(
-          title: 'Thông báo',
-          'Liên kết Thanh Toán Thành Công <3',
-          backgroundColor: Get.theme.colorScheme.primary);
+        title: 'Thông báo',
+        'Liên kết Thanh Toán Thành Công <3',
+        backgroundColor: Get.theme.colorScheme.primary,
+      );
     } catch (error) {
       Get.log(
         error.toString(),

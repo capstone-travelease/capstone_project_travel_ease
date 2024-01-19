@@ -85,7 +85,15 @@ class BookingController extends GetxController {
         );
         return;
       }
-      onPayment();
+      Get.dialog(
+        DiaLogSuccessful(
+          onTap: () {
+            onPayment();
+            Get.offAllNamed(NavigatorMenuPage.routeName);
+          },
+          text: 'You have successfully booked. Please check your email inbox',
+        ),
+      );
     } else if (isNextPage) {
       goToStepAndPage(next);
     } else {
@@ -147,12 +155,6 @@ class BookingController extends GetxController {
           productList: roomInfoList,
           accountId: selectedPayment.value?.accountId,
           taxes: '10',
-        ),
-      );
-      Get.dialog(
-        DiaLogSuccessful(
-          onTap: () => Get.offAllNamed(NavigatorMenuPage.routeName),
-          text: 'You have successfully booked. Please check your email inbox',
         ),
       );
     } catch (error) {

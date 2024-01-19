@@ -37,7 +37,9 @@ class MyBookingTab extends GetView<MyBookingController> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 6.0, horizontal: 12),
+                            vertical: 6.0,
+                            horizontal: 12,
+                          ),
                           child: Obx(
                             () => Text(
                               controller.selected.value?.status ?? '',

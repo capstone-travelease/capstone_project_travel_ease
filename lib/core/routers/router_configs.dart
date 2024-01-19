@@ -13,8 +13,12 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_bookin
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/rating/rating_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/rating/rating_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/ticket/ticket_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/ticket/ticket_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/review/review_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/review/review_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/change_password/change_password_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/change_password/change_password_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/edit_profile/edit_profile_controller.dart';
@@ -190,6 +194,20 @@ class RouterConfigs {
       page: () => const AddNewPaymentPage(),
       binding: BindingsBuilder<void>(
         () => Get.lazyPut(AddNewPaymentController.new),
+      ),
+    ),
+    GetPage(
+      name: ReviewPage.routeName,
+      page: () => const ReviewPage(),
+      binding: BindingsBuilder<void>(
+        () => Get.lazyPut(ReviewController.new),
+      ),
+    ),
+    GetPage(
+      name: RatingPage.routeName,
+      page: () => const RatingPage(),
+      binding: BindingsBuilder<void>(
+        () => Get.lazyPut(RatingController.new),
       ),
     ),
   ];
