@@ -53,7 +53,7 @@ class SignPage extends GetView<SignController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Your Name',
+                                  'Full Name',
                                   style: Get.theme.textTheme.bodyMedium
                                       ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
@@ -89,7 +89,7 @@ class SignPage extends GetView<SignController> {
                                   height: 10,
                                 ),
                                 Text(
-                                  'Your Phone',
+                                  'Phone Number',
                                   style: Get.theme.textTheme.bodyMedium
                                       ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
@@ -125,7 +125,7 @@ class SignPage extends GetView<SignController> {
                                   height: 10,
                                 ),
                                 Text(
-                                  'Your Email',
+                                  'Email',
                                   style: Get.theme.textTheme.bodyMedium
                                       ?.copyWith(fontWeight: FontWeight.bold),
                                 ),

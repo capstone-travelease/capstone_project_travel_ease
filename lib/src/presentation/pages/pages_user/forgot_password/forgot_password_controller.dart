@@ -1,22 +1,54 @@
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
+import 'package:capstone_project_travel_ease/core/utils/noti_config.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_forgot_password_body.dart';
+import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_successful.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ForgotPassWordController extends GetxController {
   late TextEditingController emailEditController;
+  final UserService _userService = Get.find(tag: Constant.uerSerServiceTAG);
+  final NotificationConfig notificationConfig = Get.find();
   @override
   void onInit() {
-    emailEditController = TextEditingController();
+    emailEditController = TextEditingController(text: 'anh@gmail.com');
     super.onInit();
   }
 
   Future<void> sendForgotPass() async {
-    Get.dialog(
-      DiaLogSuccessful(
-        onTap: () => Get.back(),
-        text:
-            'The password has been sent to your email, please check and log in to place your order.',
-      ),
-    );
+    try {
+      await _userService.forgetPassWord(
+        body: PostForgotPassWordBody(
+          email: emailEditController.text.trim(),
+        ),
+      );
+      Get.back();
+      Get.dialog(
+        DiaLogSuccessful(
+          onTap: () => Get.back(),
+          text:
+              'The password has been sent to your email, please check and log in to place your order.',
+        ),
+      );
+    } catch (error) {
+      String errorMessage = "Có lỗi xảy ra, thử lại nhé!";
+      if (error is DioException) {
+        if (error.response?.statusCode == 409 &&
+            error.response?.data['message'] != null) {
+          errorMessage =
+              error.response?.data['message'] ?? "Có lỗi xảy ra, thử lại nhé!";
+        }
+      }
+      notificationConfig.showSnackBar(
+        title: 'Thông báo',
+        errorMessage,
+        backgroundColor: Get.theme.colorScheme.primary,
+      );
+      Get.log(
+        error.toString(),
+      );
+    }
   }
 }

@@ -69,8 +69,10 @@ class ProfilePage extends GetView<ProfileController> {
                                     child: Center(
                                       child: Text(
                                         'Đăng Nhập/Đăng Kí',
-                                        style: Get.textTheme.bodyMedium!
-                                            .copyWith(color: Colors.white),
+                                        style:
+                                            Get.textTheme.bodyMedium!.copyWith(
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -82,69 +84,72 @@ class ProfilePage extends GetView<ProfileController> {
                       ),
                     ),
             ),
-            Obx(() => controller.checkLoginController.isLogin.value != false
-                ? Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: InkWell(
-                            onTap: () => controller.pushEditProfile(),
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Colors.redAccent,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text(
-                                    'Edit Profile',
-                                    style: Get.textTheme.bodyMedium!
-                                        .copyWith(color: Colors.white),
+            Obx(
+              () => controller.checkLoginController.isLogin.value != false
+                  ? Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () => controller.pushEditProfile(),
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Colors.redAccent,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Text(
+                                      'Edit Profile',
+                                      style: Get.textTheme.bodyMedium!.copyWith(
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () => Get.toNamed(
-                              ChangePassWordPage.routeName,
-                              arguments: {
-                                'userId': controller
-                                    .checkLoginController.userid.value,
-                              },
-                            ),
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: Colors.grey[300]!,
-                                ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: InkWell(
+                              onTap: () => Get.toNamed(
+                                ChangePassWordPage.routeName,
+                                arguments: {
+                                  'userId': controller
+                                      .checkLoginController.userid.value,
+                                },
                               ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text(
-                                    'Change Password',
-                                    style: Get.textTheme.bodyMedium!
-                                        .copyWith(color: Colors.redAccent),
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: Colors.grey[300]!,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Text(
+                                      'Change Password',
+                                      style: Get.textTheme.bodyMedium!
+                                          .copyWith(color: Colors.redAccent),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                : const SizedBox.shrink()),
+                          )
+                        ],
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ),
             CustomButton(
               text: Text(
                 'My Bookmark',
@@ -155,17 +160,6 @@ class ProfilePage extends GetView<ProfileController> {
                 Icons.bookmark_outline_outlined,
                 size: 30,
               ),
-            ),
-            CustomButton(
-              text: Text(
-                'Help',
-                style: Get.textTheme.bodyMedium,
-              ),
-              icon: const Icon(
-                Icons.help_outline,
-                size: 30,
-              ),
-              onTap: () => Get.toNamed(HelpPage.routeName),
             ),
             CustomButton(
               text: Text(

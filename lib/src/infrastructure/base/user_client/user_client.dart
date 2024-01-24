@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/patch_update_pass_body.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_forgot_password_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_sign_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/put_update_user_body.dart';
 import 'package:dio/dio.dart';
@@ -37,4 +38,7 @@ abstract class UserClient {
     @Path('userId') int userId,
     @Part(name: 'image') File file,
   );
+
+  @POST('/auth/forgetpassword')
+  Future forgetPassWord(@Body() PostForgotPassWordBody body);
 }

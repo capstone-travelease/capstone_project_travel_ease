@@ -36,7 +36,6 @@ class ChangePassWordController extends GetxController {
 
   void onPasswordChanged(String value) {
     password.value = value;
-
     lengthValid.value = value.length >= 8;
     uppercaseValid.value = value.contains(RegExp(r'[A-Z]'));
     lowercaseValid.value = value.contains(RegExp(r'[a-z]'));
@@ -75,7 +74,9 @@ class ChangePassWordController extends GetxController {
             title: 'Thông báo',
             errorMessage,
             backgroundColor: Get.theme.colorScheme.primary);
-        Get.log(error.toString());
+        Get.log(
+          error.toString(),
+        );
       }
       _cleanInput();
     }

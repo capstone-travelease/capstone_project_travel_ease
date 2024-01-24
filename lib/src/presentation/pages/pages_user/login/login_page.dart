@@ -65,7 +65,7 @@ class LoginView extends GetView<LoginController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Your Email',
+                                      'Email',
                                       style: Get.theme.textTheme.bodyMedium
                                           ?.copyWith(
                                               fontWeight: FontWeight.bold),
@@ -104,7 +104,7 @@ class LoginView extends GetView<LoginController> {
                                       height: 20,
                                     ),
                                     Text(
-                                      'Your Password',
+                                      'Password',
                                       style: Get.theme.textTheme.bodyMedium
                                           ?.copyWith(
                                               fontWeight: FontWeight.bold),

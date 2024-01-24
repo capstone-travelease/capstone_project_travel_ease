@@ -120,7 +120,7 @@ class DetailCustomerPage extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        'Phone',
+                        'Phone Number',
                         style: Get.theme.textTheme.bodyMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),

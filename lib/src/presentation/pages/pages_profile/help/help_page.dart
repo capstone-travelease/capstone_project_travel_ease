@@ -13,11 +13,12 @@ class HelpPage extends GetView<HelpController> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            )),
+          onPressed: () => Get.back(),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
         backgroundColor: Get.theme.colorScheme.background,
         title: Text(
           'Help',
@@ -132,7 +133,7 @@ class HelpPage extends GetView<HelpController> {
                         height: 10,
                       ),
                       Text(
-                        'Name',
+                        'Full Name',
                         style: Get.theme.textTheme.bodyMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),

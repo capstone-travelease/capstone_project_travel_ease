@@ -65,9 +65,4 @@ class HotelDetailController extends GetxController {
       throw 'Could not launch $googleMapsUrl';
     }
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

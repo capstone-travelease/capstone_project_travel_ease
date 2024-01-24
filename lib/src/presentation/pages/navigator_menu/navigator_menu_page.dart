@@ -11,19 +11,34 @@ class NavigatorMenuPage extends GetView<NavigatorMenuController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(() => controller.screens[controller.selectedIndex.value]),
+      body: Obx(
+        () => controller.screens[controller.selectedIndex.value],
+      ),
       bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
+        () => NavigationBar(
+          backgroundColor: Colors.white,
           elevation: 0,
-          onTap: (index) => controller.selectedIndex.value = index,
-          currentIndex: controller.selectedIndex.value,
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Iconsax.home_1_copy), label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.list_alt_sharp), label: 'Booking'),
-            BottomNavigationBarItem(
-                icon: Icon(Iconsax.user_octagon_copy), label: 'Profile'),
+          onDestinationSelected: (index) =>
+              controller.selectedIndex.value = index,
+          selectedIndex: controller.selectedIndex.value,
+          indicatorColor: Colors.red[100],
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Iconsax.home_1_copy),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.list_alt_sharp),
+              label: 'Booking',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.help_outline),
+              label: 'Help',
+            ),
+            NavigationDestination(
+              icon: Icon(Iconsax.user_octagon_copy),
+              label: 'Profile',
+            ),
           ],
         ),
       ),

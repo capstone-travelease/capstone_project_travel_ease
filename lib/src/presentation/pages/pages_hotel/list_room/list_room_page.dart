@@ -41,10 +41,11 @@ class ListRoomPage extends GetView<ListRoomController> {
                 ) {
                   // final itemPA = controller.listPhanAnh[index];
                   return InkWell(
-                      onTap: () {},
-                      child: ListRooms(
-                        roomModel: item,
-                      ));
+                    onTap: () {},
+                    child: ListRooms(
+                      roomModel: item,
+                    ),
+                  );
                 },
                 noItemsFoundIndicatorBuilder: (context) =>
                     const CustomNoDataWidget(

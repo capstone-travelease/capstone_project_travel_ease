@@ -76,6 +76,7 @@ class RouterConfigs {
         Get.lazyPut(HomeController.new);
         Get.lazyPut(MyBookingController.new);
         Get.lazyPut(ProfileController.new);
+        Get.lazyPut(HelpController.new);
       }),
     ),
     GetPage(

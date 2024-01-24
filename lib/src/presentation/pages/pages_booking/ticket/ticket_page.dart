@@ -113,83 +113,87 @@ class HotelAndUserBooking extends GetView<TicketController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Column(
-          children: [
-            InkWell(
-              onTap: () => Get.toNamed(HotelDetailPage.routeName),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: Get.width,
-                    height: 150,
-                    child: ExtendedImage.network(
-                      Constant.baseImageUrl +
-                          (controller.ticket.value?.fileUrl ?? ''),
-                      fit: BoxFit.cover,
-                      borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      shape: BoxShape.rectangle,
-                      loadStateChanged: (ExtendedImageState state) {
-                        switch (state.extendedImageLoadState) {
-                          case LoadState.loading:
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          case LoadState.completed:
-                            return null;
-                          case LoadState.failed:
-                            return Image.asset(
-                              Assets.images.noImage.path,
-                            );
-                        }
-                      },
+    return Obx(
+      () => Column(
+        children: [
+          InkWell(
+            // onTap: () => Get.toNamed(HotelDetailPage.routeName),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: Get.width,
+                  height: 150,
+                  child: ExtendedImage.network(
+                    Constant.baseImageUrl +
+                        (controller.ticket.value?.fileUrl ?? ''),
+                    fit: BoxFit.cover,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(12),
                     ),
+                    shape: BoxShape.rectangle,
+                    loadStateChanged: (ExtendedImageState state) {
+                      switch (state.extendedImageLoadState) {
+                        case LoadState.loading:
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        case LoadState.completed:
+                          return null;
+                        case LoadState.failed:
+                          return Image.asset(
+                            Assets.images.noImage.path,
+                          );
+                      }
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text(
-                      controller.ticket.value?.hotelName ?? '',
-                      textAlign: TextAlign.center,
-                      style: Get.textTheme.titleMedium!.copyWith(),
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    controller.ticket.value?.hotelName ?? '',
+                    textAlign: TextAlign.center,
+                    style: Get.textTheme.titleMedium!.copyWith(),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'ID: ',
-                    style: Get.textTheme.bodySmall!.copyWith(),
+          ),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'ID: ',
+                  style: Get.textTheme.bodySmall!.copyWith(),
+                ),
+                TextSpan(
+                  text: controller.ticket.value?.ticketId.toString(),
+                  style: Get.textTheme.bodySmall!.copyWith(),
+                ),
+                WidgetSpan(
+                  alignment: PlaceholderAlignment.middle,
+                  child: IconButton(
+                    onPressed: () => controller.copyText(),
+                    icon: const Icon(Icons.copy_rounded),
                   ),
-                  TextSpan(
-                    text: controller.ticket.value?.ticketId.toString(),
-                    style: Get.textTheme.bodySmall!.copyWith(),
-                  ),
-                  WidgetSpan(
-                    alignment: PlaceholderAlignment.middle,
-                    child: IconButton(
-                      onPressed: () => controller.copyText(),
-                      icon: const Icon(Icons.copy_rounded),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Text(
-              controller.ticket.value?.userName ?? '',
-              style: Get.textTheme.titleMedium!.copyWith(),
-            ),
-            Text(
-              controller.ticket.value?.userEmail ?? '',
-              style: Get.textTheme.bodyMedium!.copyWith(),
-            ),
-            Text(
-              controller.ticket.value?.userPhone ?? '',
-              style: Get.textTheme.bodyMedium!.copyWith(),
-            ),
-          ],
-        ));
+          ),
+          Text(
+            controller.ticket.value?.userName ?? '',
+            style: Get.textTheme.titleMedium!.copyWith(),
+          ),
+          Text(
+            controller.ticket.value?.userEmail ?? '',
+            style: Get.textTheme.bodyMedium!.copyWith(),
+          ),
+          Text(
+            controller.ticket.value?.userPhone ?? '',
+            style: Get.textTheme.bodyMedium!.copyWith(),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -220,7 +224,9 @@ class BookingDate extends GetView<TicketController> {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: CustomPaint(painter: DashedLinePainter()),
+                child: CustomPaint(
+                  painter: DashedLinePainter(),
+                ),
               ),
             ),
             Column(
@@ -313,8 +319,9 @@ class BookingDetailRoom extends GetView<TicketController> {
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
                               'Max Guests: ${item?.maxGuest.toString()}',
-                              style: Get.textTheme.bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.bold),
+                              style: Get.textTheme.bodyMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
@@ -366,8 +373,9 @@ class MethodAndTotalPayment extends GetView<TicketController> {
                 ),
                 Text(
                   controller.ticket.value?.paymentMethod ?? '',
-                  style: Get.textTheme.bodyMedium!
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: Get.textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -376,15 +384,18 @@ class MethodAndTotalPayment extends GetView<TicketController> {
                 Text(
                   'Total Price:',
                   style: Get.textTheme.titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold, color: Colors.redAccent),
+                    fontWeight: FontWeight.bold,
+                    color: Colors.redAccent,
+                  ),
                 ),
                 Text(
                   controller.ticket.value?.totalPrice == null
                       ? '200000'
                       : NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
                           .format(controller.ticket.value?.totalPrice),
-                  style: Get.textTheme.bodyMedium!
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: Get.textTheme.bodyMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             )
