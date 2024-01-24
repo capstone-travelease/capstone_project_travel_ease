@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChangePassWordController extends GetxController {
-  late TextEditingController currentPasswordEditController;
+  late TextEditingController oldPasswordEditController;
   late TextEditingController newPasswordEditController;
   late TextEditingController confirmPasswordEditController;
   final RegExp specialCharsRegex =
@@ -28,7 +28,7 @@ class ChangePassWordController extends GetxController {
   @override
   void onInit() {
     userId = Get.arguments['userId'];
-    currentPasswordEditController = TextEditingController();
+    oldPasswordEditController = TextEditingController();
     newPasswordEditController = TextEditingController();
     confirmPasswordEditController = TextEditingController();
     super.onInit();
@@ -60,7 +60,7 @@ class ChangePassWordController extends GetxController {
         await _userService.updatePassWord(
           userId: userId,
           body: PatchUpdatePassBody(
-            oldPassword: currentPasswordEditController.text.trim(),
+            oldPassword: oldPasswordEditController.text.trim(),
             newPassword: newPasswordEditController.text.trim(),
           ),
         );
@@ -82,7 +82,7 @@ class ChangePassWordController extends GetxController {
   }
 
   void _cleanInput() {
-    currentPasswordEditController.text = '';
+    oldPasswordEditController.text = '';
     newPasswordEditController.text = '';
     confirmPasswordEditController.text = '';
   }

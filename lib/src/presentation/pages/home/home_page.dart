@@ -9,6 +9,7 @@ import 'package:capstone_project_travel_ease/src/presentation/widgets/search_hot
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends GetView<HomeController> {
   static const String routeName = '/HomePage';
@@ -22,6 +23,7 @@ class HomePage extends GetView<HomeController> {
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppBar(
                 onTap: () => controller.geToNotification(),
@@ -57,35 +59,22 @@ class HomePage extends GetView<HomeController> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Popular Hotel',
-                      style: Get.textTheme.titleMedium!.copyWith(),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Text(
-                        'See All',
-                        style: Get.textTheme.bodySmall!
-                            .copyWith(color: Colors.deepOrangeAccent),
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  'Popular Hotel',
+                  style: Get.textTheme.titleMedium!.copyWith(),
                 ),
               ),
               SizedBox(
-                height: 200,
+                height: Get.height * 0.35,
                 child: Obx(
                   () => ListView.separated(
+                    shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemCount: controller.listImage.length,
                     separatorBuilder: (_, __) => const SizedBox(width: 12),
                     itemBuilder: (context, index) {
                       return SizedBox(
-                        width: 160,
-                        height: 200,
+                        width: Get.width * 0.7,
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
@@ -114,12 +103,13 @@ class HomePage extends GetView<HomeController> {
                               ),
                             ),
                             Positioned.fill(
-                                child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.3),
-                                borderRadius: BorderRadius.circular(12),
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.3),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
                               ),
-                            )),
+                            ),
                             Positioned(
                               right: 8,
                               top: 10,
@@ -152,7 +142,7 @@ class HomePage extends GetView<HomeController> {
                             ),
                             Positioned(
                               bottom: 12,
-                              left: 8,
+                              left: 12,
                               right: 0,
                               child: Column(
                                 children: [
@@ -162,7 +152,7 @@ class HomePage extends GetView<HomeController> {
                                     children: [
                                       Text(
                                         'Intercontinental Hotel',
-                                        style: Get.textTheme.bodyMedium!
+                                        style: Get.textTheme.titleMedium!
                                             .copyWith(
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.white),
@@ -179,7 +169,7 @@ class HomePage extends GetView<HomeController> {
                                           ),
                                           Text(
                                             'Hồ Chí Minh',
-                                            style: Get.textTheme.bodySmall!
+                                            style: Get.textTheme.titleSmall!
                                                 .copyWith(
                                               color: Colors.white,
                                             ),
@@ -190,9 +180,9 @@ class HomePage extends GetView<HomeController> {
                                         height: 4,
                                       ),
                                       Text(
-                                        "400,600,000đ \n/per night",
+                                        '${NumberFormat.currency(locale: 'vi_VN', symbol: 'VND').format(400600000)} /per day',
                                         style:
-                                            Get.textTheme.bodySmall!.copyWith(
+                                            Get.textTheme.titleSmall!.copyWith(
                                           fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                         ),
@@ -209,28 +199,6 @@ class HomePage extends GetView<HomeController> {
                   ),
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Recently Booked',
-                      style: Get.textTheme.titleMedium!.copyWith(),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Text(
-                        'See All',
-                        style: Get.textTheme.bodySmall!
-                            .copyWith(color: Colors.deepOrangeAccent),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // const RecentlyBooked(),
             ],
           ),
         ),
@@ -334,20 +302,3 @@ class AppBar extends GetView<CheckLoginController> {
     );
   }
 }
-
-// class RecentlyBooked extends StatelessWidget {
-//   const RecentlyBooked({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       shrinkWrap: true,
-//       physics: const NeverScrollableScrollPhysics(),
-//       padding: const EdgeInsets.only(top: 0),
-//       itemCount: 5,
-//       itemBuilder: (context, index) {
-//         return const ListHotelView(listHotelModel: null,);
-//       },
-//     );
-//   }
-// }

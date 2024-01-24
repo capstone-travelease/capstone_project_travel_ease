@@ -134,7 +134,7 @@ class TextFormProfile extends GetView<EditProfileController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Your FullName',
+            'Full Name',
             style: Get.theme.textTheme.bodyMedium
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
@@ -156,10 +156,33 @@ class TextFormProfile extends GetView<EditProfileController> {
           const SizedBox(
             height: 10,
           ),
-          Text(
-            'GenDer & Birthday',
-            style: Get.theme.textTheme.bodyMedium
-                ?.copyWith(fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'GenDer',
+                style: Get.theme.textTheme.bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                width: 30,
+              ),
+              Text(
+                'Birthday',
+                style: Get.theme.textTheme.bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '',
+                style: Get.theme.textTheme.bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+              Text(
+                '',
+                style: Get.theme.textTheme.bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
           const SizedBox(
             height: 4,
@@ -240,7 +263,7 @@ class TextFormProfile extends GetView<EditProfileController> {
             height: 10,
           ),
           Text(
-            'Your Phone',
+            'Phone Number',
             style: Get.theme.textTheme.bodyMedium
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),

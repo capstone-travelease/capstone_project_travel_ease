@@ -80,7 +80,7 @@ class InputChange extends GetView<ChangePassWordController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Current Password',
+            'Old Password',
             style: Get.theme.textTheme.bodyMedium
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
@@ -89,14 +89,13 @@ class InputChange extends GetView<ChangePassWordController> {
           ),
           Obx(
             () => TextFormField(
-              controller: controller.currentPasswordEditController,
+              controller: controller.oldPasswordEditController,
               obscureText: !controller.showCurrentPassword.value,
               validator: (value) {
                 if (value!.isEmpty) {
                   return value.checkEmpty(ErrorAndIsEmtys.password);
                 }
-                if (controller.currentPasswordEditController.text
-                    .contains(' ')) {
+                if (controller.oldPasswordEditController.text.contains(' ')) {
                   return ErrorAndIsEmtys.passwordSpace;
                 }
                 return null;
