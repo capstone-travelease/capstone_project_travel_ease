@@ -8,6 +8,7 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/room_detail/room_detail_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bookingInfo.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/loading_shimmer_room.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class ListRoomPage extends GetView<ListRoomController> {
                   isSearch: false,
                 ),
                 firstPageProgressIndicatorBuilder: (context) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const LoadingShimmerRoom();
                 },
                 newPageProgressIndicatorBuilder: (context) => SizedBox(
                   height: 30,
@@ -300,7 +301,9 @@ class ListRooms extends GetView<ListRoomController> {
                     padding: const EdgeInsets.only(top: 10),
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: roomModel.facilities?.length,
+                    itemCount: (roomModel.facilities?.length ?? 0) > 5
+                        ? 6
+                        : (roomModel.facilities?.length ?? 0),
                     itemBuilder: (context, index) {
                       final item = roomModel.facilities?[index];
                       return Padding(

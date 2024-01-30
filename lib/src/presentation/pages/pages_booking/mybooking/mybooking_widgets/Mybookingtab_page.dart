@@ -3,6 +3,7 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_bookin
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/ticket/ticket_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel_mybooking.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/loading_shimmer_hotel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -70,9 +71,7 @@ class MyBookingTab extends GetView<MyBookingController> {
                   isSearch: false,
                 ),
                 firstPageProgressIndicatorBuilder: (context) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return const LoadingShimmerHotel();
                 },
                 newPageProgressIndicatorBuilder: (context) => SizedBox(
                   height: 30,

@@ -3,7 +3,6 @@ import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/rating/rating_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/change_password/change_password_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/help/help_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/profile/profile_controller.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -199,7 +198,7 @@ class ProfilePage extends GetView<ProfileController> {
                     ),
                     onTap: () => controller.logOut(),
                   )
-                : const SizedBox.shrink())
+                : const SizedBox.shrink()),
           ],
         ),
       ),

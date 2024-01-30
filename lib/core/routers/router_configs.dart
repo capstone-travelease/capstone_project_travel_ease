@@ -1,4 +1,6 @@
 import 'package:capstone_project_travel_ease/src/presentation/pages/app_start.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/help/help_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/help/help_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_menu/navigator_menu_controller.dart';
@@ -23,8 +25,6 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profil
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/change_password/change_password_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/edit_profile/edit_profile_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/edit_profile/edit_profile_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/help/help_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/help/help_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/my_bookmark/my_bookmark_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/my_bookmark/my_bookmark_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/profile/profile_controller.dart';

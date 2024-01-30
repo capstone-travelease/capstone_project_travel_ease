@@ -1,6 +1,6 @@
 import 'package:capstone_project_travel_ease/core/utils/error_empty.dart';
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_profile/help/help_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/help/help_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

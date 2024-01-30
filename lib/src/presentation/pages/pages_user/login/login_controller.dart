@@ -18,7 +18,7 @@ class LoginController extends GetxController {
   final UserService _userService = Get.find(tag: Constant.uerSerServiceTAG);
   @override
   void onInit() {
-    emailEditController = TextEditingController(text: 'anh@gmail.com');
+    emailEditController = TextEditingController(text: 'anh23@gmail.com');
     passwordEditController = TextEditingController(text: 'Anh12345@');
     super.onInit();
   }
@@ -51,9 +51,10 @@ class LoginController extends GetxController {
       Get.back();
     } catch (e) {
       notificationConfig.showSnackBar(
-          title: 'Thông báo',
-          'Email hoặc Password không đúng.Vui Lòng thử Lại !',
-          backgroundColor: Colors.orangeAccent);
+        title: 'Thông báo',
+        'Email hoặc Password không đúng.Vui Lòng thử Lại !',
+        backgroundColor: Colors.orangeAccent,
+      );
     }
     isLoading.call(false);
   }

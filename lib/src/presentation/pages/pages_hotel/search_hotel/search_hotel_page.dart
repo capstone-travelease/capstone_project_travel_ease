@@ -6,6 +6,7 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/filter/filter_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/loading_shimmer_hotel.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/search_hotel_widget/widget_search_hotel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -270,7 +271,7 @@ class ListHotel extends GetView<SearchHotelController> {
           isSearch: false,
         ),
         firstPageProgressIndicatorBuilder: (context) {
-          return const Center(child: CircularProgressIndicator());
+          return const LoadingShimmerHotel();
         },
         newPageProgressIndicatorBuilder: (context) => SizedBox(
           height: 30,
