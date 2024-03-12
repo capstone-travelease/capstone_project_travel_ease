@@ -65,15 +65,17 @@ class ChangePassWordController extends GetxController {
         );
         Get.back();
         notificationConfig.showSnackBar(
-            title: 'Thông báo',
-            'Cập nhật mật khẩu Thành Công <3',
-            backgroundColor: Get.theme.colorScheme.primary);
+          title: 'Thông báo',
+          'Cập nhật mật khẩu Thành Công <3',
+          backgroundColor: Get.theme.colorScheme.primary,
+        );
       } catch (error) {
         String errorMessage = "Có lỗi xảy ra, thử lại nhé!";
         notificationConfig.showSnackBar(
-            title: 'Thông báo',
-            errorMessage,
-            backgroundColor: Get.theme.colorScheme.primary);
+          title: 'Thông báo',
+          errorMessage,
+          backgroundColor: Get.theme.colorScheme.primary,
+        );
         Get.log(
           error.toString(),
         );

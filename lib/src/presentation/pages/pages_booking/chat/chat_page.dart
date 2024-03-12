@@ -1,5 +1,8 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/messages_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_widgets/left_content.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_widgets/right_content.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,49 +33,71 @@ class ChatPage extends GetView<ChatController> {
         child: Column(
           children: [
             Expanded(
-              child: Center(
-                child: Container(
-                  width: Get.width * 0.8,
-                  height: Get.height * 0.35,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(14)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Xin chào bạn hãy gửi tin nhắn cho chúng tôi để được hỗ trợ !",
-                          textAlign: TextAlign.center,
-                          style: Get.theme.textTheme.titleMedium,
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: ExtendedImage.network(
-                            'https://cdn.dribbble.com/userupload/3271927/file/original-223856aa8fef836d7bc818da6154f3ab.gif',
-                            fit: BoxFit.cover,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(5)),
-                            shape: BoxShape.rectangle,
-                            loadStateChanged: (ExtendedImageState state) {
-                              switch (state.extendedImageLoadState) {
-                                case LoadState.loading:
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                case LoadState.completed:
-                                  return null;
-                                case LoadState.failed:
-                                  return Image.asset(
-                                    Assets.images.noImage.path,
-                                  );
-                              }
-                            },
+              child: Obx(
+                () => controller.messages.isNotEmpty
+                    ? ListView.builder(
+                        reverse: true,
+                        itemCount: controller.messages.length,
+                        itemBuilder: (context, index) {
+                          final reversedList =
+                              List.from(controller.messages.reversed);
+                          final message = reversedList[index];
+                          MessagesModel? currentItem = message;
+                          if (currentItem?.senderName != 'user1') {
+                            return LeftContent(
+                              current: currentItem!,
+                            );
+                          }
+                          return RightContent(
+                            current: currentItem!,
+                          );
+                        },
+                      )
+                    : Center(
+                        child: Container(
+                          width: Get.width * 0.8,
+                          height: Get.height * 0.35,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Xin chào bạn hãy gửi tin nhắn cho chúng tôi để được hỗ trợ !",
+                                  textAlign: TextAlign.center,
+                                  style: Get.theme.textTheme.titleMedium,
+                                ),
+                                SizedBox(
+                                  width: 200,
+                                  child: ExtendedImage.network(
+                                    'https://cdn.dribbble.com/userupload/3271927/file/original-223856aa8fef836d7bc818da6154f3ab.gif',
+                                    fit: BoxFit.cover,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(5)),
+                                    shape: BoxShape.rectangle,
+                                    loadStateChanged:
+                                        (ExtendedImageState state) {
+                                      switch (state.extendedImageLoadState) {
+                                        case LoadState.loading:
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        case LoadState.completed:
+                                          return null;
+                                        case LoadState.failed:
+                                          return Image.asset(
+                                            Assets.images.noImage.path,
+                                          );
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
+                      ),
               ),
             ),
             const GetBottomBar()
@@ -91,44 +116,45 @@ class GetBottomBar extends GetView<ChatController> {
     return Row(
       children: [
         Expanded(
-            child: Card(
-          color: Get.theme.colorScheme.surfaceVariant,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // GestureDetector(
-                //     onTap: () => controller.getCameraImages(),
-                //     child: Image.asset(IconAssets.iconCamera)),
-                const SizedBox(
-                  width: 8,
-                ),
-                Expanded(
-                  child: TextField(
-                    textInputAction: TextInputAction.done,
-                    controller: controller.message,
-                    decoration: const InputDecoration(
-                        hintText: 'Message', border: InputBorder.none),
+          child: Card(
+            color: Get.theme.colorScheme.surfaceVariant,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // GestureDetector(
+                  //     onTap: () => controller.getCameraImages(),
+                  //     child: Image.asset(IconAssets.iconCamera)),
+                  const SizedBox(
+                    width: 8,
                   ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.send,
-                    color: Colors.deepPurple,
+                  Expanded(
+                    child: TextField(
+                      textInputAction: TextInputAction.done,
+                      controller: controller.messageEditingController,
+                      decoration: const InputDecoration(
+                          hintText: 'Message', border: InputBorder.none),
+                    ),
                   ),
-                ),
-                // GestureDetector(
-                //   onTap: () => controller.getGallery(),
-                //   child: Image.asset(IconAssets.iconGallery),
-                // ),
-              ],
+                  IconButton(
+                    onPressed: () => controller.sendMessage(),
+                    icon: const Icon(
+                      Icons.send,
+                      color: Colors.deepPurple,
+                    ),
+                  ),
+                  // GestureDetector(
+                  //   onTap: () => controller.getGallery(),
+                  //   child: Image.asset(IconAssets.iconGallery),
+                  // ),
+                ],
+              ),
             ),
           ),
-        ))
+        )
       ],
     );
   }

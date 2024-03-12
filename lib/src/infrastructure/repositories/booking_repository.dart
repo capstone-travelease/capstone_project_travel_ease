@@ -5,10 +5,12 @@ import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.
 import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/location_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/my_booking_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/review_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/room_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/get_my_booking_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_add_card_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_booking_body.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_rating_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_search_hotel_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
 import 'package:capstone_project_travel_ease/src/infrastructure/base/booking_client/booking_client.dart';
@@ -218,6 +220,37 @@ class BookingRepository implements BookingService {
   Future<String> cancelBooking({required int bookingId}) async {
     try {
       final res = await _bookingClient.cancelBooking(bookingId);
+      if (res != null) {
+        return res['message'];
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ReviewModel>> reviewHotels({required int hotelId}) async {
+    try {
+      final res = await _bookingClient.reviewHotels(hotelId);
+      if (res != null) {
+        final data = (res['data'] as List)
+            .map((e) => ReviewModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+        return data;
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> postRating({required PostRatingBody body}) async {
+    try {
+      final res = await _bookingClient.postRating(body);
       if (res != null) {
         return res['message'];
       } else {

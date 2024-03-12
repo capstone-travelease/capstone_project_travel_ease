@@ -39,12 +39,12 @@ class ListRoomController extends GetxController {
     try {
       final res = await _bookingService.listRooms(hotelId: argListRoom.hotelId);
       listRoom.call(res);
-      listRoom.length < _pageSize
-          ? pagingController.appendLastPage(listRoom)
-          : pagingController.appendPage(
-              listRoom,
-              pageKey + listRoom.length,
-            );
+      // listRoom.length < _pageSize
+      pagingController.appendLastPage(listRoom);
+      // : pagingController.appendPage(
+      //     listRoom,
+      //     pageKey + listRoom.length,
+      //   );
     } catch (error) {
       pagingController.error = error;
       if (Get.isSnackbarOpen) Get.closeAllSnackbars();

@@ -291,7 +291,7 @@ class BookingDetailRoom extends GetView<TicketController> {
                     final item = controller.ticket.value?.productList?[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0,
+                        horizontal: 12.0,
                         vertical: 10,
                       ),
                       child: Column(
@@ -300,11 +300,15 @@ class BookingDetailRoom extends GetView<TicketController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                item?.roomName ?? '',
-                                style: Get.textTheme.titleMedium!.copyWith(
-                                  color: Colors.redAccent,
-                                  fontWeight: FontWeight.bold,
+                              Expanded(
+                                child: Text(
+                                  item?.roomName ?? '',
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: false,
+                                  style: Get.textTheme.titleMedium!.copyWith(
+                                    color: Colors.redAccent,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                               Text(

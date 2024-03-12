@@ -169,9 +169,7 @@ class ProfilePage extends GetView<ProfileController> {
                 Icons.settings_outlined,
                 size: 30,
               ),
-              onTap: () => Get.toNamed(
-                RatingPage.routeName,
-              ),
+              onTap: () {},
             ),
             CustomButton(
               text: Text(

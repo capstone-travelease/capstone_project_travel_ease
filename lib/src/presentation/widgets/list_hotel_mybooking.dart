@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListHotelMyBooking extends StatelessWidget {
-  const ListHotelMyBooking(
-      {Key? key,
-      required this.decoratedBox,
-      required this.myBooking,
-      required this.onTap})
-      : super(key: key);
+  const ListHotelMyBooking({
+    Key? key,
+    required this.decoratedBox,
+    required this.myBooking,
+    required this.onTap,
+    this.text,
+  }) : super(key: key);
   final DecoratedBox decoratedBox;
   final MyBookingModel myBooking;
   final VoidCallback onTap;
+  final TextButton? text;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -128,7 +130,8 @@ class ListHotelMyBooking extends StatelessWidget {
                                   Icons.bookmark_outline_outlined,
                                   size: 30,
                                 ),
-                              )
+                              ),
+                              text ?? const SizedBox.shrink(),
                             ],
                           ),
                         ],

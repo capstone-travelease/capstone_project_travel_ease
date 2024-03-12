@@ -22,27 +22,27 @@ class LoadingShimmerRoom extends StatelessWidget {
                   SizedBox(
                     height: 100,
                     child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Shimmer.fromColors(
-                              baseColor: Colors.grey.withOpacity(0.25),
-                              highlightColor: Colors.white.withOpacity(0.6),
-                              child: Container(
-                                width: 155,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.grey.withOpacity(0.9),
-                                ),
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Shimmer.fromColors(
+                            baseColor: Colors.grey.withOpacity(0.25),
+                            highlightColor: Colors.white.withOpacity(0.6),
+                            child: Container(
+                              width: 155,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.grey.withOpacity(0.9),
                               ),
                             ),
-                          );
-                        }),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 20,

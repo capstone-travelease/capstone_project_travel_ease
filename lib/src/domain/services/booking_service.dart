@@ -4,10 +4,12 @@ import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.
 import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/location_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/my_booking_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/review_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/room_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/get_my_booking_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_add_card_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_booking_body.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_rating_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_search_hotel_body.dart';
 
 abstract interface class BookingService {
@@ -36,4 +38,8 @@ abstract interface class BookingService {
   Future<BookingTicketModel> ticket({required int bookingId});
 
   Future<String> cancelBooking({required int bookingId});
+
+  Future<String> postRating({required PostRatingBody body});
+
+  Future<List<ReviewModel>> reviewHotels({required int hotelId});
 }

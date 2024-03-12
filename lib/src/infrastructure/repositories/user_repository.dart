@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/messages_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/user_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/get_messages_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/patch_update_pass_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_add_help_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_forgot_password_body.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_send_Message_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_sign_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/put_update_user_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/user_service.dart';
@@ -105,15 +108,54 @@ class UserRepository implements UserService {
   }
 
   @override
-  Future<String> help({required PostAddHelpBody body}) {
-    // TODO: implement help
-    throw UnimplementedError();
+  Future<String> help({required PostAddHelpBody body}) async {
+    try {
+      final res = await _userClient.help(body);
+      if (res != null) {
+        return res['message'];
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
   Future<String> forgetPassWord({required PostForgotPassWordBody body}) async {
     try {
       final res = await _userClient.forgetPassWord(body);
+      if (res != null) {
+        return res['message'];
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<MessagesModel>> messages({required GetMessageBody body}) async {
+    try {
+      final res = await _userClient.messages(body);
+      if (res != null) {
+        final data = (res['data'] as List)
+            .map((e) => MessagesModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+        return data;
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<String> sendMessage({required PostSendMessageBody body}) async {
+    try {
+      final res = await _userClient.sendMessages(body);
       if (res != null) {
         return res['message'];
       } else {

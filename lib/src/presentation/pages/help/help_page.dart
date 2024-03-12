@@ -12,13 +12,7 @@ class HelpPage extends GetView<HelpController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-        ),
+        elevation: 0.0,
         backgroundColor: Get.theme.colorScheme.background,
         title: Text(
           'Help',

@@ -1,14 +1,15 @@
+import 'package:capstone_project_travel_ease/src/domain/models/messages_model.dart';
 import 'package:flutter/material.dart';
 
 class RightContent extends StatelessWidget {
   // final MessageModel? last;
-  // final MessageModel current;
+  final MessagesModel current;
   // final MessageModel? next;
   // final int currentIndex;
 
   const RightContent({
     Key? key,
-    // required this.current,
+    required this.current,
     // required this.last,
     // required this.next,
     // required this.currentIndex,
@@ -34,11 +35,11 @@ class RightContent extends StatelessWidget {
                         topRight: Radius.circular(10),
                         topLeft: Radius.circular(10),
                         bottomLeft: Radius.circular(10))),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '',
-                    style: TextStyle(fontSize: 17, color: Colors.white),
+                    current.message ?? '',
+                    style: const TextStyle(fontSize: 17, color: Colors.white),
                   ),
                 ),
               ),

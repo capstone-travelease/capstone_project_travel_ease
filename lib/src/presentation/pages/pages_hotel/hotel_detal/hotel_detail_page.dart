@@ -371,7 +371,10 @@ class Review extends GetView<HotelDetailController> {
                       .copyWith(color: Colors.grey[500]),
                 ),
                 TextButton(
-                    onPressed: () => Get.toNamed(ReviewPage.routeName),
+                    onPressed: () => Get.toNamed(ReviewPage.routeName,
+                            arguments: {
+                              'hotelId': controller.hotelDetail.value?.hotelId
+                            }),
                     child: Text(
                       'Read reviews',
                       style: Get.textTheme.bodyMedium!.copyWith(

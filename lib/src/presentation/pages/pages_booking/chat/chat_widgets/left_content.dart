@@ -1,16 +1,17 @@
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/messages_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LeftContent extends StatelessWidget {
   // final MessageModel? last;
-  // final MessageModel current;
+  final MessagesModel current;
   // final MessageModel? next;
   // final bool isHienThiGio;
 
   const LeftContent({
     Key? key,
-    // required this.current,
+    required this.current,
     // required this.last,
     // required this.next,
     // this.isHienThiGio = false,
@@ -50,7 +51,7 @@ class LeftContent extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(
-                    '',
+                    current.message ?? '',
                     style: const TextStyle(fontSize: 17, color: Colors.black),
                   ),
                 ),

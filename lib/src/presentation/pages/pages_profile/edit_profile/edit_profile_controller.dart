@@ -42,17 +42,21 @@ class EditProfileController extends GetxController {
   Future updateImageUser({required File path}) async {
     try {
       await _userService.updateImage(
-          userId: checkLoginController.userid.value, file: path);
+        userId: checkLoginController.userid.value,
+        file: path,
+      );
       notificationConfig.showSnackBar(
-          title: 'Thông báo',
-          'Cập nhật thông tin Thành Công <3',
-          backgroundColor: Get.theme.colorScheme.primary);
+        title: 'Thông báo',
+        'Cập nhật thông tin Thành Công <3',
+        backgroundColor: Get.theme.colorScheme.primary,
+      );
     } catch (error) {
       String errorMessage = "Có lỗi xảy ra, vui lòng thử lại nhé!";
       notificationConfig.showSnackBar(
-          title: 'Thông báo',
-          errorMessage,
-          backgroundColor: Get.theme.colorScheme.primary);
+        title: 'Thông báo',
+        errorMessage,
+        backgroundColor: Get.theme.colorScheme.primary,
+      );
       Get.log(
         error.toString(),
       );
@@ -74,15 +78,17 @@ class EditProfileController extends GetxController {
         await checkLoginController.checkLogin();
         Get.back();
         notificationConfig.showSnackBar(
-            title: 'Thông báo',
-            'Cập nhật thông tin Thành Công <3',
-            backgroundColor: Get.theme.colorScheme.primary);
+          title: 'Thông báo',
+          'Cập nhật thông tin Thành Công <3',
+          backgroundColor: Get.theme.colorScheme.primary,
+        );
       } catch (error) {
         String errorMessage = "Có lỗi xảy ra, vui lòng thử lại nhé!";
         notificationConfig.showSnackBar(
-            title: 'Thông báo',
-            errorMessage,
-            backgroundColor: Get.theme.colorScheme.primary);
+          title: 'Thông báo',
+          errorMessage,
+          backgroundColor: Get.theme.colorScheme.primary,
+        );
         Get.log(
           error.toString(),
         );

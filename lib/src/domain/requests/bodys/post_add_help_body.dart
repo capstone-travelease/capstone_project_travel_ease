@@ -3,39 +3,44 @@ import 'package:flutter/cupertino.dart';
 
 class PostAddHelpBody extends Equatable {
   const PostAddHelpBody({
+    required this.bookingState,
     required this.email,
-    required this.name,
+    required this.fullName,
     required this.contactNumber,
     required this.noiDung,
-    this.ticket,
+    this.ticketId,
   });
-  final int? ticket;
-  final String name;
+  final bool? bookingState;
+  final int? ticketId;
+  final String fullName;
   final int contactNumber;
   final String email;
   final String? noiDung;
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
+      'bookingState': bookingState,
+      'ticketId': ticketId,
       'email': email,
-      'name': name,
+      'userName': fullName,
       'contactNumber': contactNumber,
-      'noiDung': noiDung,
-      'ticket': ticket,
+      'messages': noiDung,
     };
   }
 
   PostAddHelpBody copyWith({
+    bool? bookingState,
     String? email,
-    String? name,
+    String? fullName,
     String? noiDung,
     ValueGetter<int>? contactNumber,
-    int? ticket,
+    int? ticketId,
   }) {
     return PostAddHelpBody(
+      bookingState: bookingState ?? this.bookingState,
       email: email ?? this.email,
-      name: name ?? this.name,
+      fullName: fullName ?? this.fullName,
       noiDung: noiDung ?? this.noiDung,
-      ticket: ticket ?? this.ticket,
+      ticketId: ticketId ?? this.ticketId,
       contactNumber:
           contactNumber != null ? contactNumber() : this.contactNumber,
     );
@@ -43,10 +48,11 @@ class PostAddHelpBody extends Equatable {
 
   @override
   String toString() {
-    return 'PostAddHelpBody(email: $email, name: $name, noiDung: $noiDung, contactNumber: $contactNumber,ticket: $ticket)';
+    return 'PostAddHelpBody(email: $email, fullName: $fullName, noiDung: $noiDung, contactNumber: $contactNumber,ticketId: $ticketId)';
   }
 
   @override
   // TODO: implement props
-  List<Object?> get props => [email, name, contactNumber, ticket, noiDung];
+  List<Object?> get props =>
+      [email, fullName, contactNumber, ticketId, noiDung];
 }

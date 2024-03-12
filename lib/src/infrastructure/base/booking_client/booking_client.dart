@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/get_my_booking_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_add_card_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_booking_body.dart';
+import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_rating_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_search_hotel_body.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
@@ -48,4 +49,10 @@ abstract class BookingClient {
 
   @PUT('/booking/cancelBooking?bookingId={bookingId}')
   Future cancelBooking(@Path('bookingId') int bookingId);
+
+  @GET('/api/list-rating?hotelId={hotelId}')
+  Future reviewHotels(@Path('hotelId') int hotelId);
+
+  @POST('/api/rating')
+  Future postRating(@Body() PostRatingBody body);
 }

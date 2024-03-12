@@ -43,12 +43,12 @@ class MyBookingController extends GetxController
         ),
       );
       listBooking.call(res);
-      listBooking.length < _pageSize
-          ? pagingController.appendLastPage(listBooking)
-          : pagingController.appendPage(
-              listBooking,
-              pageKey + listBooking.length,
-            );
+      // listBooking.length < _pageSize
+      pagingController.appendLastPage(listBooking);
+      // : pagingController.appendPage(
+      //     listBooking,
+      //     pageKey + listBooking.length,
+      //   );
     } catch (error) {
       pagingController.error = error;
       if (Get.isSnackbarOpen) Get.closeAllSnackbars();

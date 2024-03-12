@@ -1,5 +1,6 @@
 import 'package:capstone_project_travel_ease/src/domain/models/my_booking_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/mybooking/mybooking_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/rating/rating_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/ticket/ticket_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel_mybooking.dart';
@@ -62,6 +63,21 @@ class MyBookingTab extends GetView<MyBookingController> {
                           'bookingType': itemBooking.bookingStatus,
                         },
                       ),
+                      text: controller.selected.value?.type.title == 'Ongoing'
+                          ? TextButton(
+                              onPressed: () =>
+                                  Get.toNamed(RatingPage.routeName, arguments: {
+                                'bookingId': itemBooking.bookingId,
+                              }),
+                              child: Text(
+                                'Rate now',
+                                style: Get.textTheme.bodySmall!.copyWith(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          : null,
                     ),
                   );
                 },

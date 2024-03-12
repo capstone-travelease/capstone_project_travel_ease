@@ -24,7 +24,7 @@ class GlobalBinding extends Bindings {
     Get.put<UserClient>(
       UserClient(
         Get.find<Dio>(tag: Constant.dioTAG),
-        baseUrl: 'http://34.142.198.2:3634',
+        baseUrl: 'http://34.126.163.206:3634',
       ),
       permanent: true,
       tag: Constant.userClientTAG,
@@ -39,7 +39,7 @@ class GlobalBinding extends Bindings {
     Get.put<BookingClient>(
       BookingClient(
         Get.find<Dio>(tag: Constant.dioTAG),
-        baseUrl: 'http://34.142.198.2:3634',
+        baseUrl: 'http://34.126.163.206:3634',
       ),
       permanent: true,
       tag: Constant.bookingClientTAG,

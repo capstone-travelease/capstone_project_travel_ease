@@ -49,12 +49,12 @@ class SearchHotelController extends GetxController {
         ),
       );
       listHotel.call(res);
-      listHotel.length < _pageSize
-          ? pagingController.appendLastPage(listHotel)
-          : pagingController.appendPage(
-              listHotel,
-              pageKey + listHotel.length,
-            );
+      // listHotel.length < _pageSize
+      pagingController.appendLastPage(listHotel);
+      // : pagingController.appendPage(
+      //     listHotel,
+      //     pageKey + listHotel.length,
+      //   );
     } catch (error) {
       pagingController.error = error;
       if (Get.isSnackbarOpen) Get.closeAllSnackbars();
