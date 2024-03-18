@@ -40,12 +40,12 @@ class RatingController extends GetxController {
     }
   }
 
-  Future<void> onSend() async {
+  Future<void> onSend({required int hotelId}) async {
     if (keyForm.currentState!.validate()) {
       try {
         await _bookingService.postRating(
           body: PostRatingBody(
-            hotelId: 61,
+            hotelId: hotelId,
             userId: checkLoginController.userid.value,
             content: contentEditController.text.trim(),
             starRate: selectedRating.value,

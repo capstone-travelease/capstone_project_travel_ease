@@ -43,7 +43,8 @@ class ChatPage extends GetView<ChatController> {
                               List.from(controller.messages.reversed);
                           final message = reversedList[index];
                           MessagesModel? currentItem = message;
-                          if (currentItem?.senderName != 'user1') {
+                          if (currentItem?.senderId !=
+                              controller.checkLoginController.userid.value) {
                             return LeftContent(
                               current: currentItem!,
                             );

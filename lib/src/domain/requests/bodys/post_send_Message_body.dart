@@ -2,38 +2,37 @@ import 'package:equatable/equatable.dart';
 
 class PostSendMessageBody extends Equatable {
   const PostSendMessageBody({
-    this.senderName,
-    this.targetUserName,
+    this.senderId,
+    this.targetId,
     this.message,
   });
-  final String? senderName;
-  final String? targetUserName;
+  final int? senderId;
+  final int? targetId;
   final String? message;
 
   Map<String, dynamic> toJson() {
     return {
-      'senderName': senderName,
-      'targetUserName': targetUserName,
+      'senderId': senderId,
+      'targetId': targetId,
       'message': message,
     };
   }
 
   PostSendMessageBody copyWith({
-    String? senderName,
-    String? targetUserName,
+    int? senderId,
+    int? targetId,
     String? message,
   }) {
     return PostSendMessageBody(
-      senderName: senderName ?? this.senderName,
-      targetUserName: targetUserName ?? this.targetUserName,
+      targetId: targetId ?? this.targetId,
+      senderId: senderId ?? this.senderId,
       message: message ?? this.message,
     );
   }
 
   @override
-  String toString() {
-    return 'PostSendMessageBody(senderName: $senderName, targetUserName: $targetUserName, message: $message)';
-  }
+  String toString() =>
+      'PostSendMessageBody(senderId: $senderId, targetId: $targetId, message: $message)';
 
   @override
   // TODO: implement props

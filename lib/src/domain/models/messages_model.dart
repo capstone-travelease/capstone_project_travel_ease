@@ -7,18 +7,18 @@ part 'messages_model.g.dart';
 class MessagesModel extends Equatable {
   const MessagesModel({
     this.messageId,
-    this.senderName,
-    this.targetUserName,
+    this.senderId,
+    this.targetId,
     this.message,
     this.date,
   });
 
   @JsonKey(name: 'messageId')
   final int? messageId;
-  @JsonKey(name: 'senderName')
-  final String? senderName;
-  @JsonKey(name: 'targetUserName')
-  final String? targetUserName;
+  @JsonKey(name: 'senderId')
+  final int? senderId;
+  @JsonKey(name: 'targetId')
+  final int? targetId;
   @JsonKey(name: 'message')
   final String? message;
   @JsonKey(name: 'time')

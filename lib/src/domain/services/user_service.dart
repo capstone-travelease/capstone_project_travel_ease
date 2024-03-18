@@ -30,7 +30,7 @@ abstract interface class UserService {
 
   Future<String> help({required PostAddHelpBody body});
 
-  Future<String> sendMessage({required PostSendMessageBody body});
+  Future<MessagesModel> sendMessage({required PostSendMessageBody body});
 
   Future<List<MessagesModel>> messages({required GetMessageBody body});
 }

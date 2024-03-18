@@ -225,7 +225,8 @@ class RatingPage extends GetView<RatingController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: () => controller.onSend(),
+                onTap: () => controller.onSend(
+                    hotelId: controller.ticket.value!.hotelId ?? -1),
                 child: SizedBox(
                   width: Get.width,
                   child: DecoratedBox(

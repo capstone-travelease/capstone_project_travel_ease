@@ -9,8 +9,8 @@ part of 'messages_model.dart';
 MessagesModel _$MessagesModelFromJson(Map<String, dynamic> json) =>
     MessagesModel(
       messageId: json['messageId'] as int?,
-      senderName: json['senderName'] as String?,
-      targetUserName: json['targetUserName'] as String?,
+      senderId: json['senderId'] as int?,
+      targetId: json['targetId'] as int?,
       message: json['message'] as String?,
       date:
           json['time'] == null ? null : DateTime.parse(json['time'] as String),
@@ -19,8 +19,8 @@ MessagesModel _$MessagesModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$MessagesModelToJson(MessagesModel instance) =>
     <String, dynamic>{
       'messageId': instance.messageId,
-      'senderName': instance.senderName,
-      'targetUserName': instance.targetUserName,
+      'senderId': instance.senderId,
+      'targetId': instance.targetId,
       'message': instance.message,
       'time': instance.date?.toIso8601String(),
     };

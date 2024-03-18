@@ -8,6 +8,7 @@ part 'booking_ticket_model.g.dart';
 class BookingTicketModel extends Equatable {
   const BookingTicketModel({
     this.ticketId,
+    this.hotelId,
     this.hotelName,
     this.hotelCity,
     this.fileUrl,
@@ -22,6 +23,8 @@ class BookingTicketModel extends Equatable {
   });
   @JsonKey(name: 'ticketId')
   final int? ticketId;
+  @JsonKey(name: 'hotelId')
+  final int? hotelId;
   @JsonKey(name: 'hotelName')
   final String? hotelName;
   @JsonKey(name: 'hotelCity')
@@ -54,6 +57,7 @@ class BookingTicketModel extends Equatable {
   // TODO: implement props
   List<Object?> get props => [
         hotelName,
+        hotelId,
         hotelCity,
         fileUrl,
         userEmail,

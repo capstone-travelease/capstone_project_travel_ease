@@ -153,11 +153,13 @@ class UserRepository implements UserService {
   }
 
   @override
-  Future<String> sendMessage({required PostSendMessageBody body}) async {
+  Future<MessagesModel> sendMessage({required PostSendMessageBody body}) async {
     try {
       final res = await _userClient.sendMessages(body);
       if (res != null) {
-        return res['message'];
+        final data =
+            MessagesModel.fromJson(res['data'] as Map<String, dynamic>);
+        return data;
       } else {
         throw Exception('Request Error: $res');
       }

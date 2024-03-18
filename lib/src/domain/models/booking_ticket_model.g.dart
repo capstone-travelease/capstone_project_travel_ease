@@ -9,6 +9,7 @@ part of 'booking_ticket_model.dart';
 BookingTicketModel _$BookingTicketModelFromJson(Map<String, dynamic> json) =>
     BookingTicketModel(
       ticketId: json['ticketId'] as int?,
+      hotelId: json['hotelId'] as int?,
       hotelName: json['hotelName'] as String?,
       hotelCity: json['hotelCity'] as String?,
       fileUrl: json['fileUrl'] as String?,
@@ -31,6 +32,7 @@ BookingTicketModel _$BookingTicketModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$BookingTicketModelToJson(BookingTicketModel instance) =>
     <String, dynamic>{
       'ticketId': instance.ticketId,
+      'hotelId': instance.hotelId,
       'hotelName': instance.hotelName,
       'hotelCity': instance.hotelCity,
       'userName': instance.userName,

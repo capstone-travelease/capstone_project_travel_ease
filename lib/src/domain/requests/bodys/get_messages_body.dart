@@ -2,34 +2,32 @@ import 'package:equatable/equatable.dart';
 
 class GetMessageBody extends Equatable {
   const GetMessageBody({
-    this.senderName,
-    this.targetName,
+    this.senderId,
+    this.targetId,
   });
-  final String? senderName;
-  final String? targetName;
+  final int? senderId;
+  final int? targetId;
 
   Map<String, dynamic> toJson() {
     return {
-      'senderName': senderName,
-      'targetName': targetName,
+      'senderId': senderId,
+      'targetId': targetId,
     };
   }
 
   GetMessageBody copyWith({
-    String? senderName,
-    String? targetName,
+    int? senderId,
+    int? targetId,
   }) {
     return GetMessageBody(
-      senderName: senderName ?? this.senderName,
-      targetName: targetName ?? this.targetName,
+      senderId: senderId ?? this.senderId,
+      targetId: targetId ?? this.targetId,
     );
   }
 
   @override
-  String toString() {
-    return 'GetMessageBody(senderName: $senderName, targetName: $targetName)';
-  }
-
+  String toString() =>
+      'GetMessageBody(senderId: $senderId, targetId: $targetId)';
   @override
   // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
