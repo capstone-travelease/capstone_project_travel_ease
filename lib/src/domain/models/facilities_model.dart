@@ -5,8 +5,12 @@ part 'facilities_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class FacilitiesModel extends Equatable {
-  const FacilitiesModel(this.facilityImage,
-      {this.facilityId, this.facilityName, this.hotelId});
+  const FacilitiesModel(
+    this.facilityImage, {
+    this.facilityId,
+    this.facilityName,
+    this.hotelId,
+  });
   @JsonKey(name: 'facility_id')
   final int? facilityId;
   @JsonKey(name: 'facility_name')

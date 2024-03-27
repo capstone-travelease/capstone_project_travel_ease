@@ -24,6 +24,7 @@ class ListRoomController extends GetxController {
   final RxInt totalRoom = 0.obs;
   final Map<int, RxInt> roomQuantities = {};
   RxList<RoomCardModel> roomCards = <RoomCardModel>[].obs;
+  // final SearchHotelController searchHotelController = Get.find();
   @override
   void onInit() {
     argListRoom = Get.arguments as ArgListRoom;

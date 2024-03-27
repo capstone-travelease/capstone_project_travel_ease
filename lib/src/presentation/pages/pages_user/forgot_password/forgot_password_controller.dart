@@ -35,10 +35,9 @@ class ForgotPassWordController extends GetxController {
     } catch (error) {
       String errorMessage = "Có lỗi xảy ra, thử lại nhé!";
       if (error is DioException) {
-        if (error.response?.statusCode == 409 &&
+        if (error.response?.statusCode == 404 &&
             error.response?.data['message'] != null) {
-          errorMessage =
-              error.response?.data['message'] ?? "Có lỗi xảy ra, thử lại nhé!";
+          errorMessage = "Email không tồn tại trong hệ thống!";
         }
       }
       notificationConfig.showSnackBar(

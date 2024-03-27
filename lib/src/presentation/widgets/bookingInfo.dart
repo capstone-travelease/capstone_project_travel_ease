@@ -14,7 +14,7 @@ class WidgetBookingInfo extends GetView<SearchHotelController> {
       text: TextSpan(
         children: [
           TextSpan(
-            text: controller.dateRange.value?.start.formatDateToString(),
+            text: controller.search.value?.fromDay.formatDateToString(),
             style: Get.textTheme.bodySmall
                 ?.copyWith(color: Colors.black, fontSize: 13),
           ),
@@ -24,13 +24,13 @@ class WidgetBookingInfo extends GetView<SearchHotelController> {
                 color: Colors.black, fontSize: 11, fontWeight: FontWeight.bold),
           ),
           TextSpan(
-            text: controller.dateRange.value?.end.formatDateToString(),
+            text: controller.search.value?.todDay.formatDateToString(),
             style: Get.textTheme.bodySmall
                 ?.copyWith(color: Colors.black, fontSize: 13),
           ),
           TextSpan(
             text:
-                ', ${(controller.dateRange.value?.end.difference(controller.dateRange.value!.start))?.inDays} Night(s)',
+                ', ${((controller.search.value?.todDay!.day)! - (controller.search.value?.fromDay!.day)!).toInt()} Night(s)',
             style: Get.textTheme.bodySmall
                 ?.copyWith(color: Colors.black, fontSize: 13),
           ),

@@ -1,19 +1,20 @@
 import 'package:equatable/equatable.dart';
 
 class PostSearchHotelBody extends Equatable {
-  const PostSearchHotelBody(
-      {required this.location,
-      required this.fromDate,
-      required this.toDate,
-      required this.adultNumber,
-      required this.roomNumber,
-      this.hotelName,
-      this.priceFrom,
-      this.toPrice,
-      this.ratting,
-      this.facilities,
-      this.priceFromHighToLow,
-      this.priceFromLowToHigh});
+  const PostSearchHotelBody({
+    required this.location,
+    required this.fromDate,
+    required this.toDate,
+    required this.adultNumber,
+    required this.roomNumber,
+    this.hotelName,
+    this.priceFrom,
+    this.toPrice,
+    this.ratting,
+    this.facilities,
+    this.priceFromHighToLow,
+    this.priceFromLowToHigh,
+  });
   final String location;
   final DateTime fromDate;
   final DateTime toDate;

@@ -14,6 +14,7 @@ class MyBookingController extends GetxController
   final CheckLoginController checkLoginController = Get.find();
   Rxn<MyBookingTab> selected = Rxn();
   List<MyBookingTab> tabs = [
+    MyBookingTab.unpaid(),
     MyBookingTab.onGoing(),
     MyBookingTab.completed(),
     MyBookingTab.cancelled(),
@@ -25,7 +26,7 @@ class MyBookingController extends GetxController
   final BookingService _bookingService = Get.find(
     tag: Constant.bookingServiceTAG,
   );
-  final int _pageSize = 10;
+  // final int _pageSize = 10;
   @override
   void onInit() {
     selected.call(tabs.first);
@@ -42,6 +43,9 @@ class MyBookingController extends GetxController
           statusName: selected.value?.type.title ?? '',
         ),
       );
+      if (res.isEmpty) {
+        listBooking.call(null);
+      }
       listBooking.call(res);
       // listBooking.length < _pageSize
       pagingController.appendLastPage(listBooking);

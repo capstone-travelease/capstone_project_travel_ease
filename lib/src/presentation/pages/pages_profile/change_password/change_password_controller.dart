@@ -29,8 +29,8 @@ class ChangePassWordController extends GetxController {
   void onInit() {
     userId = Get.arguments['userId'];
     oldPasswordEditController = TextEditingController();
-    newPasswordEditController = TextEditingController();
-    confirmPasswordEditController = TextEditingController();
+    newPasswordEditController = TextEditingController(text: 'Anh123456@');
+    confirmPasswordEditController = TextEditingController(text: 'Anh123456@');
     super.onInit();
   }
 
@@ -70,7 +70,8 @@ class ChangePassWordController extends GetxController {
           backgroundColor: Get.theme.colorScheme.primary,
         );
       } catch (error) {
-        String errorMessage = "Có lỗi xảy ra, thử lại nhé!";
+        String errorMessage =
+            "Mật khẩu cũ hoặc mật khẩu mới không đúng, vui lòng thử lại!";
         notificationConfig.showSnackBar(
           title: 'Thông báo',
           errorMessage,

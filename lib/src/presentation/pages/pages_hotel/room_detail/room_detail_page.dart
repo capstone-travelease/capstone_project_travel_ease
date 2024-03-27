@@ -84,22 +84,6 @@ class RoomDetailPage extends GetView<RoomDetailController> {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 60,
-                  right: 10,
-                  child: Row(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: const Icon(
-                          size: 40,
-                          Icons.bookmark_outline_outlined,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 if ((controller.room.value?.images?.length ?? -1) > 1)
                   Positioned(
                     bottom: 10,
@@ -362,9 +346,9 @@ class RoomInformation extends GetView<RoomDetailController> {
                         Expanded(
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.redAccent),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
+                                border: Border.all(color: Colors.redAccent),
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.white),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                 vertical: 12.0,
@@ -428,30 +412,30 @@ class RoomInformation extends GetView<RoomDetailController> {
             },
           ),
         ),
-        // Obx(
-        //   () {
-        //     bool isRoomSelected = controller.listRoomController.roomCards.any(
-        //         (element) => element.roomId == controller.room.value?.roomId);
-        //     return isRoomSelected
-        //         ? Row(
-        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //             children: [
-        //               Text(''),
-        //               if ((controller.listRoomController
-        //                       .getRoomQuantity(
-        //                           controller.room.value?.roomId ?? 0)
-        //                       .toInt() ==
-        //                   (controller.room.value?.roomQuantity?.toInt() ?? -1)))
-        //                 Text(
-        //                   'Đã tới giới hạn số phòng',
-        //                   style: Get.textTheme.bodySmall!
-        //                       .copyWith(color: Colors.red),
-        //                 ),
-        //             ],
-        //           )
-        //         : const SizedBox.shrink();
-        //   },
-        // ),
+        Obx(
+          () {
+            bool isRoomSelected = controller.listRoomController.roomCards.any(
+                (element) => element.roomId == controller.room.value?.roomId);
+            return isRoomSelected
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(''),
+                      if ((controller.listRoomController
+                              .getRoomQuantity(
+                                  controller.room.value?.roomId ?? 0)
+                              .toInt() ==
+                          (controller.room.value?.roomQuantity?.toInt() ?? -1)))
+                        Text(
+                          'Đã tới giới hạn số phòng',
+                          style: Get.textTheme.bodySmall!
+                              .copyWith(color: Colors.red),
+                        ),
+                    ],
+                  )
+                : const SizedBox.shrink();
+          },
+        ),
       ],
     );
   }
@@ -473,11 +457,11 @@ class DateBooking extends GetView<SearchHotelController> {
           ),
           TextSpan(
             text:
-                ' ${(controller.dateRange.value?.end.difference(controller.dateRange.value!.start))?.inDays} Đêm ( ',
+                ' ${((controller.search.value?.todDay!.day)! - (controller.search.value?.fromDay!.day)!).toInt()} Đêm ( ',
             style: Get.textTheme.bodyMedium?.copyWith(),
           ),
           TextSpan(
-            text: controller.dateRange.value?.start.formatDateAndTimeToString(),
+            text: controller.search.value?.fromDay.formatDateAndTimeToString(),
             style: Get.textTheme.bodyMedium?.copyWith(),
           ),
           TextSpan(
@@ -485,7 +469,7 @@ class DateBooking extends GetView<SearchHotelController> {
             style: Get.textTheme.bodyMedium?.copyWith(),
           ),
           TextSpan(
-            text: controller.dateRange.value?.end.formatDateAndTimeToString(),
+            text: controller.search.value?.todDay.formatDateAndTimeToString(),
             style: Get.textTheme.bodyMedium?.copyWith(),
           ),
           TextSpan(
@@ -546,11 +530,57 @@ class GetFooter extends GetView<RoomDetailController> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
+              padding: const EdgeInsets.all(12),
+              child: Obx(
+                () => RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Total Price: ',
+                        style: Get.textTheme.titleLarge!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: NumberFormat.currency(
+                                locale: 'vi_VN', symbol: 'VND')
+                            .format(controller.listRoomController.totalPrice
+                                .toInt()),
+                        style: Get.textTheme.titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                          text: '/per night', style: Get.textTheme.bodySmall!),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  InkWell(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: Colors.redAccent),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 16.0,
+                          horizontal: 40,
+                        ),
+                        child: Text(
+                          'Hold Now',
+                          style: Get.textTheme.titleMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   InkWell(
                     onTap: () {
                       if (controller.listRoomController.totalPrice.toInt() ==
@@ -563,13 +593,29 @@ class GetFooter extends GetView<RoomDetailController> {
                       } else {
                         Get.toNamed(
                           BookingPage.routeName,
-                          arguments: ArgRooms(
+                          arguments: ArgBookingRooms(
                             roomCardModel:
                                 controller.listRoomController.roomCards,
                             price: (controller.listRoomController.totalPrice
                                 .toInt()),
                             numberRoom:
                                 controller.listRoomController.totalRoom.toInt(),
+                            hotelId: controller
+                                .listRoomController.argListRoom.hotelId,
+                            checkIn: controller
+                                    .listRoomController
+                                    .searchHotelController
+                                    .search
+                                    .value
+                                    ?.fromDay ??
+                                DateTime.now(),
+                            checkOut: controller
+                                    .listRoomController
+                                    .searchHotelController
+                                    .search
+                                    .value
+                                    ?.todDay ??
+                                DateTime.now(),
                           ),
                         );
                       }
@@ -592,30 +638,6 @@ class GetFooter extends GetView<RoomDetailController> {
                       ),
                     ),
                   ),
-                  Obx(
-                    () => RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Total Price \n ',
-                            style: Get.textTheme.titleLarge!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: NumberFormat.currency(
-                                    locale: 'vi_VN', symbol: 'VND')
-                                .format(controller.listRoomController.totalPrice
-                                    .toInt()),
-                            style: Get.textTheme.titleMedium!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                              text: '\n/per night',
-                              style: Get.textTheme.bodySmall!),
-                        ],
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),

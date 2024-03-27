@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/utils/snack_bar_and_loading.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_search_hotel_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,6 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class SearchHotelController extends GetxController {
-  final Rxn<String> location = Rxn();
-  final RxInt numberRoom = 0.obs;
-  final RxInt numberAdult = 0.obs;
-  final Rxn<DateTimeRange> dateRange = Rxn();
   late ArgSearchHotel argSearchHotel;
   final RxList<HotelModel> listHotel = <HotelModel>[].obs;
   late PagingController<int, HotelModel> pagingController;
@@ -19,14 +16,19 @@ class SearchHotelController extends GetxController {
   int currentPage = 1;
   final BookingService _bookingService =
       Get.find(tag: Constant.bookingServiceTAG);
-  final int _pageSize = 10;
+  // final int _pageSize = 10;
+  final Rxn<SearchModel> search = Rxn<SearchModel>();
   @override
   void onInit() {
     argSearchHotel = Get.arguments as ArgSearchHotel;
-    location.value = argSearchHotel.location;
-    dateRange.value = argSearchHotel.dateTimeRange;
-    numberRoom.value = argSearchHotel.numberRoom;
-    numberAdult.value = argSearchHotel.numberAdult;
+
+    search.call(SearchModel(
+      location: argSearchHotel.location,
+      fromDay: argSearchHotel.dateTimeRange.start,
+      todDay: argSearchHotel.dateTimeRange.end,
+      numberRoom: argSearchHotel.numberRoom,
+      numberAdult: argSearchHotel.numberAdult,
+    ));
     pagingController = PagingController(firstPageKey: 0);
     pagingController.addPageRequestListener(fetchListHotel);
     super.onInit();
@@ -38,14 +40,21 @@ class SearchHotelController extends GetxController {
     try {
       final res = await _bookingService.searchHotel(
         body: PostSearchHotelBody(
-          location: location.value ?? '',
-          fromDate: dateRange.value?.start ?? DateTime.now(),
-          toDate: dateRange.value?.end ??
+          location: search.value?.location ?? '',
+          fromDate: search.value?.fromDay ?? DateTime.now(),
+          toDate: search.value?.todDay ??
               DateTime.now().add(
-                const Duration(days: 2),
+                const Duration(days: 1),
               ),
-          adultNumber: numberAdult.value,
-          roomNumber: numberRoom.value,
+          adultNumber: search.value?.numberAdult ?? -1,
+          roomNumber: search.value?.numberRoom ?? -1,
+          facilities: search.value?.facilities,
+          hotelName: search.value?.hotelName ?? '',
+          priceFrom: search.value?.priceFrom ?? -1,
+          priceFromLowToHigh: search.value?.priceFromLowToHigh,
+          priceFromHighToLow: search.value?.priceFromHighToLow,
+          ratting: search.value?.ratting,
+          toPrice: search.value?.toPrice,
         ),
       );
       listHotel.call(res);

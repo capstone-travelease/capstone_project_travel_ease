@@ -112,6 +112,8 @@ class HelpPage extends GetView<HelpController> {
                                             // color: context.theme.hintColor,
                                             ),
                                     decoration: InputDecoration(
+                                      fillColor: Colors.white,
+                                      filled: true,
                                       alignLabelWithHint: true,
                                       hintText: 'Ticket ID',
                                       hintStyle: context
@@ -149,6 +151,8 @@ class HelpPage extends GetView<HelpController> {
                             // color: context.theme.hintColor,
                             ),
                         decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
                           alignLabelWithHint: true,
                           hintText: 'Full name',
                           hintStyle: context.theme.textTheme.bodySmall
@@ -183,6 +187,8 @@ class HelpPage extends GetView<HelpController> {
                             // color: context.theme.hintColor,
                             ),
                         decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
                           alignLabelWithHint: true,
                           hintText: 'Contact number',
                           hintStyle: context.theme.textTheme.bodySmall
@@ -216,6 +222,8 @@ class HelpPage extends GetView<HelpController> {
                             // color: context.theme.hintColor,
                             ),
                         decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
                           // errorText: controller.passwordError.value,
                           alignLabelWithHint: true,
                           hintText: 'mail@example.com',
@@ -248,6 +256,8 @@ class HelpPage extends GetView<HelpController> {
                             ),
                         maxLines: 4,
                         decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
                           alignLabelWithHint: true,
                           hintText: 'Your message',
                           hintStyle: context.theme.textTheme.bodySmall

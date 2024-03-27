@@ -162,13 +162,6 @@ class Appbar extends GetView<ListRoomController>
                     ),
                   ],
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.bookmark_outline_outlined,
-                    color: Colors.white,
-                  ),
-                ),
               ],
             ),
           ),
@@ -420,6 +413,7 @@ class ListRooms extends GetView<ListRoomController> {
                                 )
                               : DecoratedBox(
                                   decoration: BoxDecoration(
+                                      color: Colors.white,
                                       border:
                                           Border.all(color: Colors.redAccent),
                                       borderRadius: BorderRadius.circular(16)),
@@ -579,7 +573,7 @@ class GetFooter extends GetView<ListRoomController> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(8.0),
               child: Obx(
                 () => WidgetBookingInfo(
                   roomQuantity: controller.totalRoom.toInt(),
@@ -587,18 +581,78 @@ class GetFooter extends GetView<ListRoomController> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Obx(
+                () => RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Total Price: ',
+                        style: Get.textTheme.titleMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(
+                        text: (controller.totalPrice.value) > 0
+                            ? NumberFormat.currency(
+                                    locale: 'vi_VN', symbol: 'VND')
+                                .format(controller.totalPrice.toInt())
+                            : "",
+                        style: Get.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: '/per night',
+                        style: Get.textTheme.bodySmall!,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(color: Colors.redAccent),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16.0, horizontal: 40),
+                        child: Text(
+                          'Hold Room',
+                          style: Get.textTheme.titleMedium!.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.redAccent,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
                     onTap: () {
                       Get.toNamed(
                         BookingPage.routeName,
-                        arguments: ArgRooms(
+                        arguments: ArgBookingRooms(
                           roomCardModel: controller.roomCards,
                           price: controller.totalPrice.toInt(),
                           numberRoom: controller.totalRoom.toInt(),
+                          hotelId: controller.argListRoom.hotelId,
+                          checkIn: controller.searchHotelController.search.value
+                                  ?.fromDay ??
+                              DateTime.now(),
+                          checkOut: controller
+                                  .searchHotelController.search.value?.todDay ??
+                              DateTime.now(),
                         ),
                       );
                     },
@@ -620,33 +674,6 @@ class GetFooter extends GetView<ListRoomController> {
                       ),
                     ),
                   ),
-                  Obx(
-                    () => RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Total Price \n ',
-                            style: Get.textTheme.titleLarge!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          TextSpan(
-                            text: (controller.totalPrice.value) > 0
-                                ? NumberFormat.currency(
-                                        locale: 'vi_VN', symbol: 'VND')
-                                    .format(controller.totalPrice.toInt())
-                                : "",
-                            style: Get.textTheme.titleMedium!.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          TextSpan(
-                            text: '\n/per night',
-                            style: Get.textTheme.bodySmall!,
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),
@@ -656,115 +683,3 @@ class GetFooter extends GetView<ListRoomController> {
     );
   }
 }
-
-// class ProposeRoom extends GetView<ListRoomController> {
-//   const ProposeRoom({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(12.0),
-//       child: Card(
-//         shape: OutlineInputBorder(
-//           borderSide: BorderSide(color: Colors.grey[400]!),
-//         ),
-//         child: Padding(
-//           padding: const EdgeInsets.all(12.0),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Obx(
-//                 () => Text(
-//                   'Được Đề Xuất cho ${controller.searchHotelController.numberAdult.toInt()} người',
-//                   style: Get.textTheme.titleMedium!.copyWith(
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               ),
-//               Obx(
-//                 () => ListView.builder(
-//                   physics: const NeverScrollableScrollPhysics(),
-//                   shrinkWrap: true,
-//                   itemCount: controller.rooms.length,
-//                   itemBuilder: (context, index) {
-//                     final item = controller.rooms[index];
-//                     return Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Expanded(
-//                           child: Text(
-//                             item.name,
-//                             maxLines: 1,
-//                             overflow: TextOverflow.ellipsis,
-//                             style: Get.textTheme.titleMedium!.copyWith(
-//                               fontWeight: FontWeight.bold,
-//                             ),
-//                           ),
-//                         ),
-//                         const SizedBox(
-//                           width: 10,
-//                         ),
-//                         Text(
-//                           NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
-//                               .format(item.price),
-//                           style: Get.textTheme.titleMedium!.copyWith(
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ],
-//                     );
-//                   },
-//                 ),
-//               ),
-//               Divider(
-//                 color: Colors.grey[400]!,
-//               ),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Text(
-//                     'Tổng Cộng',
-//                     style: Get.textTheme.titleMedium!.copyWith(
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                   ),
-//                   Obx(
-//                     () => Text(
-//                       NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
-//                           .format(controller.totalPropose.toInt()),
-//                       style: Get.textTheme.titleMedium!.copyWith(
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                   )
-//                 ],
-//               ),
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-//                 child: SizedBox(
-//                   width: Get.width,
-//                   child: DecoratedBox(
-//                     decoration: BoxDecoration(
-//                       color: Colors.redAccent,
-//                       borderRadius: BorderRadius.circular(12),
-//                     ),
-//                     child: Padding(
-//                       padding: const EdgeInsets.all(12.0),
-//                       child: Center(
-//                         child: Text(
-//                           "Đặt Ngay",
-//                           style: Get.textTheme.titleMedium!
-//                               .copyWith(color: Colors.white),
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

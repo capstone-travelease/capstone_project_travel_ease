@@ -5,6 +5,7 @@ enum Environment {
 }
 
 enum MyBookingTabType {
+  unpaid('Unpaid'),
   onGoing('Ongoing'),
   completed('Completed'),
   cancelled('Cancelled');

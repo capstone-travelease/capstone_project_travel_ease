@@ -104,6 +104,8 @@ class InputChange extends GetView<ChangePassWordController> {
                   // color: context.theme.hintColor,
                   ),
               decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
                 // errorText: controller.passwordError.value,
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -152,6 +154,8 @@ class InputChange extends GetView<ChangePassWordController> {
                   // color: context.theme.hintColor,
                   ),
               decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
                 // errorText: controller.passwordError.value,
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -208,6 +212,8 @@ class InputChange extends GetView<ChangePassWordController> {
                   onPressed: () => controller.togglePasswordVisibility(3),
                 ),
                 alignLabelWithHint: true,
+                fillColor: Colors.white,
+                filled: true,
                 hintText: 'Confirm Password',
                 hintStyle: context.theme.textTheme.bodySmall
                     ?.copyWith(color: Colors.grey[500]),

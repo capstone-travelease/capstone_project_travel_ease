@@ -65,13 +65,14 @@ class HotelDetailPage extends GetView<HotelDetailController> {
                           );
                         },
                         options: CarouselOptions(
-                            viewportFraction: 1,
-                            // pageSnapping: false,
-                            enableInfiniteScroll: false,
-                            autoPlay: true,
-                            enlargeCenterPage: true,
-                            onPageChanged: (index, reason) =>
-                                controller.activeIndex.value = index),
+                          viewportFraction: 1,
+                          // pageSnapping: false,
+                          enableInfiniteScroll: false,
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          onPageChanged: (index, reason) =>
+                              controller.activeIndex.value = index,
+                        ),
                       ),
                     ),
                   ),
@@ -83,18 +84,6 @@ class HotelDetailPage extends GetView<HotelDetailController> {
                       child: const Icon(
                         size: 30,
                         Icons.arrow_back_outlined,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 70,
-                    right: 10,
-                    child: InkWell(
-                      onTap: () {},
-                      child: const Icon(
-                        size: 40,
-                        Icons.bookmark_outline_outlined,
                         color: Colors.white,
                       ),
                     ),

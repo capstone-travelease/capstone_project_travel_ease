@@ -2,8 +2,6 @@ import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -67,6 +65,8 @@ class BookingOverviewPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(22),
                             borderSide: BorderSide(color: Colors.grey[300]!),
                           ),
+                          fillColor: Colors.white,
+                          filled: true,
                           alignLabelWithHint: true,
                           hintText: 'Add your coupon code',
                           hintStyle: context.theme.textTheme.bodySmall
@@ -108,6 +108,8 @@ class BookingOverviewPage extends StatelessWidget {
                               // color: context.theme.hintColor,
                               ),
                           decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            filled: true,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(22),
                               borderSide: BorderSide(color: Colors.grey[300]!),
@@ -185,7 +187,7 @@ class BookingOverviewPage extends StatelessWidget {
   }
 }
 
-class HotelSelected extends GetView<HotelDetailController> {
+class HotelSelected extends GetView<BookingController> {
   const HotelSelected({Key? key}) : super(key: key);
 
   @override
@@ -277,7 +279,7 @@ class HotelSelected extends GetView<HotelDetailController> {
   }
 }
 
-class SearchViewBooking extends GetView<SearchHotelController> {
+class SearchViewBooking extends GetView<BookingController> {
   const SearchViewBooking({Key? key, required this.roomQuantity})
       : super(key: key);
   final int roomQuantity;
@@ -301,7 +303,7 @@ class SearchViewBooking extends GetView<SearchHotelController> {
                   style: Get.textTheme.titleMedium!.copyWith(),
                 ),
                 Text(
-                  controller.dateRange.value!.start.formatDateToString(),
+                  controller.argBookingRooms.checkIn.formatDateToString(),
                   style: Get.textTheme.bodySmall?.copyWith(),
                 ),
               ],
@@ -321,7 +323,7 @@ class SearchViewBooking extends GetView<SearchHotelController> {
                   style: Get.textTheme.titleMedium!.copyWith(),
                 ),
                 Text(
-                  controller.dateRange.value!.end.formatDateToString(),
+                  controller.argBookingRooms.checkOut.formatDateToString(),
                   style: Get.textTheme.bodySmall?.copyWith(),
                 ),
               ],
@@ -345,7 +347,7 @@ class SearchViewBooking extends GetView<SearchHotelController> {
                     children: [
                       TextSpan(
                         text:
-                            '${(controller.dateRange.value?.end.difference(controller.dateRange.value!.start))?.inDays} nights, ',
+                            '${(controller.argBookingRooms.checkOut.day) - (controller.argBookingRooms.checkIn.day)} nights, ',
                         style: Get.textTheme.bodySmall!.copyWith(),
                       ),
                       TextSpan(

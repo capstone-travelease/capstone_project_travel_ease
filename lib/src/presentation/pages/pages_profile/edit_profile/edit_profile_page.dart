@@ -147,6 +147,8 @@ class TextFormProfile extends GetView<EditProfileController> {
                 // color: context.theme.hintColor,
                 ),
             decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
               alignLabelWithHint: true,
               hintText: 'Your Name',
               hintStyle: context.theme.textTheme.bodySmall
@@ -206,6 +208,7 @@ class TextFormProfile extends GetView<EditProfileController> {
                     },
                     child: DecoratedBox(
                       decoration: BoxDecoration(
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: Colors.grey[300]!)),
                       child: Padding(
@@ -235,6 +238,7 @@ class TextFormProfile extends GetView<EditProfileController> {
                     },
                     child: DecoratedBox(
                       decoration: BoxDecoration(
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: Colors.grey[300]!)),
                       child: Padding(
@@ -276,6 +280,8 @@ class TextFormProfile extends GetView<EditProfileController> {
                 // color: context.theme.hintColor,
                 ),
             decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
               alignLabelWithHint: true,
               hintText: 'Your Phone',
               hintStyle: context.theme.textTheme.bodySmall

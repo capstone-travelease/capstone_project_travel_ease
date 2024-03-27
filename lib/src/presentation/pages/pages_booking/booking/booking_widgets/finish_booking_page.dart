@@ -343,7 +343,7 @@ class DataSearchFinish extends GetView<SearchHotelController> {
                     style: Get.textTheme.titleMedium!.copyWith(),
                   ),
                   Text(
-                    controller.dateRange.value!.start.formatDateToString(),
+                    controller.search.value!.fromDay.formatDateToString(),
                     style: Get.textTheme.bodySmall?.copyWith(),
                   ),
                 ],
@@ -356,7 +356,7 @@ class DataSearchFinish extends GetView<SearchHotelController> {
                     style: Get.textTheme.titleMedium!.copyWith(),
                   ),
                   Text(
-                    controller.dateRange.value!.end.formatDateToString(),
+                    controller.search.value!.todDay.formatDateToString(),
                     style: Get.textTheme.bodySmall?.copyWith(),
                   ),
                 ],
@@ -373,7 +373,7 @@ class DataSearchFinish extends GetView<SearchHotelController> {
                   style: Get.textTheme.titleMedium!.copyWith(),
                 ),
                 Text(
-                  'Max guests:  ${controller.numberAdult.value}',
+                  'Max guests:  ${controller.search.value?.numberAdult}',
                   style: Get.textTheme.titleMedium!.copyWith(),
                 ),
                 const Text('')

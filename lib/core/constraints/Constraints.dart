@@ -16,7 +16,8 @@ class Constant {
   static const String bookingClientTAG = 'bookingModule|bookingClient';
   static const String bookingServiceTAG = 'bookingModule|bookingService';
   static const String dioTAG = 'app|Dio';
-  static const String baseImageUrl = 'http://34.126.163.206/';
+  static const String baseImageUrl = 'http://34.143.171.128/';
+  static const String baseUrl = 'http://34.143.171.128:3634';
   static const String baseImageUserUrl =
       'https://res.cloudinary.com/df3vn23o6/image/upload';
 }

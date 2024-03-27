@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/utils/snack_bar_and_loading.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/bank_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/payment_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/room_card_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_booking_body.dart';
@@ -10,8 +11,6 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/navigator_me
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_widgets/booking_overview_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_widgets/detail_customer_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_widgets/finish_booking_page.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/dialog_successful.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,16 +40,15 @@ class BookingController extends GetxController {
   RxList<RoomCardModel> roomCards = <RoomCardModel>[].obs;
   final RxInt totalPrice = 0.obs;
   late int numberRoom;
-  late ArgRooms argRooms;
+  late ArgBookingRooms argBookingRooms;
   final RxList<BanksModel> listBanksAccount = <BanksModel>[].obs;
-  final HotelDetailController hotelDetailController = Get.find();
-  final SearchHotelController searchHotelController = Get.find();
+  final Rxn<HotelModel> hotelDetail = Rxn<HotelModel>();
   @override
   void onInit() {
-    argRooms = Get.arguments as ArgRooms;
-    roomCards.value = argRooms.roomCardModel;
-    totalPrice.value = argRooms.price;
-    numberRoom = argRooms.numberRoom;
+    argBookingRooms = Get.arguments as ArgBookingRooms;
+    roomCards.value = argBookingRooms.roomCardModel;
+    totalPrice.value = argBookingRooms.price;
+    numberRoom = argBookingRooms.numberRoom;
     pageController.addListener(
       () {
         _currentStepAndPage.value = pageController.page!.round();
@@ -64,7 +62,18 @@ class BookingController extends GetxController {
         text: checkLoginController.user.value?.phoneNumber ?? '');
     listPayment.call(payment);
     selectPaymentMethod(listPayment.first);
+    fetchRoomDetail();
     super.onInit();
+  }
+
+  Future<void> fetchRoomDetail() async {
+    try {
+      final res =
+          await _bookingService.detailHotel(hotelId: argBookingRooms.hotelId);
+      hotelDetail.call(res);
+    } catch (e) {
+      Get.log(e.toString());
+    }
   }
 
   void goToStepAndPage(int index) {
@@ -145,11 +154,9 @@ class BookingController extends GetxController {
     try {
       await _bookingService.booking(
         body: PostBookingBody(
-          hotelId: hotelDetailController.hotelId,
-          checkinDate:
-              searchHotelController.dateRange.value?.start ?? DateTime.now(),
-          checkoutDate:
-              searchHotelController.dateRange.value?.end ?? DateTime.now(),
+          hotelId: 1,
+          checkinDate: DateTime.now(),
+          checkoutDate: DateTime.now(),
           userId: checkLoginController.userid.toInt(),
           totalPrice: totalPrice.toInt(),
           productList: roomInfoList,
@@ -165,13 +172,19 @@ class BookingController extends GetxController {
   }
 }
 
-class ArgRooms {
-  ArgRooms({
+class ArgBookingRooms {
+  ArgBookingRooms({
     required this.roomCardModel,
     required this.price,
     required this.numberRoom,
+    required this.hotelId,
+    required this.checkIn,
+    required this.checkOut,
   });
   final List<RoomCardModel> roomCardModel;
   final int price;
   final int numberRoom;
+  final int hotelId;
+  final DateTime checkIn;
+  final DateTime checkOut;
 }

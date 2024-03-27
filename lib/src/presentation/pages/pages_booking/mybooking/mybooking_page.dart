@@ -12,6 +12,8 @@ class MyBookingPage extends GetView<MyBookingController> {
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.background,
       appBar: AppBar(
+        elevation: 0,
+        scrolledUnderElevation: 0,
         surfaceTintColor: Get.theme.colorScheme.background,
         backgroundColor: Get.theme.colorScheme.background,
         title: Text(
@@ -25,9 +27,10 @@ class MyBookingPage extends GetView<MyBookingController> {
         physics: const ClampingScrollPhysics(),
         headerSliverBuilder: (context, value) => [
           SliverAppBar(
-            surfaceTintColor: Get.theme.colorScheme.background,
+            // surfaceTintColor: Get.theme.colorScheme.background,
             automaticallyImplyLeading: false,
             elevation: 0,
+            scrolledUnderElevation: 0,
             backgroundColor: Get.theme.colorScheme.background,
             floating: true,
             snap: true,
@@ -108,7 +111,6 @@ class TabView extends GetView<MyBookingController> {
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: ListView.separated(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemCount: controller.tabs.length,
         itemBuilder: (BuildContext context, int index) {
@@ -151,10 +153,13 @@ class TabView extends GetView<MyBookingController> {
         },
         separatorBuilder: (BuildContext context, int index) {
           return const SizedBox(
-            width: 14,
+            width: 6,
           );
         },
       ),
     );
   }
 }
+// if (controller.selected.value?.type.title == 'Unpaid') ...[
+
+// ],

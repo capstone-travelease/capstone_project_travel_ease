@@ -110,6 +110,8 @@ class DetailCustomerPage extends StatelessWidget {
                             // color: context.theme.hintColor,
                             ),
                         decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
                           alignLabelWithHint: true,
                           hintText: 'Your Name',
                           hintStyle: context.theme.textTheme.bodySmall
@@ -143,6 +145,8 @@ class DetailCustomerPage extends StatelessWidget {
                             // color: context.theme.hintColor,
                             ),
                         decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
                           alignLabelWithHint: true,
                           hintText: 'Your Phone',
                           hintStyle: context.theme.textTheme.bodySmall
@@ -176,6 +180,8 @@ class DetailCustomerPage extends StatelessWidget {
                             // color: context.theme.hintColor,
                             ),
                         decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
                           alignLabelWithHint: true,
                           hintText: 'mail@example.com',
                           hintStyle: context.theme.textTheme.bodySmall

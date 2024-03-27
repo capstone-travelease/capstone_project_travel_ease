@@ -18,6 +18,9 @@ class ReviewController extends GetxController {
   Future<void> fetchListReview() async {
     try {
       final res = await _bookingService.reviewHotels(hotelId: hotelId);
+      if (res.isEmpty) {
+        listReview.call(null);
+      }
       listReview.call(res);
     } catch (error) {
       Get.log(

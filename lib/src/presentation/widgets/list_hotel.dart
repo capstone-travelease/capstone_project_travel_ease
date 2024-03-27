@@ -142,13 +142,6 @@ class ListHotelView extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Icon(
-                                  Icons.bookmark_outline_outlined,
-                                  size: 30,
-                                ),
-                              )
                             ],
                           ),
                         ],

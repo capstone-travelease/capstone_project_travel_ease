@@ -34,194 +34,8 @@ class RatingPage extends GetView<RatingController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              children: [
-                Card(
-                  child: Column(
-                    children: [
-                      Obx(
-                        () => ExtendedImage.network(
-                          Constant.baseImageUrl +
-                              (controller.ticket.value?.fileUrl ?? ''),
-                          fit: BoxFit.cover,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                          shape: BoxShape.rectangle,
-                          loadStateChanged: (ExtendedImageState state) {
-                            switch (state.extendedImageLoadState) {
-                              case LoadState.loading:
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              case LoadState.completed:
-                                return null;
-                              case LoadState.failed:
-                                return Image.asset(
-                                  Assets.images.noImage.path,
-                                );
-                            }
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Obx(() => Text(
-                              controller.ticket.value?.userName ?? '',
-                              style: Get.textTheme.bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.bold),
-                            )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 22.0,
-                          vertical: 8,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Check-In',
-                              style: Get.textTheme.bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'Check-Out',
-                              style: Get.textTheme.bodyMedium!
-                                  .copyWith(fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Obx(() => Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  controller.ticket.value?.checkInDate
-                                          .formatDateAndTimeToString() ??
-                                      '',
-                                  style: Get.textTheme.bodyMedium!
-                                      .copyWith(fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  controller.ticket.value?.checkOutDate
-                                          .formatDateAndTimeToString() ??
-                                      '',
-                                  style: Get.textTheme.bodyMedium!
-                                      .copyWith(fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 12),
-                        child: Obx(
-                          () => controller.ticket.value?.productList != null
-                              ? ListView.separated(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: (controller
-                                          .ticket.value?.productList?.length ??
-                                      -1),
-                                  itemBuilder: (context, index) {
-                                    final item = controller
-                                        .ticket.value?.productList?[index];
-                                    return Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'NumberRoom: ${item?.numberRoom.toString()}',
-                                          style: Get.textTheme.bodyMedium!
-                                              .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          'Max Guests: ${item?.maxGuest.toString()}',
-                                          style: Get.textTheme.bodyMedium!
-                                              .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return const Divider(
-                                      color: Colors.grey,
-                                    );
-                                  },
-                                )
-                              : const SizedBox.shrink(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Rate your experience',
-                    style: Get.textTheme.titleMedium!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Center(
-                  child: Obx(
-                    () => Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(5, (index) {
-                        return IconButton(
-                          icon: Icon(
-                            Icons.star_rate,
-                            color:
-                                index < controller.selectedRating.value.toInt()
-                                    ? Colors.red
-                                    : Colors.grey,
-                          ),
-                          onPressed: () {
-                            controller.updateRating(index + 1);
-                          },
-                        );
-                      }),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Form(
-                      key: controller.keyForm,
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return value.checkEmpty(ErrorAndIsEmtys.name);
-                          }
-                          return null;
-                        },
-                        controller: controller.contentEditController,
-                        style: context.theme.textTheme.bodyMedium?.copyWith(
-                            // color: context.theme.hintColor,
-                            ),
-                        decoration: InputDecoration(
-                          alignLabelWithHint: true,
-                          hintText: 'Comment',
-                          hintStyle:
-                              context.theme.textTheme.bodySmall?.copyWith(
-                            color: Colors.grey[500],
-                          ),
-                        ),
-                      )),
-                )
-              ],
-            ),
+            const HotelBooking(),
+            const WidgetRating(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
@@ -255,6 +69,217 @@ class RatingPage extends GetView<RatingController> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class HotelBooking extends GetView<RatingController> {
+  const HotelBooking({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Card(
+        child: Column(
+          children: [
+            Obx(
+              () => ExtendedImage.network(
+                Constant.baseImageUrl +
+                    (controller.ticket.value?.fileUrl ?? ''),
+                fit: BoxFit.cover,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(12),
+                ),
+                width: Get.width,
+                shape: BoxShape.rectangle,
+                loadStateChanged: (ExtendedImageState state) {
+                  switch (state.extendedImageLoadState) {
+                    case LoadState.loading:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case LoadState.completed:
+                      return null;
+                    case LoadState.failed:
+                      return Image.asset(
+                        Assets.images.noImage.path,
+                      );
+                  }
+                },
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Obx(
+              () => Text(
+                controller.ticket.value?.hotelName ?? '',
+                style: Get.textTheme.titleMedium!
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 22.0,
+                vertical: 8,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Check-In',
+                    style: Get.textTheme.bodyMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'Check-Out',
+                    style: Get.textTheme.bodyMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Obx(() => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        controller.ticket.value?.checkInDate
+                                .formatDateAndTimeToString() ??
+                            '',
+                        style: Get.textTheme.bodyMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        controller.ticket.value?.checkOutDate
+                                .formatDateAndTimeToString() ??
+                            '',
+                        style: Get.textTheme.bodyMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  )),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12),
+              child: Obx(
+                () => controller.ticket.value?.productList != null
+                    ? ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount:
+                            (controller.ticket.value?.productList?.length ??
+                                -1),
+                        itemBuilder: (context, index) {
+                          final item =
+                              controller.ticket.value?.productList?[index];
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'NumberRoom: ${item?.numberRoom.toString()}',
+                                style: Get.textTheme.bodyMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                'Max Guests: ${item?.maxGuest.toString()}',
+                                style: Get.textTheme.bodyMedium!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return const Divider(
+                            color: Colors.grey,
+                          );
+                        },
+                      )
+                    : const SizedBox.shrink(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class WidgetRating extends GetView<RatingController> {
+  const WidgetRating({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'Rate your experience',
+            style: Get.textTheme.titleMedium!
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Center(
+          child: Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(5, (index) {
+                return IconButton(
+                  icon: Icon(
+                    Icons.star_border_sharp,
+                    color: index < controller.selectedRating.value.toInt()
+                        ? Colors.red
+                        : Colors.black,
+                    size: 40,
+                  ),
+                  onPressed: () {
+                    controller.updateRating(index + 1);
+                  },
+                );
+              }),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Form(
+            key: controller.keyForm,
+            child: TextFormField(
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return value.checkEmpty(ErrorAndIsEmtys.name);
+                }
+                return null;
+              },
+              controller: controller.contentEditController,
+              style: context.theme.textTheme.bodyMedium?.copyWith(
+                  // color: context.theme.hintColor,
+                  ),
+              decoration: InputDecoration(
+                alignLabelWithHint: true,
+                fillColor: Colors.white,
+                filled: true,
+                hintText: 'Comment',
+                hintStyle: context.theme.textTheme.bodySmall?.copyWith(
+                  color: Colors.grey[500],
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

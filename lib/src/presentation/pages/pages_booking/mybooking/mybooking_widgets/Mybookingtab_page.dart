@@ -5,6 +5,7 @@ import 'package:capstone_project_travel_ease/src/presentation/pages/pages_bookin
 import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel_mybooking.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/loading_shimmer_hotel.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/mybooking_unpaid.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,64 +29,92 @@ class MyBookingTab extends GetView<MyBookingController> {
                 ) {
                   final itemBooking = controller.listBooking[index];
                   return Obx(
-                    () => ListHotelMyBooking(
-                      decoratedBox: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: controller.selected.value?.type.title ==
-                                  'Cancelled'
-                              ? Colors.red[50]
-                              : Colors.green[50],
-                          borderRadius: BorderRadius.circular(22),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 6.0,
-                            horizontal: 12,
-                          ),
-                          child: Obx(
-                            () => Text(
-                              controller.selected.value?.status ?? '',
-                              style: Get.textTheme.bodySmall?.copyWith(
-                                color: controller.selected.value?.type.title ==
-                                        'Cancelled'
-                                    ? Colors.red
-                                    : Colors.green,
+                    () {
+                      if (controller.selected.value?.type.title == 'Unpaid') {
+                        return UnpaidBooking(
+                          myBooking: item,
+                        );
+                      } else {
+                        return ListHotelMyBooking(
+                          decoratedBox: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: controller.selected.value?.type.title ==
+                                      'Cancelled'
+                                  ? Colors.red[50]
+                                  : Colors.green[50],
+                              borderRadius: BorderRadius.circular(22),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 6.0,
+                                horizontal: 12,
+                              ),
+                              child: Obx(
+                                () => Text(
+                                  controller.selected.value?.status ?? '',
+                                  style: Get.textTheme.bodySmall?.copyWith(
+                                    color:
+                                        controller.selected.value?.type.title ==
+                                                'Cancelled'
+                                            ? Colors.red
+                                            : Colors.green,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
+                          myBooking: item,
+                          onTap: () => Get.toNamed(
+                            TicketPage.routeName,
+                            arguments: {
+                              'bookingId': itemBooking.bookingId,
+                              'bookingType': itemBooking.bookingStatus,
+                            },
+                          ),
+                          text: controller.selected.value?.type.title ==
+                                  'Completed'
+                              ? TextButton(
+                                  onPressed: () => Get.toNamed(
+                                      RatingPage.routeName,
+                                      arguments: {
+                                        'bookingId': itemBooking.bookingId,
+                                      }),
+                                  child: Text(
+                                    'Rate now',
+                                    style: Get.textTheme.bodySmall!.copyWith(
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                )
+                              : null,
+                        );
+                      }
+                    },
+                  );
+                },
+                noItemsFoundIndicatorBuilder: (context) {
+                  return Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          width: 200,
+                          fit: BoxFit.contain,
+                          controller.selected.value?.image ?? '',
                         ),
-                      ),
-                      myBooking: item,
-                      onTap: () => Get.toNamed(
-                        TicketPage.routeName,
-                        arguments: {
-                          'bookingId': itemBooking.bookingId,
-                          'bookingType': itemBooking.bookingStatus,
-                        },
-                      ),
-                      text: controller.selected.value?.type.title == 'Ongoing'
-                          ? TextButton(
-                              onPressed: () =>
-                                  Get.toNamed(RatingPage.routeName, arguments: {
-                                'bookingId': itemBooking.bookingId,
-                              }),
-                              child: Text(
-                                'Rate now',
-                                style: Get.textTheme.bodySmall!.copyWith(
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            )
-                          : null,
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          controller.selected.value?.textNoLogin ?? '',
+                          style: Get.textTheme.titleLarge!
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   );
                 },
-                noItemsFoundIndicatorBuilder: (context) =>
-                    const CustomNoDataWidget(
-                  noiDung: 'Không có dữ liệu',
-                  isSearch: false,
-                ),
                 firstPageProgressIndicatorBuilder: (context) {
                   return const LoadingShimmerHotel();
                 },

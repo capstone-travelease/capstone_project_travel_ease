@@ -4,6 +4,7 @@ import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/filter/filter_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/srot_price.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/custom_no_data_widget.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/list_hotel.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/loading_shimmer_hotel.dart';
@@ -37,7 +38,8 @@ class SearchHotelPage extends GetView<SearchHotelController> {
                   textAlignVertical: TextAlignVertical.center,
                   style: context.theme.textTheme.titleMedium?.copyWith(),
                   decoration: InputDecoration(
-                    border: InputBorder.none,
+                    border: InputBorder.none, fillColor: Colors.white,
+                    filled: true,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                     isCollapsed: true,
                     alignLabelWithHint: true,
@@ -100,13 +102,13 @@ class Appbar extends GetView<SearchHotelController>
                       Obx(
                         () => Expanded(
                           child: Text(
-                            controller.location.value == ""
+                            controller.search.value?.location == ""
                                 ? 'Choose your location'
-                                : controller.location.value ??
+                                : controller.search.value?.location ??
                                     'Choose your location',
                             style: Get.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.bold,
-                              color: controller.location.value == ""
+                              color: controller.search.value?.location == ""
                                   ? Colors.white.withOpacity(0.4)
                                   : Colors.white,
                             ),
@@ -118,7 +120,7 @@ class Appbar extends GetView<SearchHotelController>
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: controller.dateRange.value!.start
+                                text: controller.search.value?.fromDay
                                     .formatDateToString(),
                                 style: Get.textTheme.bodySmall?.copyWith(
                                   color: Colors.white,
@@ -127,7 +129,7 @@ class Appbar extends GetView<SearchHotelController>
                               ),
                               const TextSpan(text: ' - '),
                               TextSpan(
-                                text: controller.dateRange.value!.end
+                                text: controller.search.value!.todDay
                                     .formatDateToString(),
                                 style: Get.textTheme.bodySmall?.copyWith(
                                   color: Colors.white,
@@ -143,14 +145,14 @@ class Appbar extends GetView<SearchHotelController>
                           child: Row(
                             children: [
                               Text(
-                                '${controller.numberRoom.value} room(s),',
+                                '${controller.search.value?.numberRoom} room(s),',
                                 style: Get.textTheme.bodySmall?.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                '${controller.numberAdult.value} adlut(s)',
+                                '${controller.search.value?.numberAdult} adlut(s)',
                                 style: Get.textTheme.bodySmall?.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -169,12 +171,7 @@ class Appbar extends GetView<SearchHotelController>
                       const FilterOverlay(),
                     );
                     if (data != null) {
-                      controller.dateRange.value = DateTimeRange(
-                          start: data.fromDay!, end: data.todDay!);
-                      controller.numberAdult.value = data.numberAdult ?? -1;
-                      controller.numberRoom.value = data.numberRoom ?? -1;
-                      controller.location.value = data.location ?? '';
-                      controller.pagingController.refresh();
+                      controller.search.value = data;
                     }
                   },
                   child: Text(
@@ -213,23 +210,20 @@ class FilterOverlay extends GetView<SearchHotelController> {
           alignment: Alignment.topCenter,
           child: Column(
             children: [
-              GestureDetector(
-                onTap: () {},
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(12),
-                    ),
+              DecoratedBox(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(12),
                   ),
-                  child: WidgetSearchHotelPage(
-                    title: 'Modify',
-                    onChange: (SearchModel data) {
-                      final result = data;
+                ),
+                child: WidgetSearchHotelPage(
+                  title: 'Modify',
+                  onChange: (SearchModel data) {
+                    final result = data;
 
-                      Get.back(result: result);
-                    },
-                  ),
+                    Get.back(result: result);
+                  },
                 ),
               ),
             ],
@@ -267,7 +261,7 @@ class ListHotel extends GetView<SearchHotelController> {
           );
         },
         noItemsFoundIndicatorBuilder: (context) => const CustomNoDataWidget(
-          noiDung: 'Không có dữ liệu',
+          noiDung: 'Không có Hotel nào được tìm thấy',
           isSearch: false,
         ),
         firstPageProgressIndicatorBuilder: (context) {
@@ -301,7 +295,7 @@ class ListHotel extends GetView<SearchHotelController> {
   }
 }
 
-class BottomSheetFilter extends StatelessWidget {
+class BottomSheetFilter extends GetView<SearchHotelController> {
   const BottomSheetFilter({Key? key}) : super(key: key);
 
   @override
@@ -325,21 +319,41 @@ class BottomSheetFilter extends StatelessWidget {
           children: [
             const Text(''),
             InkWell(
-              onTap: () => Get.bottomSheet(
-                SizedBox(
-                  height: 500,
-                  width: Get.width,
-                  child: const DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(12),
+              onTap: () async {
+                final data = await Get.bottomSheet<SearchModel>(
+                  SizedBox(
+                    height: 500,
+                    width: Get.width,
+                    child: DecoratedBox(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(12),
+                        ),
+                      ),
+                      child: FilterPage(
+                        facilities: controller.search.value?.facilities ?? [],
+                        maxPrice: controller.search.value!.toPrice?.toDouble(),
+                        minPrice:
+                            controller.search.value!.priceFrom?.toDouble(),
+                        star: controller.search.value!.ratting,
                       ),
                     ),
-                    child: FilterPage(),
                   ),
-                ),
-              ),
+                );
+                if (data != null) {
+                  print(data);
+
+                  /// add data to search
+                  /// refresh paging
+                  controller.search.value?.facilities = data.facilities;
+                  controller.search.value?.priceFrom = data.priceFrom;
+                  controller.search.value?.ratting = data.ratting;
+                  controller.search.value?.toPrice = data.toPrice;
+
+                  controller.pagingController.refresh();
+                }
+              },
               child: Row(
                 children: [
                   const Icon(
@@ -363,21 +377,57 @@ class BottomSheetFilter extends StatelessWidget {
               indent: 8,
               endIndent: 8,
             ),
-            Row(
-              children: [
-                const Icon(
-                  Icons.sort,
-                  color: Colors.redAccent,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Sort',
-                  style: Get.textTheme.bodyMedium!
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-              ],
+            InkWell(
+              onTap: () async {
+                final data = await Get.bottomSheet<SearchModel>(
+                  SizedBox(
+                    height: Get.height * 0.2,
+                    width: Get.width,
+                    child: DecoratedBox(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(12),
+                        ),
+                      ),
+                      child: SortPriceWidget(
+                        priceFromLowToHigh:
+                            controller.search.value?.priceFromLowToHigh == true
+                                ? 'From low to high'
+                                : 'false',
+                        priceFromHighToLow:
+                            controller.search.value?.priceFromHighToLow == true
+                                ? 'From high to low'
+                                : 'false',
+                      ),
+                    ),
+                  ),
+                );
+                if (data != null) {
+                  controller.search.value?.priceFromHighToLow =
+                      data.priceFromHighToLow;
+                  controller.search.value?.priceFromLowToHigh =
+                      data.priceFromLowToHigh;
+
+                  controller.pagingController.refresh();
+                }
+              },
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.sort,
+                    color: Colors.redAccent,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Sort',
+                    style: Get.textTheme.bodyMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
             const Text(''),
           ],

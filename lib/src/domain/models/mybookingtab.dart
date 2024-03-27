@@ -39,4 +39,12 @@ class MyBookingTab {
       'Cancelled & Refunded',
     );
   }
+  factory MyBookingTab.unpaid() {
+    return MyBookingTab(
+      MyBookingTabType.unpaid,
+      Assets.images.cancelled.path,
+      'Bạn Không có Đặt Chỗ',
+      'Unpaid',
+    );
+  }
 }

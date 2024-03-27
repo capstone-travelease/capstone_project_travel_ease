@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class WidgetSearchHotelController extends GetxController {
   final Rxn<SearchModel> search = Rxn<SearchModel>();
   Rx<DateTimeRange> dateRange = DateTimeRange(
-    end: DateTime.now().add(const Duration(days: 2)),
+    end: DateTime.now().add(const Duration(days: 1)),
     start: DateTime.now(),
   ).obs;
   final NotificationConfig tinTucConfig = Get.find();
@@ -15,10 +15,10 @@ class WidgetSearchHotelController extends GetxController {
   final RxInt numberAdult = 2.obs;
   final Rxn<LocationModel> selectedLocation = Rxn();
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
   Future<void> onUpdateSearch(SearchModel data) async {
     search.call(data);

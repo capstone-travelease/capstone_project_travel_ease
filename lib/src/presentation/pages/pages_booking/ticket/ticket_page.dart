@@ -1,9 +1,11 @@
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/room_card_model.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/chat/chat_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/ticket/ticket_controller.dart';
-import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_page.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,13 +73,45 @@ class TicketPage extends GetView<TicketController> {
                   ),
                 ),
               ),
-              if (controller.bookingType == 'Ongoing') ...[
+              if (controller.bookingType == 'Ongoing' ||
+                  controller.bookingType == 'unpaid') ...[
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12.0),
                   child: SizedBox(
                     width: Get.width,
                     child: InkWell(
-                      onTap: () => controller.onCanCelBooking(),
+                      onTap: () {
+                        if (controller.bookingType == 'Ongoing') {
+                          controller.onCanCelBooking();
+                        } else {
+                          final List<RoomCardModel>? roomInfoList =
+                              controller.ticket.value?.productList
+                                  ?.map(
+                                    (room) => RoomCardModel(
+                                      roomId: 1,
+                                      roomQuantity: RxInt(room.numberRoom ?? 0),
+                                      name: room.roomName ?? '',
+                                      price: 1000,
+                                    ),
+                                  )
+                                  .toList();
+                          Get.toNamed(
+                            BookingPage.routeName,
+                            arguments: ArgBookingRooms(
+                              roomCardModel: roomInfoList ?? [],
+                              price: controller.ticket.value!.totalPrice ?? -1,
+                              numberRoom: controller
+                                      .ticket.value!.productList?.length ??
+                                  -1,
+                              hotelId: controller.ticket.value?.hotelId ?? -1,
+                              checkIn: controller.ticket.value?.checkInDate ??
+                                  DateTime.now(),
+                              checkOut: controller.ticket.value?.checkOutDate ??
+                                  DateTime.now(),
+                            ),
+                          );
+                        }
+                      },
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                           color: Colors.redAccent,
@@ -87,7 +121,9 @@ class TicketPage extends GetView<TicketController> {
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           child: Center(
                             child: Text(
-                              'Cancel Booking',
+                              controller.bookingType == 'Ongoing'
+                                  ? 'Cancel Booking'
+                                  : 'Thanh Toán',
                               style: Get.textTheme.bodyMedium!.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -117,7 +153,12 @@ class HotelAndUserBooking extends GetView<TicketController> {
       () => Column(
         children: [
           InkWell(
-            // onTap: () => Get.toNamed(HotelDetailPage.routeName),
+            // onTap: () => Get.toNamed(
+            //   HotelDetailPage.routeName,
+            //   arguments: {
+            //     'hotelId': controller.ticket.value?.hotelId ?? -1,
+            //   },
+            // ),
             child: Column(
               children: [
                 SizedBox(
