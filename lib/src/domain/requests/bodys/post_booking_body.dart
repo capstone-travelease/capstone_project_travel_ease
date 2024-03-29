@@ -83,30 +83,35 @@ class ProductList extends Equatable {
   const ProductList({
     required this.roomId,
     required this.roomQuantity,
+    required this.roomPrice,
   });
   final int roomId;
   final int roomQuantity;
+  final int roomPrice;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'roomId': roomId,
       'roomQuantity': roomQuantity,
+      'roomPrice': roomPrice,
     };
   }
 
   ProductList copyWith({
     int? roomId,
     int? roomQuantity,
+    int? roomPrice,
   }) {
     return ProductList(
       roomId: roomId ?? this.roomId,
       roomQuantity: roomQuantity ?? this.roomQuantity,
+      roomPrice: roomPrice ?? this.roomPrice,
     );
   }
 
   @override
   String toString() {
-    return 'ProductList(roomId: $roomId, roomQuantity: $roomQuantity,)';
+    return 'ProductList(roomId: $roomId, roomQuantity: $roomQuantity,roomPrice: $roomPrice)';
   }
 
   @override
@@ -114,5 +119,6 @@ class ProductList extends Equatable {
   List<Object?> get props => [
         roomId,
         roomQuantity,
+        roomPrice,
       ];
 }

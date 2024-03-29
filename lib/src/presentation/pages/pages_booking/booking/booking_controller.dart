@@ -147,6 +147,7 @@ class BookingController extends GetxController {
           (room) => ProductList(
             roomId: room.roomId,
             roomQuantity: room.roomQuantity.toInt(),
+            roomPrice: room.price.toInt(),
           ),
         )
         .toList();
@@ -154,9 +155,9 @@ class BookingController extends GetxController {
     try {
       await _bookingService.booking(
         body: PostBookingBody(
-          hotelId: 1,
-          checkinDate: DateTime.now(),
-          checkoutDate: DateTime.now(),
+          hotelId: argBookingRooms.hotelId,
+          checkinDate: argBookingRooms.checkIn,
+          checkoutDate: argBookingRooms.checkOut,
           userId: checkLoginController.userid.toInt(),
           totalPrice: totalPrice.toInt(),
           productList: roomInfoList,

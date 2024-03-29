@@ -55,14 +55,19 @@ class ReviewPage extends GetView<ReviewController> {
                   ),
                 ),
               ),
-              Obx(
-                () => ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: controller.listReview.length,
-                  itemBuilder: (context, index) {
-                    final item = controller.listReview[index];
-                    if (controller.listReview.isNotEmpty) {
+              Obx(() {
+                if (controller.listReview.isEmpty) {
+                  return const CustomNoDataWidget(
+                    noiDung: 'Không có đánh giá ',
+                    isSearch: false,
+                  );
+                } else {
+                  return ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: controller.listReview.length,
+                    itemBuilder: (context, index) {
+                      final item = controller.listReview[index];
                       return Card(
                         child: Column(
                           children: [
@@ -191,14 +196,10 @@ class ReviewPage extends GetView<ReviewController> {
                           ],
                         ),
                       );
-                    }
-                    return const CustomNoDataWidget(
-                      noiDung: 'Không có dữ liệu',
-                      isSearch: false,
-                    );
-                  },
-                ),
-              )
+                    },
+                  );
+                }
+              })
             ],
           ),
         ),

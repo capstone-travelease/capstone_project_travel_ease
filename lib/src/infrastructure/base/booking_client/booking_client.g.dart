@@ -271,7 +271,7 @@ class _BookingClient implements BookingClient {
     )
         .compose(
           _dio.options,
-          '/booking/order',
+          '/booking/pushlish',
           queryParameters: queryParameters,
           data: _data,
         )

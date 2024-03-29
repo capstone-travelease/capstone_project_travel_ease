@@ -20,8 +20,9 @@ class ReviewController extends GetxController {
       final res = await _bookingService.reviewHotels(hotelId: hotelId);
       if (res.isEmpty) {
         listReview.call(null);
+      } else {
+        listReview.call(res);
       }
-      listReview.call(res);
     } catch (error) {
       Get.log(
         error.toString(),

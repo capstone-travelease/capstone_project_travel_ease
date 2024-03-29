@@ -1,4 +1,3 @@
-import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'model_search.g.dart';
 

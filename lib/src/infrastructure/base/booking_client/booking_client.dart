@@ -38,7 +38,7 @@ abstract class BookingClient {
   @GET('/api/facility/list-all')
   Future listFacilities();
 
-  @POST('/booking/order')
+  @POST('/booking/pushlish')
   Future booking(@Body() PostBookingBody body);
 
   @GET('/booking/get-orders')

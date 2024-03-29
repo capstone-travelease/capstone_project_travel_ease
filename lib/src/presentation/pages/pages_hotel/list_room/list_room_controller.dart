@@ -15,7 +15,7 @@ class ListRoomController extends GetxController {
   int currentPage = 1;
   final BookingService _bookingService =
       Get.find(tag: Constant.bookingServiceTAG);
-  final int _pageSize = 10;
+  // final int _pageSize = 10;
   late ArgListRoom argListRoom;
   SearchHotelController searchHotelController = Get.put(
     SearchHotelController(),

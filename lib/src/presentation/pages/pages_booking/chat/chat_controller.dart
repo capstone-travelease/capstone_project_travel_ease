@@ -60,7 +60,7 @@ class ChatController extends GetxController {
   Future<void> sendMessage() async {
     try {
       if (messageEditingController.text != '') {
-        final res = await _userService.sendMessage(
+        await _userService.sendMessage(
           body: PostSendMessageBody(
             senderId: checkLoginController.userid.value,
             targetId: 17,
