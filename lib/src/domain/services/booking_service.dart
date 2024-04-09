@@ -42,4 +42,6 @@ abstract interface class BookingService {
   Future<String> postRating({required PostRatingBody body});
 
   Future<List<ReviewModel>> reviewHotels({required int hotelId});
+
+  Future<List<HotelModel>> proposeHotel();
 }

@@ -260,4 +260,21 @@ class BookingRepository implements BookingService {
       rethrow;
     }
   }
+
+  @override
+  Future<List<HotelModel>> proposeHotel() async {
+    try {
+      final res = await _bookingClient.propose();
+      if (res != null) {
+        final data = (res['data'] as List)
+            .map((e) => HotelModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+        return data;
+      } else {
+        throw Exception('Request Error: $res');
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

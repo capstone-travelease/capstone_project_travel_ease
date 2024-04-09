@@ -57,9 +57,11 @@ class BookingController extends GetxController {
     emailEditController = TextEditingController(
         text: checkLoginController.user.value?.email ?? '');
     nameEditController = TextEditingController(
-        text: checkLoginController.user.value?.fullName ?? '');
+        // text: checkLoginController.user.value?.fullName ?? '',
+        );
     phoneEditController = TextEditingController(
-        text: checkLoginController.user.value?.phoneNumber ?? '');
+        // text: checkLoginController.user.value?.phoneNumber ?? ''
+        );
     listPayment.call(payment);
     selectPaymentMethod(listPayment.first);
     fetchRoomDetail();
@@ -164,6 +166,11 @@ class BookingController extends GetxController {
           accountId: selectedPayment.value?.accountId,
           taxes: '10',
         ),
+      );
+      SnackBarAndLoading.showSnackBar(
+        'Bạn đã đặt Phòng Thành Công',
+        textColor: Colors.black,
+        backgroundColor: Colors.white,
       );
     } catch (error) {
       Get.log(

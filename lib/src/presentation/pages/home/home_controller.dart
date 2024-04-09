@@ -1,3 +1,6 @@
+import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/notification/notification_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_user/login/login_page.dart';
@@ -5,25 +8,27 @@ import 'package:capstone_project_travel_ease/src/presentation/widgets/dia_log/di
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  final RxList<String> listImage = <String>[].obs;
   final RxBool isLoading = false.obs;
   int userId = 0;
   final CheckLoginController checkLoginController = Get.find();
-  List<String> dsImage = [
-    'https://www.hotelgrandsaigon.com/wp-content/uploads/sites/227/2017/12/GRAND_SEDK_01.jpg',
-    'https://images.squarespace-cdn.com/content/v1/5aadf482aa49a1d810879b88/1626698419120-J7CH9BPMB2YI728SLFPN/1.jpg',
-    'https://asiky.com/files/images/Article/tin-tuc/chup-anh-khach-san.jpg',
-    'https://cf.bstatic.com/xdata/images/hotel/max1024x768/382586584.jpg?k=c615c33d39628661129df3581cdf4eacc434cccdd69ed4fc62be839d28f526af&o=&hp=1'
-  ];
-
+  final RxList<HotelModel> proposeHotel = <HotelModel>[].obs;
+  final BookingService _bookingService =
+      Get.find(tag: Constant.bookingServiceTAG);
   @override
   void onInit() {
-    loadDataImage();
+    fetchProposeHotel();
     super.onInit();
   }
 
-  Future<void> loadDataImage() async {
-    listImage.call(dsImage);
+  Future<void> fetchProposeHotel() async {
+    try {
+      final res = await _bookingService.proposeHotel();
+      proposeHotel.call(res);
+    } catch (error) {
+      Get.log(
+        error.toString(),
+      );
+    }
   }
 
   Future<void> geToNotification() async {

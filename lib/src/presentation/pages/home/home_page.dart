@@ -3,6 +3,7 @@ import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/search_hotel_widget/widget_search_hotel.dart';
@@ -70,129 +71,139 @@ class HomePage extends GetView<HomeController> {
                   () => ListView.separated(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: controller.listImage.length,
+                    itemCount: controller.proposeHotel.length,
                     separatorBuilder: (_, __) => const SizedBox(width: 12),
                     itemBuilder: (context, index) {
+                      final item = controller.proposeHotel[index];
                       return SizedBox(
                         width: Get.width * 0.7,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Positioned.fill(
-                              child: ExtendedImage.network(
-                                controller.listImage[index],
-                                fit: BoxFit.cover,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(12),
+                        child: InkWell(
+                          onTap: () => Get.toNamed(
+                            HotelDetailPage.routeName,
+                            arguments: {
+                              'hotelId': item.hotelId,
+                            },
+                          ),
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: [
+                              Positioned.fill(
+                                child: ExtendedImage.network(
+                                  Constant.baseImageUrl +
+                                      (item.images!.first.imageUrl ?? ''),
+                                  fit: BoxFit.cover,
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                  shape: BoxShape.rectangle,
+                                  loadStateChanged: (ExtendedImageState state) {
+                                    switch (state.extendedImageLoadState) {
+                                      case LoadState.loading:
+                                        return const Center(
+                                          child: CircularProgressIndicator(),
+                                        );
+                                      case LoadState.completed:
+                                        return null;
+                                      case LoadState.failed:
+                                        return Image.asset(
+                                          Assets.images.noImage.path,
+                                        );
+                                    }
+                                  },
                                 ),
-                                shape: BoxShape.rectangle,
-                                loadStateChanged: (ExtendedImageState state) {
-                                  switch (state.extendedImageLoadState) {
-                                    case LoadState.loading:
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    case LoadState.completed:
-                                      return null;
-                                    case LoadState.failed:
-                                      return Image.asset(
-                                        Assets.images.noImage.path,
-                                      );
-                                  }
-                                },
                               ),
-                            ),
-                            Positioned.fill(
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.3),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              right: 8,
-                              top: 10,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.redAccent),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 4, horizontal: 4),
-                                  child: Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.star,
-                                        color: Colors.white,
-                                        size: 14,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        '5.0',
-                                        style: Get.textTheme.bodySmall!
-                                            .copyWith(color: Colors.white),
-                                      ),
-                                    ],
+                              Positioned.fill(
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              bottom: 12,
-                              left: 12,
-                              right: 0,
-                              child: Column(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Intercontinental Hotel',
-                                        style: Get.textTheme.titleMedium!
-                                            .copyWith(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white),
-                                      ),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.location_on_outlined,
-                                            size: 16,
-                                            color: Colors.white,
-                                          ),
-                                          Text(
-                                            'Hồ Chí Minh',
-                                            style: Get.textTheme.titleSmall!
-                                                .copyWith(
+                              Positioned(
+                                right: 8,
+                                top: 10,
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.redAccent),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 4),
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.star,
+                                          color: Colors.white,
+                                          size: 14,
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          item.starRating.toString(),
+                                          style: Get.textTheme.bodySmall!
+                                              .copyWith(color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 12,
+                                left: 12,
+                                right: 0,
+                                child: Column(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          item.hotelName ?? '',
+                                          style: Get.textTheme.titleMedium!
+                                              .copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                        ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.location_on_outlined,
+                                              size: 16,
                                               color: Colors.white,
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text(
-                                        '${NumberFormat.currency(locale: 'vi_VN', symbol: 'VND').format(400600000)} /per day',
-                                        style:
-                                            Get.textTheme.titleSmall!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
+                                            Text(
+                                              item.hotelCity ?? '',
+                                              style: Get.textTheme.titleSmall!
+                                                  .copyWith(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Text(
+                                          '${NumberFormat.currency(locale: 'vi_VN', symbol: 'VND').format(item.price)} /per night',
+                                          style: Get.textTheme.titleSmall!
+                                              .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },

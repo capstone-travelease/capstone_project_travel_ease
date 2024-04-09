@@ -55,4 +55,7 @@ abstract class BookingClient {
 
   @POST('/api/rating')
   Future postRating(@Body() PostRatingBody body);
+
+  @GET('/api/hotel/suggestHotel')
+  Future propose();
 }
