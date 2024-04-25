@@ -13,7 +13,7 @@ class ForgotPassWordController extends GetxController {
   final NotificationConfig notificationConfig = Get.find();
   @override
   void onInit() {
-    emailEditController = TextEditingController(text: 'anh@gmail.com');
+    emailEditController = TextEditingController();
     super.onInit();
   }
 

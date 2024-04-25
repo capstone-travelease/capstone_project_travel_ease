@@ -561,6 +561,19 @@ class GetFooter extends GetView<RoomDetailController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
+                    onTap: () {
+                      Get.showSnackbar(GetSnackBar(
+                        title: 'Thông báo',
+                        message: 'Chức năng đang phát triển',
+                        snackPosition: SnackPosition.BOTTOM,
+                        duration: const Duration(seconds: 2),
+                        backgroundColor: Colors.redAccent,
+                        margin: const EdgeInsets.all(8),
+                        borderRadius: 18,
+                        overlayColor: Colors.black.withOpacity(0.5),
+                        isDismissible: true,
+                      ));
+                    },
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(18),
