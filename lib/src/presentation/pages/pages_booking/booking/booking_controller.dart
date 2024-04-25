@@ -57,11 +57,10 @@ class BookingController extends GetxController {
     emailEditController = TextEditingController(
         text: checkLoginController.user.value?.email ?? '');
     nameEditController = TextEditingController(
-        // text: checkLoginController.user.value?.fullName ?? '',
-        );
+      text: checkLoginController.user.value?.fullName ?? '',
+    );
     phoneEditController = TextEditingController(
-        // text: checkLoginController.user.value?.phoneNumber ?? ''
-        );
+        text: '0${checkLoginController.user.value?.phoneNumber}' ?? '');
     listPayment.call(payment);
     selectPaymentMethod(listPayment.first);
     fetchRoomDetail();

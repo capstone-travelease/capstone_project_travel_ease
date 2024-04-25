@@ -113,10 +113,13 @@ class HotelBooking extends GetView<RatingController> {
               height: 20,
             ),
             Obx(
-              () => Text(
-                controller.ticket.value?.hotelName ?? '',
-                style: Get.textTheme.titleMedium!
-                    .copyWith(fontWeight: FontWeight.bold),
+              () => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Text(
+                  controller.ticket.value?.hotelName ?? '',
+                  style: Get.textTheme.titleMedium!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             const SizedBox(

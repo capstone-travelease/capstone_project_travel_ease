@@ -326,7 +326,7 @@ class SignPage extends GetView<SignController> {
                                     InkWell(
                                       onTap: () => Get.back(),
                                       child: Text(
-                                        "Sign Up ",
+                                        "Sign In ",
                                         style: Get.theme.textTheme.bodyMedium
                                             ?.copyWith(
                                                 fontWeight: FontWeight.bold,

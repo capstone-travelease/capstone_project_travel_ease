@@ -110,6 +110,7 @@ class HotelDetailPage extends GetView<HotelDetailController> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const AddressView(),
                     Obx(
@@ -255,7 +256,8 @@ class Facilities extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ExtendedImage.network(
-                          Constant.baseImageUrl + (item.facilityImage ?? ''),
+                          Constant.baseImageFacilityUrl +
+                              (item.facilityImage ?? ''),
                           width: 24,
                           height: 24,
                           color: Colors.redAccent,

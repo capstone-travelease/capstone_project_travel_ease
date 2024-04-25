@@ -344,7 +344,7 @@ class Facilities extends GetView<FilterController> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ExtendedImage.network(
-                                Constant.baseImageUrl +
+                                Constant.baseImageFacilityUrl +
                                     (item.facilityImage ?? ''),
                                 width: 24,
                                 height: 24,

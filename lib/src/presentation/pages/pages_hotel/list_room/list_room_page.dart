@@ -12,6 +12,7 @@ import 'package:capstone_project_travel_ease/src/presentation/widgets/loading_sh
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
@@ -116,51 +117,51 @@ class Appbar extends GetView<ListRoomController>
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () => Get.back(),
-                      icon: const Icon(
-                        Icons.arrow_back_outlined,
-                        color: Colors.white,
+                IconButton(
+                  onPressed: () => Get.back(),
+                  icon: const Icon(
+                    Icons.arrow_back_outlined,
+                    color: Colors.white,
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        controller.argListRoom.hotelName,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        softWrap: true,
+                        style: Get.textTheme.titleMedium!.copyWith(
+                            fontWeight: FontWeight.bold, color: Colors.white),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          controller.argListRoom.hotelName,
-                          style: Get.textTheme.titleMedium!.copyWith(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                        ),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              const WidgetSpan(
-                                alignment: PlaceholderAlignment.middle,
-                                child: Icon(
-                                  Icons.location_on_outlined,
-                                  size: 18,
-                                  color: Colors.white,
-                                ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            const WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Icon(
+                                Icons.location_on_outlined,
+                                size: 18,
+                                color: Colors.white,
                               ),
-                              const TextSpan(
-                                text: ' ',
+                            ),
+                            const TextSpan(
+                              text: ' ',
+                            ),
+                            TextSpan(
+                              text: controller.argListRoom.location,
+                              style: Get.textTheme.bodySmall!.copyWith(
+                                color: Colors.white,
                               ),
-                              TextSpan(
-                                text: controller.argListRoom.location,
-                                style: Get.textTheme.bodySmall!.copyWith(
-                                  color: Colors.white,
-                                ),
-                              )
-                            ],
-                          ),
+                            )
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -619,6 +620,19 @@ class GetFooter extends GetView<ListRoomController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
+                    onTap: () {
+                      Get.showSnackbar(GetSnackBar(
+                        title: 'Thông báo',
+                        message: 'Chức năng đang phát triển',
+                        snackPosition: SnackPosition.BOTTOM,
+                        duration: const Duration(seconds: 2),
+                        backgroundColor: Colors.redAccent,
+                        margin: const EdgeInsets.all(8),
+                        borderRadius: 18,
+                        overlayColor: Colors.black.withOpacity(0.5),
+                        isDismissible: true,
+                      ));
+                    },
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         color: Colors.white,
