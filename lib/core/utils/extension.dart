@@ -15,13 +15,11 @@ extension FormatDateTime on DateTime? {
   }
 
   String formatDateToString() {
-    return this == null
-        ? ''
-        : DateFormat('EE, dd/MM/yyyy', 'vi_VN').format(this!);
+    return this == null ? '' : DateFormat('EE, dd/MM/yyyy').format(this!);
   }
 
   String formatDateMonthToString() {
-    return this == null ? '' : DateFormat('EE, d MMM y', 'vi_VN').format(this!);
+    return this == null ? '' : DateFormat('EE, d MMM y').format(this!);
   }
 }
 

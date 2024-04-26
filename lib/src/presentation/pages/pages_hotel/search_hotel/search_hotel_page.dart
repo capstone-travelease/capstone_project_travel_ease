@@ -381,7 +381,7 @@ class BottomSheetFilter extends GetView<SearchHotelController> {
               onTap: () async {
                 final data = await Get.bottomSheet<SearchModel>(
                   SizedBox(
-                    height: Get.height * 0.2,
+                    height: Get.height * 0.22,
                     width: Get.width,
                     child: DecoratedBox(
                       decoration: const BoxDecoration(

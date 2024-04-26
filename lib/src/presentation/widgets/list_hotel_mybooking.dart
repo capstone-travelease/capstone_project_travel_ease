@@ -69,6 +69,8 @@ class ListHotelMyBooking extends StatelessWidget {
                               children: [
                                 Text(
                                   myBooking.hotelName ?? '',
+                                  overflow: TextOverflow.ellipsis,
+                                  softWrap: true,
                                   style: Get.textTheme.bodyMedium!
                                       .copyWith(fontWeight: FontWeight.bold),
                                 ),

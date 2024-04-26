@@ -20,197 +20,200 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.background,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppBar(
-                onTap: () => controller.geToNotification(),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.grey[300]!,
-                      ),
-                      color: Colors.white),
-                  child: WidgetSearchHotelPage(
-                    title: 'Search Your Hotel',
-                    onChange: (SearchModel data) async {
-                      await Get.toNamed(
-                        SearchHotelPage.routeName,
-                        preventDuplicates: false,
-                        arguments: ArgSearchHotel(
-                          dateTimeRange: DateTimeRange(
-                            end: data.todDay!,
-                            start: data.fromDay!,
-                          ),
-                          location: data.location ?? '',
-                          numberRoom: data.numberRoom ?? 0,
-                          numberAdult: data.numberAdult ?? 0,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppBar(
+                  onTap: () => controller.geToNotification(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: Colors.grey[300]!,
                         ),
-                      );
-                    },
+                        color: Colors.white),
+                    child: WidgetSearchHotelPage(
+                      title: 'Search Your Hotel',
+                      onChange: (SearchModel data) async {
+                        await Get.toNamed(
+                          SearchHotelPage.routeName,
+                          preventDuplicates: false,
+                          arguments: ArgSearchHotel(
+                            dateTimeRange: DateTimeRange(
+                              end: data.todDay!,
+                              start: data.fromDay!,
+                            ),
+                            location: data.location ?? '',
+                            numberRoom: data.numberRoom ?? 0,
+                            numberAdult: data.numberAdult ?? 0,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Popular Hotel',
-                  style: Get.textTheme.titleMedium!.copyWith(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Popular Hotel',
+                    style: Get.textTheme.titleMedium!.copyWith(),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: Get.height * 0.35,
-                child: Obx(
-                  () => ListView.separated(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: controller.proposeHotel.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 12),
-                    itemBuilder: (context, index) {
-                      final item = controller.proposeHotel[index];
-                      return SizedBox(
-                        width: Get.width * 0.7,
-                        child: InkWell(
-                          onTap: () => Get.toNamed(
-                            HotelDetailPage.routeName,
-                            arguments: {
-                              'hotelId': item.hotelId,
-                            },
-                          ),
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: [
-                              Positioned.fill(
-                                child: ExtendedImage.network(
-                                  Constant.baseImageUrl +
-                                      (item.images!.first.imageUrl ?? ''),
-                                  fit: BoxFit.cover,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(12),
-                                  ),
-                                  shape: BoxShape.rectangle,
-                                  loadStateChanged: (ExtendedImageState state) {
-                                    switch (state.extendedImageLoadState) {
-                                      case LoadState.loading:
-                                        return const Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                      case LoadState.completed:
-                                        return null;
-                                      case LoadState.failed:
-                                        return Image.asset(
-                                          Assets.images.noImage.path,
-                                        );
-                                    }
-                                  },
-                                ),
-                              ),
-                              Positioned.fill(
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.3),
-                                    borderRadius: BorderRadius.circular(12),
+                SizedBox(
+                  height: Get.height * 0.35,
+                  child: Obx(
+                    () => ListView.separated(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.proposeHotel.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      itemBuilder: (context, index) {
+                        final item = controller.proposeHotel[index];
+                        return SizedBox(
+                          width: Get.width * 0.7,
+                          child: InkWell(
+                            onTap: () => Get.toNamed(
+                              HotelDetailPage.routeName,
+                              arguments: {
+                                'hotelId': item.hotelId,
+                              },
+                            ),
+                            child: Stack(
+                              fit: StackFit.expand,
+                              children: [
+                                Positioned.fill(
+                                  child: ExtendedImage.network(
+                                    Constant.baseImageUrl +
+                                        (item.images!.first.imageUrl ?? ''),
+                                    fit: BoxFit.cover,
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(12),
+                                    ),
+                                    shape: BoxShape.rectangle,
+                                    loadStateChanged:
+                                        (ExtendedImageState state) {
+                                      switch (state.extendedImageLoadState) {
+                                        case LoadState.loading:
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        case LoadState.completed:
+                                          return null;
+                                        case LoadState.failed:
+                                          return Image.asset(
+                                            Assets.images.noImage.path,
+                                          );
+                                      }
+                                    },
                                   ),
                                 ),
-                              ),
-                              Positioned(
-                                right: 8,
-                                top: 10,
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: Colors.redAccent),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 4, horizontal: 4),
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.star,
-                                          color: Colors.white,
-                                          size: 14,
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          item.starRating.toString(),
-                                          style: Get.textTheme.bodySmall!
-                                              .copyWith(color: Colors.white),
-                                        ),
-                                      ],
+                                Positioned.fill(
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.3),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Positioned(
-                                bottom: 12,
-                                left: 12,
-                                right: 0,
-                                child: Column(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          item.hotelName ?? '',
-                                          style: Get.textTheme.titleMedium!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
-                                        ),
-                                        const SizedBox(
-                                          height: 4,
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.location_on_outlined,
-                                              size: 16,
-                                              color: Colors.white,
-                                            ),
-                                            Text(
-                                              item.hotelCity ?? '',
-                                              style: Get.textTheme.titleSmall!
-                                                  .copyWith(
+                                Positioned(
+                                  right: 8,
+                                  top: 10,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.redAccent),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 4),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.star,
+                                            color: Colors.white,
+                                            size: 14,
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            item.starRating.toString(),
+                                            style: Get.textTheme.bodySmall!
+                                                .copyWith(color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 12,
+                                  left: 12,
+                                  right: 0,
+                                  child: Column(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            item.hotelName ?? '',
+                                            style: Get.textTheme.titleMedium!
+                                                .copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white),
+                                          ),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.location_on_outlined,
+                                                size: 16,
                                                 color: Colors.white,
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 4,
-                                        ),
-                                        Text(
-                                          '${NumberFormat.currency(locale: 'vi_VN', symbol: 'VND').format(item.price)} /per night',
-                                          style: Get.textTheme.titleSmall!
-                                              .copyWith(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                                              Text(
+                                                item.hotelCity ?? '',
+                                                style: Get.textTheme.titleSmall!
+                                                    .copyWith(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                            '${NumberFormat.currency(locale: 'vi_VN', symbol: 'VND').format(item.price)} /per night',
+                                            style: Get.textTheme.titleSmall!
+                                                .copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

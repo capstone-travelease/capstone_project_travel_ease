@@ -19,39 +19,44 @@ class SortPriceWidget extends StatelessWidget {
         initialSortLowValue: priceFromLowToHigh,
       ),
       builder: (controller) {
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () => Get.back(),
-                    child: const Icon(
-                      Icons.close,
-                      size: 30,
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 12.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      onTap: () => Get.back(),
+                      child: const Icon(
+                        Icons.close,
+                        size: 30,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Sort',
-                    style: Get.textTheme.titleLarge!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  TextButton(
-                    onPressed: () => controller.resetSortPrice(),
-                    child: Text(
-                      'Reset all',
-                      style: Get.textTheme.bodySmall!
-                          .copyWith(color: Colors.redAccent),
+                    Text(
+                      'Sort',
+                      style: Get.textTheme.titleLarge!
+                          .copyWith(fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
+                    TextButton(
+                      onPressed: () => controller.resetSortPrice(),
+                      child: Text(
+                        'Reset all',
+                        style: Get.textTheme.bodySmall!
+                            .copyWith(color: Colors.redAccent),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 12.0),
-              child: ListView.builder(
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 12.0,
+                ),
+                child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: controller.sortPrice.length,
                   itemBuilder: (context, index) {
@@ -83,9 +88,11 @@ class SortPriceWidget extends StatelessWidget {
                         ),
                       ),
                     );
-                  }),
-            ),
-          ],
+                  },
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

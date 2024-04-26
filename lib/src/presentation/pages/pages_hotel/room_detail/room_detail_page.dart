@@ -362,11 +362,11 @@ class RoomInformation extends GetView<RoomDetailController> {
                                     onTap: () {
                                       if (controller.room.value == null) return;
                                       controller.listRoomController
-                                          .incrementRoom(
+                                          .decrementRoom(
                                               controller.room.value!);
                                     },
                                     child: const Icon(
-                                      Icons.add,
+                                      Icons.remove,
                                       size: 26,
                                       color: Colors.redAccent,
                                     ),
@@ -393,11 +393,11 @@ class RoomInformation extends GetView<RoomDetailController> {
                                     onTap: () {
                                       if (controller.room.value == null) return;
                                       controller.listRoomController
-                                          .decrementRoom(
+                                          .incrementRoom(
                                               controller.room.value!);
                                     },
                                     child: const Icon(
-                                      Icons.remove,
+                                      Icons.add,
                                       size: 26,
                                       color: Colors.redAccent,
                                     ),

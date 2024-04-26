@@ -253,7 +253,7 @@ class Facilities extends StatelessWidget {
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
+                      mainAxisSize: MainAxisSize.max,
                       children: [
                         ExtendedImage.network(
                           Constant.baseImageFacilityUrl +
@@ -350,28 +350,29 @@ class Review extends GetView<HotelDetailController> {
                 ),
               ),
             ),
-            const SizedBox(
-              width: 15,
-            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '20 review',
-                  style: Get.textTheme.bodySmall!
-                      .copyWith(color: Colors.grey[500]),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    'All Review',
+                    style: Get.textTheme.bodySmall!
+                        .copyWith(color: Colors.grey[500]),
+                  ),
                 ),
                 TextButton(
-                    onPressed: () => Get.toNamed(ReviewPage.routeName,
-                            arguments: {
-                              'hotelId': controller.hotelDetail.value?.hotelId
-                            }),
-                    child: Text(
-                      'Read reviews',
-                      style: Get.textTheme.bodyMedium!.copyWith(
-                        color: Colors.redAccent,
-                      ),
-                    ))
+                  onPressed: () => Get.toNamed(ReviewPage.routeName,
+                      arguments: {
+                        'hotelId': controller.hotelDetail.value?.hotelId
+                      }),
+                  child: Text(
+                    'Read reviews',
+                    style: Get.textTheme.bodyMedium!.copyWith(
+                      color: Colors.redAccent,
+                    ),
+                  ),
+                )
               ],
             )
           ],

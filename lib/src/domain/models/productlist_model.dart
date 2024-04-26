@@ -5,13 +5,16 @@ part 'productlist_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ProductListModel extends Equatable {
-  const ProductListModel({this.roomName, this.maxGuest, this.numberRoom});
+  const ProductListModel(this.roomPrice,
+      {this.roomName, this.maxGuest, this.numberRoom});
   @JsonKey(name: 'roomName')
   final String? roomName;
   @JsonKey(name: 'maxGuest')
   final int? maxGuest;
   @JsonKey(name: 'numberRoom')
   final int? numberRoom;
+  @JsonKey(name: 'roomPrice')
+  final int? roomPrice;
 
   factory ProductListModel.fromJson(Map<String, dynamic> json) =>
       _$ProductListModelFromJson(json);

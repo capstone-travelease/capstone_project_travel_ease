@@ -14,10 +14,10 @@ class MyBookingController extends GetxController
   final CheckLoginController checkLoginController = Get.find();
   Rxn<MyBookingTab> selected = Rxn();
   List<MyBookingTab> tabs = [
-    MyBookingTab.unpaid(),
     MyBookingTab.onGoing(),
     MyBookingTab.completed(),
     MyBookingTab.cancelled(),
+    MyBookingTab.unpaid(),
   ];
   final RxList<MyBookingModel> listBooking = <MyBookingModel>[].obs;
   late PagingController<int, MyBookingModel> pagingController;

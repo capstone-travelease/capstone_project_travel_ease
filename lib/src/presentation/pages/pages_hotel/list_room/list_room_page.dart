@@ -420,17 +420,17 @@ class ListRooms extends GetView<ListRoomController> {
                                       borderRadius: BorderRadius.circular(16)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 12.0, horizontal: 16),
+                                        vertical: 8.0, horizontal: 14),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            controller.incrementRoom(roomModel);
+                                            controller.decrementRoom(roomModel);
                                           },
                                           child: const Icon(
-                                            Icons.add,
+                                            Icons.remove,
                                             size: 26,
                                             color: Colors.redAccent,
                                           ),
@@ -455,10 +455,10 @@ class ListRooms extends GetView<ListRoomController> {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.decrementRoom(roomModel);
+                                            controller.incrementRoom(roomModel);
                                           },
                                           child: const Icon(
-                                            Icons.remove,
+                                            Icons.add,
                                             size: 26,
                                             color: Colors.redAccent,
                                           ),

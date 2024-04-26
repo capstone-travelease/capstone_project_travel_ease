@@ -50,7 +50,7 @@ class TicketPage extends GetView<TicketController> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               DecoratedBox(
@@ -353,21 +353,39 @@ class BookingDetailRoom extends GetView<TicketController> {
                                 ),
                               ),
                               Text(
-                                'NumberRoom: ${item?.numberRoom.toString()}',
+                                'Number: ${item?.numberRoom.toString()}',
                                 style: Get.textTheme.bodyMedium!.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child: Text(
-                              'Max Guests: ${item?.maxGuest.toString()}',
-                              style: Get.textTheme.bodyMedium!.copyWith(
-                                fontWeight: FontWeight.bold,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  'Max Guests: ${item?.maxGuest.toString()}',
+                                  style: Get.textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                            ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Text(
+                                  item?.roomPrice == null
+                                      ? '200000'
+                                      : NumberFormat.currency(
+                                              locale: 'vi_VN', symbol: 'VND')
+                                          .format(item?.roomPrice),
+                                  style: Get.textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
