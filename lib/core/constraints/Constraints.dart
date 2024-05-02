@@ -16,10 +16,10 @@ class Constant {
   static const String bookingClientTAG = 'bookingModule|bookingClient';
   static const String bookingServiceTAG = 'bookingModule|bookingService';
   static const String dioTAG = 'app|Dio';
-  static const String baseImageUrl = 'https://www.capstone-partner-api.com/';
+  static const String baseImageUrl = 'https://www.capstone-api-partner.online/';
   static const String baseImageFacilityUrl =
-      'https://www.capstone-admin-api.com/';
-  static const String baseUrl = 'http://34.143.171.128:3634';
+      'https://www.capstone-api-admin.cloud/';
+  static const String baseUrl = 'http://34.124.137.14:3634';
   static const String baseImageUserUrl =
       'https://res.cloudinary.com/df3vn23o6/image/upload';
 }
