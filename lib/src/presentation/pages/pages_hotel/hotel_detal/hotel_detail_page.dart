@@ -533,34 +533,36 @@ class GetFooter extends GetView<HotelDetailController> {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 26.0, vertical: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            InkWell(
-              onTap: () => Get.toNamed(
-                ListRoomPage.routeName,
-                preventDuplicates: false,
-                arguments: ArgListRoom(
-                  location: controller.hotelDetail.value?.hotelCity ?? '',
-                  hotelName: controller.hotelDetail.value?.hotelName ?? '',
-                  hotelId: controller.hotelDetail.value?.hotelId ?? -1,
+        child: Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: () => Get.toNamed(
+                  ListRoomPage.routeName,
+                  preventDuplicates: false,
+                  arguments: ArgListRoom(
+                    location: controller.hotelDetail.value?.hotelCity ?? '',
+                    hotelName: controller.hotelDetail.value?.hotelName ?? '',
+                    hotelId: controller.hotelDetail.value?.hotelId ?? -1,
+                  ),
                 ),
-              ),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: Colors.deepOrange,
-                    borderRadius: BorderRadius.circular(12)),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    'Select Room',
-                    style: Get.textTheme.titleLarge!.copyWith(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: Colors.deepOrange,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      'Select Room',
+                      style: Get.textTheme.titleLarge!.copyWith(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Obx(() => RichText(
+              Obx(
+                () => RichText(
                   text: TextSpan(
                     children: [
                       TextSpan(
@@ -577,8 +579,10 @@ class GetFooter extends GetView<HotelDetailController> {
                           style: Get.textTheme.bodySmall!),
                     ],
                   ),
-                ))
-          ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
