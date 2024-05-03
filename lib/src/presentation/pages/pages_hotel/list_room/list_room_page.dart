@@ -617,72 +617,82 @@ class GetFooter extends GetView<ListRoomController> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Get.showSnackbar(GetSnackBar(
-                        title: 'Thông báo',
-                        message: 'Chức năng đang phát triển',
-                        snackPosition: SnackPosition.BOTTOM,
-                        duration: const Duration(seconds: 2),
-                        backgroundColor: Colors.redAccent,
-                        margin: const EdgeInsets.all(8),
-                        borderRadius: 18,
-                        overlayColor: Colors.black.withOpacity(0.5),
-                        isDismissible: true,
-                      ));
-                    },
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(18),
-                        border: Border.all(color: Colors.redAccent),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 40),
-                        child: Text(
-                          'Hold Room',
-                          style: Get.textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.redAccent,
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Get.showSnackbar(GetSnackBar(
+                          title: 'Thông báo',
+                          message: 'Chức năng đang phát triển',
+                          snackPosition: SnackPosition.BOTTOM,
+                          duration: const Duration(seconds: 2),
+                          backgroundColor: Colors.redAccent,
+                          margin: const EdgeInsets.all(8),
+                          borderRadius: 18,
+                          overlayColor: Colors.black.withOpacity(0.5),
+                          isDismissible: true,
+                        ));
+                      },
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(color: Colors.redAccent),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 16.0, horizontal: 20),
+                          child: Center(
+                            child: Text(
+                              'Hold Room',
+                              style: Get.textTheme.titleMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.redAccent,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(
-                        BookingPage.routeName,
-                        arguments: ArgBookingRooms(
-                          roomCardModel: controller.roomCards,
-                          price: controller.totalPrice.toInt(),
-                          numberRoom: controller.totalRoom.toInt(),
-                          hotelId: controller.argListRoom.hotelId,
-                          checkIn: controller.searchHotelController.search.value
-                                  ?.fromDay ??
-                              DateTime.now(),
-                          checkOut: controller
-                                  .searchHotelController.search.value?.todDay ??
-                              DateTime.now(),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(
+                          BookingPage.routeName,
+                          arguments: ArgBookingRooms(
+                            roomCardModel: controller.roomCards,
+                            price: controller.totalPrice.toInt(),
+                            numberRoom: controller.totalRoom.toInt(),
+                            hotelId: controller.argListRoom.hotelId,
+                            checkIn: controller.searchHotelController.search
+                                    .value?.fromDay ??
+                                DateTime.now(),
+                            checkOut: controller.searchHotelController.search
+                                    .value?.todDay ??
+                                DateTime.now(),
+                          ),
+                        );
+                      },
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.redAccent,
+                          borderRadius: BorderRadius.circular(18),
                         ),
-                      );
-                    },
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.redAccent,
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 40),
-                        child: Text(
-                          'Book Room',
-                          style: Get.textTheme.titleMedium!.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 16.0, horizontal: 20),
+                          child: Center(
+                            child: Text(
+                              'Book Room',
+                              style: Get.textTheme.titleMedium!.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
