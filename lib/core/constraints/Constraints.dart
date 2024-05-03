@@ -21,7 +21,7 @@ class Constant {
       'https://www.capstone-api-admin.cloud/';
   static const String baseUrl = 'http://34.124.137.14:3634';
   static const String baseImageUserUrl =
-      'https://res.cloudinary.com/df3vn23o6/image/upload';
+      'https://res.cloudinary.com/dys8o1q1q/image/upload';
   static const String baseImageBankUrl =
       'https://res.cloudinary.com/dys8o1q1q/image/upload';
 }
