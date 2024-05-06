@@ -12,12 +12,14 @@ class ChatController extends GetxController {
   final RxList<MessagesModel> messages = <MessagesModel>[].obs;
   late TextEditingController messageEditingController;
   final UserService _userService = Get.find(tag: Constant.uerSerServiceTAG);
-  final IO.Socket socket = IO.io('http://34.126.163.206:9092/',
+  final IO.Socket socket = IO.io('http://34.124.137.14:9092/',
       IO.OptionBuilder().setTransports(['websocket']).build());
   final CheckLoginController checkLoginController = Get.find();
+  late int ownerId;
   @override
   void onInit() {
     messageEditingController = TextEditingController();
+    ownerId = Get.arguments['ownerId'];
     fetchMessages();
     connectSocket();
     super.onInit();
@@ -33,9 +35,9 @@ class ChatController extends GetxController {
         print(data);
         final newMessage = MessagesModel.fromJson(data);
         if ((newMessage.senderId == checkLoginController.userid.value &&
-                newMessage.targetId == 17) ||
+                newMessage.targetId == ownerId) ||
             (newMessage.targetId == checkLoginController.userid.value &&
-                newMessage.senderId == 17)) {
+                newMessage.senderId == ownerId)) {
           messages.add(newMessage);
         }
       });
@@ -46,7 +48,7 @@ class ChatController extends GetxController {
       final res = await _userService.messages(
         body: GetMessageBody(
           senderId: checkLoginController.userid.value,
-          targetId: 17,
+          targetId: ownerId,
         ),
       );
       messages.call(res);
@@ -63,7 +65,7 @@ class ChatController extends GetxController {
         await _userService.sendMessage(
           body: PostSendMessageBody(
             senderId: checkLoginController.userid.value,
-            targetId: 17,
+            targetId: ownerId,
             message: messageEditingController.text.trim(),
           ),
         );

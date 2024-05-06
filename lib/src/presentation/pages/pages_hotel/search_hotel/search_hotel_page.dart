@@ -380,26 +380,22 @@ class BottomSheetFilter extends GetView<SearchHotelController> {
             InkWell(
               onTap: () async {
                 final data = await Get.bottomSheet<SearchModel>(
-                  SizedBox(
-                    height: Get.height * 0.22,
-                    width: Get.width,
-                    child: DecoratedBox(
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(12),
-                        ),
+                  DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(12),
                       ),
-                      child: SortPriceWidget(
-                        priceFromLowToHigh:
-                            controller.search.value?.priceFromLowToHigh == true
-                                ? 'From low to high'
-                                : 'false',
-                        priceFromHighToLow:
-                            controller.search.value?.priceFromHighToLow == true
-                                ? 'From high to low'
-                                : 'false',
-                      ),
+                    ),
+                    child: SortPriceWidget(
+                      priceFromLowToHigh:
+                          controller.search.value?.priceFromLowToHigh == true
+                              ? 'From low to high'
+                              : 'false',
+                      priceFromHighToLow:
+                          controller.search.value?.priceFromHighToLow == true
+                              ? 'From high to low'
+                              : 'false',
                     ),
                   ),
                 );

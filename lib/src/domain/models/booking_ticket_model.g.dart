@@ -27,6 +27,7 @@ BookingTicketModel _$BookingTicketModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       paymentMethod: json['paymentMethod'] as String?,
       totalPrice: json['totalPrice'] as int?,
+      ownerId: json['ownerId'] as int?,
     );
 
 Map<String, dynamic> _$BookingTicketModelToJson(BookingTicketModel instance) =>
@@ -44,4 +45,5 @@ Map<String, dynamic> _$BookingTicketModelToJson(BookingTicketModel instance) =>
       'productList': instance.productList?.map((e) => e.toJson()).toList(),
       'paymentMethod': instance.paymentMethod,
       'totalPrice': instance.totalPrice,
+      'ownerId': instance.ownerId,
     };

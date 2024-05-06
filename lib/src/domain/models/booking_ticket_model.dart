@@ -20,6 +20,7 @@ class BookingTicketModel extends Equatable {
     this.productList,
     this.paymentMethod,
     this.totalPrice,
+    this.ownerId,
   });
   @JsonKey(name: 'ticketId')
   final int? ticketId;
@@ -47,6 +48,8 @@ class BookingTicketModel extends Equatable {
   final String? paymentMethod;
   @JsonKey(name: 'totalPrice')
   final int? totalPrice;
+  @JsonKey(name: 'ownerId')
+  final int? ownerId;
 
   factory BookingTicketModel.fromJson(Map<String, dynamic> json) =>
       _$BookingTicketModelFromJson(json);

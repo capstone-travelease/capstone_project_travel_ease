@@ -17,116 +17,122 @@ class TicketPage extends GetView<TicketController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Get.back(),
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14.0),
-            child: InkWell(
-              onTap: () => Get.toNamed(ChatPage.routeName),
-              child: Image.asset(
-                fit: BoxFit.fill,
-                Assets.icons.chat1.path,
-                width: 30,
-                height: 30,
-              ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
             ),
           ),
-        ],
-        backgroundColor: Get.theme.colorScheme.background,
-        title: Text(
-          'Ticket',
-          style: Get.textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Colors.grey[300]!,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                  child: Column(
-                    children: [
-                      HotelAndUserBooking(),
-                      BookingDate(),
-                      BookingDetailRoom(),
-                      MethodAndTotalPayment(),
-                    ],
-                  ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14.0),
+              child: InkWell(
+                onTap: () => Get.toNamed(ChatPage.routeName, arguments: {
+                  'ownerId': controller.ticket.value?.ownerId,
+                }),
+                child: Image.asset(
+                  fit: BoxFit.fill,
+                  Assets.icons.chat1.path,
+                  width: 30,
+                  height: 30,
                 ),
               ),
-              if (controller.bookingType == 'Ongoing' ||
-                  controller.bookingType == 'unpaid') ...[
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                  child: SizedBox(
-                    width: Get.width,
-                    child: InkWell(
-                      onTap: () {
-                        if (controller.bookingType == 'Ongoing') {
-                          controller.onCanCelBooking();
-                        } else {
-                          final List<RoomCardModel>? roomInfoList =
-                              controller.ticket.value?.productList
-                                  ?.map(
-                                    (room) => RoomCardModel(
-                                      roomId: 1,
-                                      roomQuantity: RxInt(room.numberRoom ?? 0),
-                                      name: room.roomName ?? '',
-                                      price: 1000,
-                                    ),
-                                  )
-                                  .toList();
-                          Get.toNamed(
-                            BookingPage.routeName,
-                            arguments: ArgBookingRooms(
-                              roomCardModel: roomInfoList ?? [],
-                              price: controller.ticket.value!.totalPrice ?? -1,
-                              numberRoom: controller
-                                      .ticket.value!.productList?.length ??
-                                  -1,
-                              hotelId: controller.ticket.value?.hotelId ?? -1,
-                              checkIn: controller.ticket.value?.checkInDate ??
-                                  DateTime.now(),
-                              checkOut: controller.ticket.value?.checkOutDate ??
-                                  DateTime.now(),
-                            ),
-                          );
-                        }
-                      },
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.redAccent,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Center(
-                            child: Text(
-                              controller.bookingType == 'Ongoing'
-                                  ? 'Cancel Booking'
-                                  : 'Thanh Toán',
-                              style: Get.textTheme.bodyMedium!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
+            ),
+          ],
+          backgroundColor: Get.theme.colorScheme.background,
+          title: Text(
+            'Ticket',
+            style: Get.textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.grey[300]!,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        HotelAndUserBooking(),
+                        BookingDate(),
+                        BookingDetailRoom(),
+                        MethodAndTotalPayment(),
+                      ],
+                    ),
+                  ),
+                ),
+                if (controller.bookingType == 'Ongoing' ||
+                    controller.bookingType == 'unpaid') ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: SizedBox(
+                      width: Get.width,
+                      child: InkWell(
+                        onTap: () {
+                          if (controller.bookingType == 'Ongoing') {
+                            controller.onCanCelBooking();
+                          } else {
+                            final List<RoomCardModel>? roomInfoList = controller
+                                .ticket.value?.productList
+                                ?.map(
+                                  (room) => RoomCardModel(
+                                    roomId: 1,
+                                    roomQuantity: RxInt(room.numberRoom ?? 0),
+                                    name: room.roomName ?? '',
+                                    price: 1000,
+                                  ),
+                                )
+                                .toList();
+                            Get.toNamed(
+                              BookingPage.routeName,
+                              arguments: ArgBookingRooms(
+                                roomCardModel: roomInfoList ?? [],
+                                price:
+                                    controller.ticket.value!.totalPrice ?? -1,
+                                numberRoom: controller
+                                        .ticket.value!.productList?.length ??
+                                    -1,
+                                hotelId: controller.ticket.value?.hotelId ?? -1,
+                                checkIn: controller.ticket.value?.checkInDate ??
+                                    DateTime.now(),
+                                checkOut:
+                                    controller.ticket.value?.checkOutDate ??
+                                        DateTime.now(),
+                              ),
+                            );
+                          }
+                        },
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Colors.redAccent,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Center(
+                              child: Text(
+                                controller.bookingType == 'Ongoing'
+                                    ? 'Cancel Booking'
+                                    : 'Thanh Toán',
+                                style: Get.textTheme.bodyMedium!.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -134,9 +140,9 @@ class TicketPage extends GetView<TicketController> {
                       ),
                     ),
                   ),
-                ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

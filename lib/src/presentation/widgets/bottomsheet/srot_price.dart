@@ -58,6 +58,7 @@ class SortPriceWidget extends StatelessWidget {
                 ),
                 child: ListView.builder(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: controller.sortPrice.length,
                   itemBuilder: (context, index) {
                     final item = controller.sortPrice[index];
