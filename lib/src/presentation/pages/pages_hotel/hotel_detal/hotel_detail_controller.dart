@@ -1,13 +1,15 @@
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/search_hotel_information.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HotelDetailController extends GetxController {
   final activeIndex = 0.obs;
-  late int hotelId;
+
   final BookingService _bookingService =
       Get.find(tag: Constant.bookingServiceTAG);
   final Rxn<HotelModel> hotelDetail = Rxn<HotelModel>();
@@ -20,16 +22,18 @@ class HotelDetailController extends GetxController {
     _isLoading.value = value;
   }
 
+  late ArgSearchHotel argHotelDetail;
   @override
   void onInit() {
-    hotelId = Get.arguments['hotelId'];
+    argHotelDetail = Get.arguments as ArgSearchHotel;
     fetchRoomDetail();
     super.onInit();
   }
 
   Future<void> fetchRoomDetail() async {
     try {
-      final res = await _bookingService.detailHotel(hotelId: hotelId);
+      final res =
+          await _bookingService.detailHotel(hotelId: argHotelDetail.hotelId!);
       hotelDetail.call(res);
     } catch (e) {
       Get.log(e.toString());

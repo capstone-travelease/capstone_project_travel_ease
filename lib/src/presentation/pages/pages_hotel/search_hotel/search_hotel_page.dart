@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/utils/extension.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/search_hotel_information.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/widgets/bottomsheet/filter/filter_page.dart';
@@ -254,9 +255,13 @@ class ListHotel extends GetView<SearchHotelController> {
             hotelModel: item,
             onTap: () => Get.toNamed(
               HotelDetailPage.routeName,
-              arguments: {
-                'hotelId': itemHotel.hotelId,
-              },
+              arguments: ArgSearchHotel(
+                hotelId: itemHotel.hotelId,
+                dateTimeRange: controller.argSearchHotel.dateTimeRange,
+                location: item.hotelCity ?? '',
+                numberRoom: controller.search.value?.numberRoom ?? 1,
+                numberAdult: controller.search.value?.numberAdult ?? 2,
+              ),
             ),
           );
         },

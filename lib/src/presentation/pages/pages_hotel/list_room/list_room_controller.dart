@@ -2,6 +2,7 @@ import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/utils/snack_bar_and_loading.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/room_card_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/room_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/search_hotel_information.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,10 @@ class ListRoomController extends GetxController {
   final BookingService _bookingService =
       Get.find(tag: Constant.bookingServiceTAG);
   // final int _pageSize = 10;
-  late ArgListRoom argListRoom;
-  SearchHotelController searchHotelController = Get.put(
-    SearchHotelController(),
-  );
+  late ArgSearchHotel argListRoom;
+  // SearchHotelController searchHotelController = Get.put(
+  //   SearchHotelController(),
+  // );
   final RxInt totalPrice = 0.obs;
   final RxInt totalRoom = 0.obs;
   final Map<int, RxInt> roomQuantities = {};
@@ -27,18 +28,20 @@ class ListRoomController extends GetxController {
   // final SearchHotelController searchHotelController = Get.find();
   @override
   void onInit() {
-    argListRoom = Get.arguments as ArgListRoom;
+    argListRoom = Get.arguments as ArgSearchHotel;
     pagingController = PagingController(firstPageKey: 0);
     pagingController.addPageRequestListener(fetchListRoom);
     for (var roomModel in listRoom) {
       roomQuantities[roomModel.roomId ?? 0] = 1.obs;
     }
+
     super.onInit();
   }
 
   Future<void> fetchListRoom(int pageKey) async {
     try {
-      final res = await _bookingService.listRooms(hotelId: argListRoom.hotelId);
+      final res =
+          await _bookingService.listRooms(hotelId: argListRoom.hotelId!);
       listRoom.call(res);
       // listRoom.length < _pageSize
       pagingController.appendLastPage(listRoom);
@@ -129,15 +132,4 @@ class ListRoomController extends GetxController {
     totalRoom.value -= roomQuantity.value.toInt();
     roomQuantities.remove(roomId);
   }
-}
-
-class ArgListRoom {
-  ArgListRoom({
-    required this.location,
-    required this.hotelName,
-    required this.hotelId,
-  });
-  final String location;
-  final String hotelName;
-  final int hotelId;
 }

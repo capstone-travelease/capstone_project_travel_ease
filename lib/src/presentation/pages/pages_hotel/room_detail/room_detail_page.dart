@@ -5,6 +5,7 @@ import 'package:capstone_project_travel_ease/core/utils/snack_bar_and_loading.da
 import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_page.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/room_detail/room_detail_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -441,7 +442,7 @@ class RoomInformation extends GetView<RoomDetailController> {
   }
 }
 
-class DateBooking extends GetView<SearchHotelController> {
+class DateBooking extends GetView<ListRoomController> {
   const DateBooking({
     Key? key,
   }) : super(key: key);
@@ -457,11 +458,12 @@ class DateBooking extends GetView<SearchHotelController> {
           ),
           TextSpan(
             text:
-                ' ${((controller.search.value?.todDay!.day)! - (controller.search.value?.fromDay!.day)!).toInt()} Đêm ( ',
+                ' ${((controller.argListRoom.dateTimeRange?.end.day)! - (controller.argListRoom.dateTimeRange?.start.day)!).toInt()} Đêm ( ',
             style: Get.textTheme.bodyMedium?.copyWith(),
           ),
           TextSpan(
-            text: controller.search.value?.fromDay.formatDateAndTimeToString(),
+            text: controller.argListRoom.dateTimeRange?.start
+                .formatDateAndTimeToString(),
             style: Get.textTheme.bodyMedium?.copyWith(),
           ),
           TextSpan(
@@ -469,7 +471,8 @@ class DateBooking extends GetView<SearchHotelController> {
             style: Get.textTheme.bodyMedium?.copyWith(),
           ),
           TextSpan(
-            text: controller.search.value?.todDay.formatDateAndTimeToString(),
+            text: controller.argListRoom.dateTimeRange?.end
+                .formatDateAndTimeToString(),
             style: Get.textTheme.bodyMedium?.copyWith(),
           ),
           TextSpan(
@@ -614,20 +617,12 @@ class GetFooter extends GetView<RoomDetailController> {
                             numberRoom:
                                 controller.listRoomController.totalRoom.toInt(),
                             hotelId: controller
-                                .listRoomController.argListRoom.hotelId,
-                            checkIn: controller
-                                    .listRoomController
-                                    .searchHotelController
-                                    .search
-                                    .value
-                                    ?.fromDay ??
+                                .listRoomController.argListRoom.hotelId!,
+                            checkIn: controller.listRoomController.argListRoom
+                                    .dateTimeRange?.start ??
                                 DateTime.now(),
-                            checkOut: controller
-                                    .listRoomController
-                                    .searchHotelController
-                                    .search
-                                    .value
-                                    ?.todDay ??
+                            checkOut: controller.listRoomController.argListRoom
+                                    .dateTimeRange?.end ??
                                 DateTime.now(),
                           ),
                         );

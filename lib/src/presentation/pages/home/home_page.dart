@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/search_hotel_information.dart';
 import 'package:capstone_project_travel_ease/src/presentation/controller/checklogin_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/home/home_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_page.dart';
@@ -81,9 +82,17 @@ class HomePage extends GetView<HomeController> {
                           child: InkWell(
                             onTap: () => Get.toNamed(
                               HotelDetailPage.routeName,
-                              arguments: {
-                                'hotelId': item.hotelId,
-                              },
+                              arguments: ArgSearchHotel(
+                                hotelId: item.hotelId,
+                                dateTimeRange: DateTimeRange(
+                                  end: DateTime.now()
+                                      .add(const Duration(days: 1)),
+                                  start: DateTime.now(),
+                                ),
+                                location: item.hotelCity ?? '',
+                                numberRoom: 1,
+                                numberAdult: 2,
+                              ),
                             ),
                             child: Stack(
                               fit: StackFit.expand,

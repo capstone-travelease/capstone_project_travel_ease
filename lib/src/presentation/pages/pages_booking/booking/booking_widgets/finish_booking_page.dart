@@ -5,6 +5,7 @@ import 'package:capstone_project_travel_ease/src/domain/models/bank_model.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/add_new_payment/add_new_payment_page.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_booking/booking/booking_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
+import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/search_hotel/search_hotel_controller.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -322,7 +323,7 @@ class HotelSelect extends GetView<HotelDetailController> {
   }
 }
 
-class DataSearchFinish extends GetView<SearchHotelController> {
+class DataSearchFinish extends GetView<ListRoomController> {
   const DataSearchFinish({Key? key, required this.roomQuantity})
       : super(key: key);
   final int roomQuantity;
@@ -343,7 +344,8 @@ class DataSearchFinish extends GetView<SearchHotelController> {
                     style: Get.textTheme.titleMedium!.copyWith(),
                   ),
                   Text(
-                    controller.search.value!.fromDay.formatDateToString(),
+                    controller.argListRoom.dateTimeRange!.start
+                        .formatDateToString(),
                     style: Get.textTheme.bodySmall?.copyWith(),
                   ),
                 ],
@@ -356,7 +358,8 @@ class DataSearchFinish extends GetView<SearchHotelController> {
                     style: Get.textTheme.titleMedium!.copyWith(),
                   ),
                   Text(
-                    controller.search.value!.todDay.formatDateToString(),
+                    controller.argListRoom.dateTimeRange!.end
+                        .formatDateToString(),
                     style: Get.textTheme.bodySmall?.copyWith(),
                   ),
                 ],
@@ -373,7 +376,7 @@ class DataSearchFinish extends GetView<SearchHotelController> {
                   style: Get.textTheme.titleMedium!.copyWith(),
                 ),
                 Text(
-                  'Max guests:  ${controller.search.value?.numberAdult}',
+                  'Max guests:  ${controller.argListRoom.numberAdult!.toInt()}',
                   style: Get.textTheme.titleMedium!.copyWith(),
                 ),
                 const Text('')

@@ -130,7 +130,7 @@ class Appbar extends GetView<ListRoomController>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        controller.argListRoom.hotelName,
+                        controller.argListRoom.hotelName ?? '',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         softWrap: true,
@@ -667,13 +667,13 @@ class GetFooter extends GetView<ListRoomController> {
                             roomCardModel: controller.roomCards,
                             price: controller.totalPrice.toInt(),
                             numberRoom: controller.totalRoom.toInt(),
-                            hotelId: controller.argListRoom.hotelId,
-                            checkIn: controller.searchHotelController.search
-                                    .value?.fromDay ??
-                                DateTime.now(),
-                            checkOut: controller.searchHotelController.search
-                                    .value?.todDay ??
-                                DateTime.now(),
+                            hotelId: controller.argListRoom.hotelId!,
+                            checkIn:
+                                controller.argListRoom.dateTimeRange?.start ??
+                                    DateTime.now(),
+                            checkOut:
+                                controller.argListRoom.dateTimeRange?.end ??
+                                    DateTime.now(),
                           ),
                         );
                       },

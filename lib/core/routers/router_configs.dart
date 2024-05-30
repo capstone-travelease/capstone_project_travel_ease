@@ -123,9 +123,9 @@ class RouterConfigs {
     GetPage(
       name: ListRoomPage.routeName,
       page: () => const ListRoomPage(),
-      binding: BindingsBuilder<void>(
-        () => Get.lazyPut(ListRoomController.new),
-      ),
+      binding: BindingsBuilder<void>(() {
+        Get.lazyPut(ListRoomController.new);
+      }),
     ),
     GetPage(
       name: RoomDetailPage.routeName,

@@ -1,6 +1,7 @@
 import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/gen/assets.gen.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/facilities_model.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/search_hotel_information.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/hotel_detal/hotel_detail_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_controller.dart';
 import 'package:capstone_project_travel_ease/src/presentation/pages/pages_hotel/list_room/list_room_page.dart';
@@ -541,10 +542,16 @@ class GetFooter extends GetView<HotelDetailController> {
                 onTap: () => Get.toNamed(
                   ListRoomPage.routeName,
                   preventDuplicates: false,
-                  arguments: ArgListRoom(
+                  arguments: ArgSearchHotel(
                     location: controller.hotelDetail.value?.hotelCity ?? '',
                     hotelName: controller.hotelDetail.value?.hotelName ?? '',
                     hotelId: controller.hotelDetail.value?.hotelId ?? -1,
+                    dateTimeRange: controller.argHotelDetail.dateTimeRange ??
+                        DateTimeRange(
+                            start: DateTime.now(),
+                            end: DateTime.now().add(const Duration(days: 1))),
+                    numberRoom: controller.argHotelDetail.numberRoom ?? 1,
+                    numberAdult: controller.argHotelDetail.numberAdult ?? 1,
                   ),
                 ),
                 child: DecoratedBox(

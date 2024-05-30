@@ -2,6 +2,7 @@ import 'package:capstone_project_travel_ease/core/constraints/Constraints.dart';
 import 'package:capstone_project_travel_ease/core/utils/snack_bar_and_loading.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/hotel_model.dart';
 import 'package:capstone_project_travel_ease/src/domain/models/model_search.dart';
+import 'package:capstone_project_travel_ease/src/domain/models/search_hotel_information.dart';
 import 'package:capstone_project_travel_ease/src/domain/requests/bodys/post_search_hotel_body.dart';
 import 'package:capstone_project_travel_ease/src/domain/services/booking_service.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +21,12 @@ class SearchHotelController extends GetxController {
   final Rxn<SearchModel> search = Rxn<SearchModel>();
   @override
   void onInit() {
-    argSearchHotel = Get.arguments as ArgSearchHotel;
+    argSearchHotel = argSearchHotel = Get.arguments as ArgSearchHotel;
 
     search.call(SearchModel(
       location: argSearchHotel.location,
-      fromDay: argSearchHotel.dateTimeRange.start,
-      todDay: argSearchHotel.dateTimeRange.end,
+      fromDay: argSearchHotel.dateTimeRange?.start,
+      todDay: argSearchHotel.dateTimeRange?.end,
       numberRoom: argSearchHotel.numberRoom,
       numberAdult: argSearchHotel.numberAdult,
     ));
@@ -76,17 +77,4 @@ class SearchHotelController extends GetxController {
       );
     }
   }
-}
-
-class ArgSearchHotel {
-  ArgSearchHotel({
-    required this.dateTimeRange,
-    required this.location,
-    required this.numberRoom,
-    required this.numberAdult,
-  });
-  final DateTimeRange dateTimeRange;
-  final String location;
-  final int numberRoom;
-  final int numberAdult;
 }
