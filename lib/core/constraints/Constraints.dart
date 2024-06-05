@@ -19,7 +19,7 @@ class Constant {
   static const String baseImageUrl = 'https://www.capstone-api-partner.online/';
   static const String baseImageFacilityUrl =
       'https://www.capstone-api-admin.cloud/';
-  static const String baseUrl = 'http://34.124.137.14:3634';
+  static const String baseUrl = 'http://34.142.153.7:3634';
   static const String baseImageUserUrl =
       'https://res.cloudinary.com/dys8o1q1q/image/upload';
   static const String baseImageBankUrl =
