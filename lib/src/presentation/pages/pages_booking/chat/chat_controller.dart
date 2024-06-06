@@ -12,7 +12,7 @@ class ChatController extends GetxController {
   final RxList<MessagesModel> messages = <MessagesModel>[].obs;
   late TextEditingController messageEditingController;
   final UserService _userService = Get.find(tag: Constant.uerSerServiceTAG);
-  final IO.Socket socket = IO.io('http://34.124.137.14:9092/',
+  final IO.Socket socket = IO.io('http://34.142.153.7:9092/',
       IO.OptionBuilder().setTransports(['websocket']).build());
   final CheckLoginController checkLoginController = Get.find();
   late int ownerId;
