@@ -398,8 +398,7 @@ class RoomDetail extends GetView<BookingController> {
                   Column(
                     children: [
                       Text(
-                        NumberFormat.currency(locale: 'vi_VN', symbol: 'VND')
-                            .format(item.price),
+                        '${NumberFormat.currency(locale: 'vi_VN', symbol: 'VND').format(item.price)} / room',
                         style: Get.textTheme.titleMedium?.copyWith(),
                       ),
                       Text(

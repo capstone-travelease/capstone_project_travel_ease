@@ -283,7 +283,7 @@ class SignPage extends GetView<SignController> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(16.0),
                                           child: Text(
-                                            'Sign In',
+                                            'Sign Up',
                                             style: Get
                                                 .theme.textTheme.titleMedium
                                                 ?.copyWith(

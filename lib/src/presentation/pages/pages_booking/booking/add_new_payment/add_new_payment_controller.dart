@@ -72,7 +72,7 @@ class AddNewPaymentController extends GetxController {
       notificationConfig.showSnackBar(
         title: 'Thông báo',
         'Liên kết Thanh Toán Thành Công <3',
-        backgroundColor: Get.theme.colorScheme.primary,
+        backgroundColor: Colors.greenAccent,
       );
     } catch (error) {
       Get.log(

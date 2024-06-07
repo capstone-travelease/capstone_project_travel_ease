@@ -18,8 +18,9 @@ class LoginController extends GetxController {
   final UserService _userService = Get.find(tag: Constant.uerSerServiceTAG);
   @override
   void onInit() {
-    emailEditController = TextEditingController(text: 'x.anh090102@gmail.com');
-    passwordEditController = TextEditingController(text: 'Anh123456@');
+    emailEditController =
+        TextEditingController(text: 'finalcapstone22@gmail.com');
+    passwordEditController = TextEditingController(text: 'Capstonevlu@123');
     super.onInit();
   }
 

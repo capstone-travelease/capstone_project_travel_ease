@@ -57,7 +57,7 @@ class SignController extends GetxController {
         notificationConfig.showSnackBar(
           title: 'Thông báo',
           'Đăng Kí Tài Khoản Thành Công <3',
-          backgroundColor: Get.theme.colorScheme.primary,
+          backgroundColor: Colors.greenAccent,
         );
       } catch (error) {
         String errorMessage = "Có lỗi xảy ra, thử lại nhé!";
