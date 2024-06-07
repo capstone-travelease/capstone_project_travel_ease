@@ -173,6 +173,11 @@ class Appbar extends GetView<SearchHotelController>
                     );
                     if (data != null) {
                       controller.search.value = data;
+                      controller.argSearchHotel.dateTimeRange = DateTimeRange(
+                        start: data.fromDay!,
+                        end: data.todDay!,
+                      );
+                      controller.pagingController.refresh();
                     }
                   },
                   child: Text(

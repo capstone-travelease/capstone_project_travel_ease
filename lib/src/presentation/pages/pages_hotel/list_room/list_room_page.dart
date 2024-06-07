@@ -596,7 +596,12 @@ class GetFooter extends GetView<ListRoomController> {
                         text: (controller.totalPrice.value) > 0
                             ? NumberFormat.currency(
                                     locale: 'vi_VN', symbol: 'VND')
-                                .format(controller.totalPrice.toInt())
+                                .format(controller.totalPrice.toInt() *
+                                    ((controller.argListRoom.dateTimeRange?.end
+                                                .day)! -
+                                            (controller.argListRoom
+                                                .dateTimeRange?.start.day)!)
+                                        .toInt())
                             : "",
                         style: Get.textTheme.titleMedium!.copyWith(
                           fontWeight: FontWeight.bold,
@@ -665,7 +670,12 @@ class GetFooter extends GetView<ListRoomController> {
                           BookingPage.routeName,
                           arguments: ArgBookingRooms(
                             roomCardModel: controller.roomCards,
-                            price: controller.totalPrice.toInt(),
+                            price: (controller.totalPrice.toInt() *
+                                ((controller.argListRoom.dateTimeRange?.end
+                                            .day)! -
+                                        (controller.argListRoom.dateTimeRange
+                                            ?.start.day)!)
+                                    .toInt()),
                             numberRoom: controller.totalRoom.toInt(),
                             hotelId: controller.argListRoom.hotelId!,
                             checkIn:

@@ -17,7 +17,7 @@ class MyBookingTab {
     return MyBookingTab(
       MyBookingTabType.onGoing,
       Assets.images.ongoing.path,
-      'Không có Đặt Chỗ',
+      'No Reservations',
       'Paid',
     );
   }
@@ -26,7 +26,7 @@ class MyBookingTab {
     return MyBookingTab(
       MyBookingTabType.completed,
       Assets.images.completed.path,
-      'Không có đặt chỗ đã qua',
+      'There are no past reservations',
       'Completed',
     );
   }
@@ -35,7 +35,7 @@ class MyBookingTab {
     return MyBookingTab(
       MyBookingTabType.cancelled,
       Assets.images.cancelled.path,
-      'Không có đặt chỗ đã hủy',
+      'There are no canceled reservations',
       'Cancelled & Refunded',
     );
   }
@@ -43,7 +43,7 @@ class MyBookingTab {
     return MyBookingTab(
       MyBookingTabType.unpaid,
       Assets.images.cancelled.path,
-      'Bạn Không có Đặt Chỗ',
+      'You Do Not Have a Reservation Yet',
       'Unpaid',
     );
   }

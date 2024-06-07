@@ -547,7 +547,16 @@ class GetFooter extends GetView<RoomDetailController> {
                         text: NumberFormat.currency(
                                 locale: 'vi_VN', symbol: 'VND')
                             .format(controller.listRoomController.totalPrice
-                                .toInt()),
+                                    .toInt() *
+                                ((controller.listRoomController.argListRoom
+                                            .dateTimeRange?.end.day)! -
+                                        (controller
+                                            .listRoomController
+                                            .argListRoom
+                                            .dateTimeRange
+                                            ?.start
+                                            .day)!)
+                                    .toInt()),
                         style: Get.textTheme.titleMedium!
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
@@ -613,7 +622,16 @@ class GetFooter extends GetView<RoomDetailController> {
                             roomCardModel:
                                 controller.listRoomController.roomCards,
                             price: (controller.listRoomController.totalPrice
-                                .toInt()),
+                                    .toInt() *
+                                ((controller.listRoomController.argListRoom
+                                            .dateTimeRange?.end.day)! -
+                                        (controller
+                                            .listRoomController
+                                            .argListRoom
+                                            .dateTimeRange
+                                            ?.start
+                                            .day)!)
+                                    .toInt()),
                             numberRoom:
                                 controller.listRoomController.totalRoom.toInt(),
                             hotelId: controller

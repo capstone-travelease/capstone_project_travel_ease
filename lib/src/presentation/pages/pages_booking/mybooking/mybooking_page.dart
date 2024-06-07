@@ -58,7 +58,7 @@ class MyBookingPage extends GetView<MyBookingController> {
                             Padding(
                               padding: const EdgeInsets.only(top: 16.0),
                               child: Text(
-                                'Đăng kí thành viên, hưởng nhiều ưu đãi!',
+                                'Register as a member and enjoy many incentives!',
                                 style: Get.textTheme.bodyMedium!.copyWith(),
                               ),
                             ),
@@ -78,7 +78,7 @@ class MyBookingPage extends GetView<MyBookingController> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: Center(
                                         child: Text(
-                                          'Đăng Nhập/Đăng Kí',
+                                          'Login/Register',
                                           style: Get.textTheme.bodyMedium!
                                               .copyWith(
                                             color: Colors.white,
